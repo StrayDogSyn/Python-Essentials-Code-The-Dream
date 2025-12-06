@@ -1,0 +1,417 @@
+# 🐍 Code the Dream - Python Essentials Curriculum
+
+> **A comprehensive, interactive Python curriculum designed for aspiring developers transitioning into the tech industry.**
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
+
+---
+
+## 📚 Table of Contents
+
+- [Overview](#overview)
+- [Course Structure](#course-structure)
+- [Interactive Lesson Plans](#interactive-lesson-plans)
+- [Key Features](#key-features)
+- [Prerequisites](#prerequisites)
+- [Getting Started](#getting-started)
+- [Repository Structure](#repository-structure)
+- [For Educators](#for-educators)
+- [For Students](#for-students)
+- [Contributing](#contributing)
+- [License](#license)
+- [Acknowledgments](#acknowledgments)
+
+---
+
+## 🎯 Overview
+
+The **Code the Dream Python Essentials** curriculum is a production-ready educational program that takes students from Python fundamentals through advanced data engineering, web development, and machine learning concepts. Designed specifically for **Code the Dream fellows**, this curriculum emphasizes:
+
+- **Progressive Learning**: Step-by-step skill building with clear learning objectives
+- **Real-World Applications**: Practical examples from industry use cases
+- **Interactive Experience**: Engaging HTML lessons with progress tracking
+- **Best Practices**: Pythonic code patterns and professional development workflows
+- **Inclusive Design**: Accessible materials for learners from diverse backgrounds
+
+---
+
+## 📖 Course Structure
+
+### **11-Week Intensive Program**
+
+| Week | Topic | Focus Areas | Key Technologies |
+|------|-------|-------------|------------------|
+| **1** | Introduction to Python | Environment setup, variables, control flow, functions, debugging | Python, VS Code, Git |
+| **2** | Data Structures & File Handling | Lists, dictionaries, tuples, sets, CSV/text files, modules | Python stdlib, `csv`, `pathlib` |
+| **3** | Advanced Python Skills | OOP, decorators, comprehensions, closures | Classes, `@decorators` |
+| **4** | Data Engineering Fundamentals | Pandas basics, Series, DataFrames, ETL patterns | `pandas`, `numpy` |
+| **5** | Data Visualization | Matplotlib, Seaborn, interactive plots | `matplotlib`, `seaborn` |
+| **6** | SQL & Databases | SQL syntax, queries, database integration | SQLite, `sqlite3` |
+| **7** | APIs & Web Scraping | REST APIs, HTTP requests, HTML parsing | `requests`, `BeautifulSoup` |
+| **8** | Advanced Pandas | Merging, groupby, pivot tables, time series | `pandas` (advanced) |
+| **9** | Introduction to Machine Learning | Supervised learning, model evaluation, scikit-learn | `scikit-learn`, ML basics |
+| **10** | Flask Web Development | Routes, templates, forms, sessions | `Flask`, Jinja2, web fundamentals |
+| **11** | Deployment & DevOps | Environment variables, Docker, production servers | `Docker`, `gunicorn`, CI/CD |
+
+---
+
+## 🎨 Interactive Lesson Plans
+
+### **NEW: Premium HTML Lesson Experience**
+
+Each week features a **beautifully designed, interactive HTML lesson** with:
+
+✨ **Retro Gaming Aesthetic** - Dark theme with cyberpunk-inspired design  
+📊 **Live Progress Tracking** - Visual XP bar and topic completion markers  
+💻 **Syntax-Highlighted Code** - Color-coded examples with skill level badges  
+🎯 **Progressive Examples** - From bad practice → novice → intermediate → best practice  
+📱 **Responsive Design** - Works seamlessly on desktop, tablet, and mobile  
+🧭 **Smart Navigation** - Sidebar with instant topic jumping  
+💡 **Educational Boxes** - Tips, warnings, explanations, and best practices  
+
+**Access Lessons**: Open any `.html` file in the `lesson-plans/` directory in your web browser.
+
+```bash
+# Example: Open Week 2 lesson
+open lesson-plans/lesson_week2_data_structures.html  # macOS
+start lesson-plans\lesson_week2_data_structures.html  # Windows
+xdg-open lesson-plans/lesson_week2_data_structures.html  # Linux
+```
+
+---
+
+## ⭐ Key Features
+
+### **For Students**
+
+- **Self-Paced Learning**: Progress at your own speed with clear milestones
+- **Hands-On Practice**: Jupyter notebooks with executable code cells
+- **Real Code Examples**: Industry-standard patterns and anti-patterns
+- **Immediate Feedback**: Interactive exercises with solution examples
+- **Career-Ready Skills**: Technologies used in professional development
+
+### **For Educators**
+
+- **Instructor Guides**: Detailed teaching notes and answer keys
+- **Flexible Curriculum**: Modular lessons adaptable to different schedules
+- **Assessment Materials**: Weekly assignments with automated test suites
+- **Group Activities**: Collaborative exercises designed for pair programming
+- **Mentorship Resources**: Guidelines for 1:1 student support
+
+### **Technical Highlights**
+
+- **Version Controlled**: Full Git integration for collaborative development
+- **Test-Driven Development**: PyTest-based assignment validation
+- **Modern Tooling**: VS Code, virtual environments, pip package management
+- **Cloud-Ready**: Docker containerization and deployment strategies
+- **Industry Standards**: PEP 8 style guide, type hints, documentation
+
+---
+
+## 📋 Prerequisites
+
+### **Required Skills**
+- Basic computer literacy (file management, web browsing)
+- Willingness to learn and problem-solve
+- No prior programming experience needed!
+
+### **Technical Requirements**
+- **Operating System**: Windows 10+, macOS 10.14+, or Linux (Ubuntu 20.04+)
+- **Python**: Version 3.8 or higher
+- **Code Editor**: VS Code (recommended) or any text editor
+- **Web Browser**: Modern browser (Chrome, Firefox, Safari, Edge)
+- **Internet**: For package installation and resource access
+
+---
+
+## 🚀 Getting Started
+
+### **1. Clone the Repository**
+
+```bash
+git clone https://github.com/YOUR_USERNAME/CTD.git
+cd CTD
+```
+
+### **2. Set Up Python Environment**
+
+```bash
+# Create virtual environment
+python -m venv venv
+
+# Activate virtual environment
+# Windows:
+venv\Scripts\activate
+# macOS/Linux:
+source venv/bin/activate
+
+# Install dependencies
+pip install -r python-essentials-v2/requirements.txt
+```
+
+### **3. Verify Installation**
+
+```bash
+python --version  # Should be 3.8+
+jupyter --version  # Verify Jupyter is installed
+```
+
+### **4. Launch Your First Lesson**
+
+**Option A: Interactive HTML Lesson**
+```bash
+# Open in browser
+open lesson-plans/lesson_week1_intro_python.html
+```
+
+**Option B: Jupyter Notebook**
+```bash
+# Start Jupyter
+jupyter notebook
+
+# Navigate to:
+# python-essentials-v2/sessions/week1/session1_intro_to_python.ipynb
+```
+
+---
+
+## 📁 Repository Structure
+
+```
+CTD/
+├── lesson-plans/                    # Interactive HTML lessons (NEW!)
+│   ├── lesson_week1_intro_python.html
+│   ├── lesson_week2_data_structures.html  ← NEW: Complete with all sections
+│   ├── lesson_week3_python_skills.html    ← RENAMED for consistency
+│   ├── lesson_week4_data_engineering.html
+│   ├── lesson_week5_data_visualization.html
+│   ├── lesson_week6_sql_databases.html
+│   ├── lesson_week7_apis_scraping.html
+│   ├── lesson_week8_advanced_pandas.html
+│   ├── lesson_week9_intro_ml.html
+│   ├── lesson_week10_flask_web.html
+│   └── lesson_week11_deployment.html
+│
+├── python-essentials-v2/            # Core curriculum materials
+│   ├── lessons/                     # Markdown lesson content
+│   │   ├── 01IntroToPython.md
+│   │   ├── 02DataStructuresAndFileHandling.md
+│   │   └── ...
+│   │
+│   ├── assignments/                 # Weekly homework with test suites
+│   │   ├── 01IntroToPython.md
+│   │   ├── 02DataStructuresAndFileHandling.md
+│   │   └── ...
+│   │
+│   ├── sessions/                    # Jupyter notebooks for live sessions
+│   │   ├── week1/
+│   │   │   ├── session1_intro_to_python.ipynb
+│   │   │   └── session2_intro_to_python_group.ipynb
+│   │   └── ...
+│   │
+│   ├── instructor-materials/        # Teaching guides and solutions
+│   │   ├── week1_instructor.md
+│   │   └── ...
+│   │
+│   ├── instructor_guides/           # Detailed facilitation notes
+│   │   ├── week1_instructor_guide.md
+│   │   └── ...
+│   │
+│   └── mentor-guidebook/            # 1:1 mentorship resources
+│       ├── assignment-solution-examples/
+│       ├── group-lesson-guide/
+│       └── README.md
+│
+├── .gitignore                       # Python project ignore rules
+├── fix_notebooks.py                 # Notebook maintenance utility
+├── validate_notebooks.py            # Notebook validation script
+├── test.py                          # Testing utilities
+└── README.md                        # This file
+```
+
+---
+
+## 👨‍🏫 For Educators
+
+### **Teaching Workflow**
+
+1. **Pre-Session Prep**
+   - Review `instructor_guides/weekN_instructor_guide.md`
+   - Test code examples in session notebooks
+   - Prepare supplementary materials or real-world examples
+
+2. **Live Session**
+   - Use `sessions/weekN/session1_*.ipynb` for demonstration
+   - Facilitate group work with `session2_*_group.ipynb`
+   - Reference HTML lesson for visual aids and progressive examples
+
+3. **Assignment Review**
+   - Students complete assignments from `assignments/`
+   - Automated tests validate core functionality
+   - Review code quality and provide personalized feedback
+
+4. **Mentorship**
+   - Use `mentor-guidebook/` resources for 1:1 support
+   - Track student progress through assignment completion
+   - Address individual learning gaps
+
+### **Customization Tips**
+
+- **Adjust Pacing**: Lessons are modular—extend or compress as needed
+- **Add Examples**: Incorporate industry examples relevant to your students
+- **Modify Assignments**: Adapt difficulty based on cohort skill level
+- **Create Branches**: Use Git branches for cohort-specific modifications
+
+---
+
+## 👩‍💻 For Students
+
+### **Weekly Learning Cycle**
+
+**📖 Monday-Tuesday: Learn**
+- Read lesson materials (`lessons/` directory)
+- Complete interactive HTML lesson (`lesson-plans/`)
+- Practice with Jupyter notebooks (`sessions/`)
+
+**💻 Wednesday-Thursday: Practice**
+- Work through weekly assignment (`assignments/`)
+- Run automated tests: `pytest -v`
+- Debug and refine your code
+
+**👥 Friday: Collaborate**
+- Attend group session
+- Pair program with peers
+- Ask questions and share insights
+
+**🔄 Weekend: Review**
+- Revisit challenging concepts
+- Explore additional resources
+- Prepare for next week
+
+### **Getting Help**
+
+1. **Self-Service**
+   - Review HTML lesson's "Explanation Boxes" and "Common Pitfalls"
+   - Check `mentor-guidebook/assignment-solution-examples/`
+   - Search error messages in lesson cheat sheets
+
+2. **Peer Support**
+   - Slack discussion channels
+   - Study groups and pair programming
+   - Code review exchanges
+
+3. **Mentorship**
+   - Schedule 1:1 mentor sessions
+   - Office hours with instructors
+   - Detailed code feedback on assignments
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions from educators, students, and the developer community!
+
+### **How to Contribute**
+
+1. **Fork the Repository**
+   ```bash
+   # Click "Fork" on GitHub, then clone your fork
+   git clone https://github.com/YOUR_USERNAME/CTD.git
+   ```
+
+2. **Create a Feature Branch**
+   ```bash
+   git checkout -b feature/improved-week5-examples
+   ```
+
+3. **Make Your Changes**
+   - Add new examples or exercises
+   - Fix typos or clarify explanations
+   - Update outdated package versions
+   - Improve HTML lesson design
+
+4. **Test Your Changes**
+   ```bash
+   # Validate notebooks
+   python validate_notebooks.py
+   
+   # Test example code
+   python -m pytest
+   ```
+
+5. **Submit a Pull Request**
+   - Write clear commit messages
+   - Describe your changes in PR description
+   - Link related issues
+
+### **Contribution Guidelines**
+
+- **Code Style**: Follow PEP 8 for Python code
+- **Documentation**: Update README/guides when changing structure
+- **Examples**: Ensure all code examples are tested and executable
+- **Accessibility**: Maintain inclusive language and design
+- **Licenses**: Only contribute content you have rights to share
+
+### **Areas for Contribution**
+
+- 🐛 Bug fixes in code examples
+- 📝 Additional practice problems
+- 🌐 Translations to other languages
+- 🎨 UI/UX improvements for HTML lessons
+- 📊 Data visualization examples
+- 🧪 Additional test cases
+- 📚 Supplementary learning resources
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+
+**What this means:**
+- ✅ Free to use for educational purposes
+- ✅ Modify and adapt for your classroom
+- ✅ Share with students and colleagues
+- ⚠️ Attribution appreciated but not required
+- ⚠️ No warranty provided
+
+---
+
+## 🙏 Acknowledgments
+
+### **Code the Dream**
+This curriculum is proudly developed for [Code the Dream](https://codethedream.org), a nonprofit organization providing free, high-quality technical training to people from diverse backgrounds who aspire to become professional programmers.
+
+### **Contributors**
+- **Curriculum Designers**: Original lesson authors and educators
+- **Technical Reviewers**: Industry professionals providing feedback
+- **Students**: Past cohorts whose feedback shaped improvements
+- **Open Source Community**: Python, Jupyter, and web development tools
+
+### **Special Thanks**
+- The Python Software Foundation for maintaining excellent documentation
+- Jupyter Project for interactive computing tools
+- VS Code team for an outstanding developer experience
+- All mentors and instructors who bring this curriculum to life
+
+---
+
+## 📞 Contact & Support
+
+- **Issues**: [GitHub Issues](https://github.com/YOUR_USERNAME/CTD/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/YOUR_USERNAME/CTD/discussions)
+- **Code the Dream**: [codethedream.org](https://codethedream.org)
+
+---
+
+<div align="center">
+
+**Built with ❤️ for aspiring developers**
+
+*Empowering the next generation of Python programmers*
+
+[⬆ Back to Top](#-code-the-dream---python-essentials-curriculum)
+
+</div>
