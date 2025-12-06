@@ -339,6 +339,10 @@
                     <p><strong>Save Raw Data First:</strong> Save JSON responses or HTML to files before parsing. If parsing fails, you don't have to re-fetch.</p>
                     <p><strong>Read robots.txt:</strong> Visit <code>example.com/robots.txt</code> to see what's allowed. Ignoring it can get you sued or blocked.</p>
                 </div>
+                <div class="explanation-box info" data-notebook="week7-intro">
+                    <div class="explanation-title">📓 Practice in Notebook</div>
+                    <p>Open <code>notebook-sessions/week7/session1_apis_scraping.ipynb</code> and summarize API vs scraping with one example each. Note ethical considerations.</p>
+                </div>
 
                 <button class="nav-btn complete-btn" data-topic="intro">Mark Complete ✓</button>
                 <div class="nav-buttons">
@@ -492,6 +496,10 @@ url = <span class="string">'https://jsonplaceholder.typicode.com/posts/1'</span>
                 </div>
 
                 <button class="nav-btn complete-btn" data-topic="apis">Mark Topic Complete ✓</button>
+                <div class="explanation-box info" data-notebook="week7-apis">
+                    <div class="explanation-title">📓 Practice in Notebook</div>
+                    <p>Open <code>notebook-sessions/week7/session1_apis_scraping.ipynb</code> and call an open API (e.g., JSONPlaceholder). Use <code>raise_for_status()</code> and handle <code>Timeout</code>.</p>
+                </div>
                 <div class="nav-buttons">
                     <button class="nav-btn prev" onclick="navigateToSection('intro')">◀ Prev: Intro</button>
                     <button class="nav-btn next" onclick="navigateToSection('scraping')">Next: Web Scraping ▶</button>
@@ -570,6 +578,10 @@ link = soup.find(<span class="string">'a'</span>)[<span class="string">'href'</s
                 </div>
 
                 <button class="nav-btn complete-btn" data-topic="scraping">Mark Topic Complete ✓</button>
+                <div class="explanation-box info" data-notebook="week7-scraping">
+                    <div class="explanation-title">📓 Practice in Notebook</div>
+                    <p>Open <code>notebook-sessions/week7/session1_apis_scraping.ipynb</code> and parse simple HTML with BeautifulSoup. Extract title and links. Save HTML locally first.</p>
+                </div>
                 <div class="nav-buttons">
                     <button class="nav-btn prev" onclick="navigateToSection('apis')">◀ Prev: APIs</button>
                     <button class="nav-btn next" onclick="navigateToSection('ethics')">Next: Ethics ▶</button>
@@ -640,6 +652,10 @@ urls = [<span class="string">'http://site.com/page1'</span>, <span class="string
                 </div>
 
                 <button class="nav-btn complete-btn" data-topic="ethics">Mark Topic Complete ✓</button>
+                <div class="explanation-box info" data-notebook="week7-ethics">
+                    <div class="explanation-title">📓 Practice in Notebook</div>
+                    <p>Open <code>notebook-sessions/week7/session2_apis_scraping_group.ipynb</code> and implement polite scraping with headers, sleep, and robots.txt checks.</p>
+                </div>
                 <div class="nav-buttons">
                     <button class="nav-btn prev" onclick="navigateToSection('scraping')">◀ Prev: Scraping</button>
                     <button class="nav-btn next" onclick="navigateToSection('cheatsheet')">Next: Cheat Sheet ▶</button>
@@ -672,6 +688,24 @@ els = soup.find_all(<span class="string">'a'</span>, class_=<span class="string"
 text = el.text.strip()      <span class="comment"># Get text content</span>
 href = el[<span class="string">'href'</span>]           <span class="comment"># Get attribute</span>
 </code></pre>
+                </div>
+
+                <div class="explanation-box" data-quiz="week7-quiz" style="margin-top: 1rem;">
+                    <div class="explanation-title">🧠 Quick Quiz: Week 7 Concepts</div>
+                    <form aria-label="Week 7 Quiz" style="color: var(--text-secondary);">
+                        <p>1) Which method raises an HTTP error for non-2xx codes?</p>
+                        <label><input type="radio" name="q1" data-correct> response.raise_for_status()</label>
+                        <label><input type="radio" name="q1"> response.json()</label>
+                        <p>2) Which BeautifulSoup parser argument is used in examples?</p>
+                        <label><input type="radio" name="q2" data-correct> 'html.parser'</label>
+                        <label><input type="radio" name="q2"> 'xml'</label>
+                        <p>3) Which header identifies your bot?</p>
+                        <label><input type="radio" name="q3" data-correct> 'User-Agent'</label>
+                        <label><input type="radio" name="q3"> 'Content-Type'</label>
+                        <div style="margin-top:0.75rem;">
+                            <button class="nav-btn" type="button" aria-label="Check quiz answers" onclick="(function(){var s=0;document.querySelectorAll('[data-quiz] input[data-correct]').forEach(function(el){if(el.checked)s++;});alert('Score: '+s+'/3');})();">Check Answers</button>
+                        </div>
+                    </form>
                 </div>
 
                 <div class="objectives-box" style="margin-top: 2rem;">

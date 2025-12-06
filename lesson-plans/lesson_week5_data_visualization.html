@@ -493,6 +493,11 @@ plt.show()
                     </ol>
                 </div>
 
+                <div class="explanation-box info" data-notebook="week5-matplotlib">
+                    <div class="explanation-title">📓 Practice in Notebook</div>
+                    <p>Open <code>notebook-sessions/week5/session1_data_visualization.ipynb</code> and reproduce the OO plotting pattern (<code>fig, ax = plt.subplots()</code>). Add labels, titles, and a style. Bonus: compare pyplot vs OO outputs.</p>
+                </div>
+
                 <button class="nav-btn complete-btn" data-topic="matplotlib">Mark Topic Complete ✓</button>
                 <div class="nav-buttons">
                     <button class="nav-btn prev" onclick="navigateToSection('intro')">◀ Prev: Intro</button>
@@ -601,6 +606,11 @@ plt.show()
                     </ol>
                 </div>
 
+                <div class="explanation-box info" data-notebook="week5-seaborn">
+                    <div class="explanation-title">📓 Practice in Notebook</div>
+                    <p>Open <code>notebook-sessions/week5/session1_data_visualization.ipynb</code> and create a Seaborn scatter with <code>hue</code> and <code>size</code>. Try <code>regplot</code> for a regression line and experiment with <code>sns.set_theme()</code>.</p>
+                </div>
+
                 <button class="nav-btn complete-btn" data-topic="seaborn">Mark Topic Complete ✓</button>
                 <div class="nav-buttons">
                     <button class="nav-btn prev" onclick="navigateToSection('matplotlib')">◀ Prev: Matplotlib</button>
@@ -681,6 +691,11 @@ plt.show()
                     <p><strong>Bonus:</strong> Use <code>fig.suptitle()</code> to add an overall title to your dashboard.</p>
                 </div>
 
+                <div class="explanation-box info" data-notebook="week5-subplots">
+                    <div class="explanation-title">📓 Practice in Notebook</div>
+                    <p>Open <code>notebook-sessions/week5/session2_data_visualization_group.ipynb</code> and build a 2x2 dashboard with shared axes where appropriate. Use <code>tight_layout()</code> and <code>fig.suptitle()</code>.</p>
+                </div>
+
                 <button class="nav-btn complete-btn" data-topic="subplots">Mark Topic Complete ✓</button>
                 <div class="nav-buttons">
                     <button class="nav-btn prev" onclick="navigateToSection('seaborn')">◀ Prev: Seaborn</button>
@@ -724,6 +739,26 @@ plt.xticks(rotation=<span class="number">45</span>)
 plt.legend()
 plt.tight_layout()
 </code></pre>
+                </div>
+
+                <div class="explanation-box" data-quiz="week5-quiz" style="margin-top: 1rem;">
+                    <div class="explanation-title">🧠 Quick Quiz: Week 5 Concepts</div>
+                    <form aria-label="Week 5 Quiz" style="color: var(--text-secondary);">
+                        <p>1) Which interface provides explicit control over plots?</p>
+                        <label><input type="radio" name="q1"> pyplot</label>
+                        <label><input type="radio" name="q1" data-correct> OO interface (fig, ax)</label>
+                        <p>2) In Seaborn, which parameter colors points by category?</p>
+                        <label><input type="radio" name="q2" data-correct> hue</label>
+                        <label><input type="radio" name="q2"> size</label>
+                        <label><input type="radio" name="q2"> style</label>
+                        <p>3) Which function prevents subplot overlap?</p>
+                        <label><input type="radio" name="q3"> suptitle()</label>
+                        <label><input type="radio" name="q3" data-correct> tight_layout()</label>
+                        <label><input type="radio" name="q3"> legend()</label>
+                        <div style="margin-top:0.75rem;">
+                            <button class="nav-btn" type="button" aria-label="Check quiz answers" onclick="(function(){var s=0;document.querySelectorAll('[data-quiz] input[data-correct]').forEach(function(el){if(el.checked)s++;});alert('Score: '+s+'/3');})();">Check Answers</button>
+                        </div>
+                    </form>
                 </div>
 
                 <div class="objectives-box" style="margin-top: 2rem;">
