@@ -1,17 +1,162 @@
-:root{--sd-cyan:#00e5ff;--sd-green:#00ff41;--sd-amber:#ffbf00;--sd-magenta:#ff00ff;--sd-fg:#e0e0e0;--sd-muted:#a0a0a0}
-.sd-supported-badge{display:inline-flex;align-items:center;gap:.5rem;padding:.3rem .6rem;border:1px solid var(--sd-cyan);border-radius:12px;color:var(--sd-cyan);font-family:"IBM Plex Mono",monospace;font-size:.85rem}
-.sd-supported-badge img{width:18px;height:18px}
-.sd-footer{position:relative;margin-top:2rem;padding:1.5rem 0;border-top:1px solid #222;color:var(--sd-muted);font-family:"IBM Plex Mono",monospace}
-.sd-footer .sd-credits{margin-top:.5rem;font-size:.85rem}
-.sd-footer a{color:var(--sd-cyan);text-decoration:none}
-.sd-footer a:hover{text-decoration:underline}
-.sd-footer .sd-corner{position:absolute;bottom:12px;width:28px;height:28px;opacity:.6}
-.sd-footer .sd-corner.left{left:12px}
-.sd-footer .sd-corner.right{right:12px}
-.sd-footer .sd-links{display:flex;justify-content:center;gap:.75rem;margin-top:.5rem}
-.sd-github{width:18px;height:18px;fill:var(--sd-fg);opacity:.8}
-.sd-watermark::before{content:"";position:fixed;inset:0;background-image:url("../assets/brands/stray-stencil.png");background-repeat:no-repeat;background-position:95% 90%;background-size:220px;opacity:.04;pointer-events:none;z-index:0}
-@media(max-width:768px){.sd-footer .sd-corner{display:none}.sd-watermark::before{background-size:140px;background-position:90% 88%}}
-.sd-banner-logo{float:right;width:120px;max-width:25%;height:auto;margin-left:1rem;opacity:.9}
-@media(max-width:768px){.sd-banner-logo{display:none}}
+/* StrayDog Branding Variables */
+:root {
+    --sd-cyan: #00e5ff;
+    --sd-green: #00ff41;
+    --sd-amber: #ffbf00;
+    --sd-magenta: #ff00ff;
+    --sd-fg: #e0e0e0;
+    --sd-muted: #a0a0a0;
+    --sd-shadow: rgba(0, 229, 255, 0.2);
+}
+
+/* Supported By Badge */
+.sd-supported-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border: 2px solid var(--sd-cyan);
+    border-radius: 12px;
+    color: var(--sd-cyan);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.9rem;
+    background: rgba(0, 229, 255, 0.05);
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px var(--sd-shadow);
+}
+
+.sd-supported-badge:hover {
+    background: rgba(0, 229, 255, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px var(--sd-shadow);
+}
+
+.sd-supported-badge img {
+    width: 20px;
+    height: 20px;
+    filter: drop-shadow(0 0 4px var(--sd-cyan));
+}
+
+/* Footer Styling */
+.sd-footer {
+    position: relative;
+    margin-top: 4rem;
+    padding: 2rem 0;
+    border-top: 2px solid rgba(0, 229, 255, 0.2);
+    color: var(--sd-muted);
+    font-family: "IBM Plex Mono", monospace;
+    text-align: center;
+}
+
+.sd-footer .sd-credits {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.sd-footer a {
+    color: var(--sd-cyan);
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.sd-footer a:hover {
+    color: var(--sd-green);
+    text-shadow: 0 0 8px var(--sd-cyan);
+}
+
+/* Footer Corner Logos */
+.sd-footer .sd-corner {
+    position: absolute;
+    bottom: 20px;
+    width: 32px;
+    height: 32px;
+    opacity: 0.4;
+    transition: opacity 0.3s ease;
+}
+
+.sd-footer .sd-corner:hover {
+    opacity: 0.8;
+}
+
+.sd-footer .sd-corner.left {
+    left: 20px;
+}
+
+.sd-footer .sd-corner.right {
+    right: 20px;
+}
+
+/* GitHub Links */
+.sd-footer .sd-links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 0.75rem;
+}
+
+.sd-github {
+    width: 20px;
+    height: 20px;
+    fill: var(--sd-fg);
+    opacity: 0.7;
+    transition: all 0.3s ease;
+}
+
+.sd-footer .sd-links a:hover .sd-github {
+    opacity: 1;
+    fill: var(--sd-cyan);
+    filter: drop-shadow(0 0 4px var(--sd-cyan));
+}
+
+/* Subtle Watermark */
+.sd-watermark::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: url("../brands/stray-stencil.png");
+    background-repeat: no-repeat;
+    background-position: 95% 90%;
+    background-size: 220px;
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Banner Logo */
+.sd-banner-logo {
+    float: right;
+    width: 120px;
+    max-width: 25%;
+    height: auto;
+    margin-left: 1.5rem;
+    margin-bottom: 0.5rem;
+    opacity: 0.85;
+    transition: opacity 0.3s ease;
+}
+
+.sd-banner-logo:hover {
+    opacity: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .sd-footer .sd-corner {
+        display: none;
+    }
+    
+    .sd-watermark::before {
+        background-size: 140px;
+        background-position: 90% 88%;
+    }
+    
+    .sd-banner-logo {
+        display: none;
+    }
+    
+    .sd-supported-badge {
+        font-size: 0.8rem;
+        padding: 0.4rem 0.8rem;
+    }
+}
 

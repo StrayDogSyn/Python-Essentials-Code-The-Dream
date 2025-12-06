@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Python Essentials Curriculum - Interactive Lessons & Notebooks</title>
     <meta name="description" content="Code the Dream Python Essentials - Interactive HTML lessons and Jupyter notebooks for aspiring developers">
+    <link rel="icon" type="image/png" href="assets/brands/favicon-straydog.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -482,7 +483,7 @@
         }
     </style>
 </head>
-<body>
+<body class="sd-watermark">
     <!-- Progress Bar -->
     <div class="progress-container">
         <div class="progress-bar" id="progressBar"></div>
@@ -510,8 +511,10 @@
                 <a href="#setup" class="quick-link">⚙️ Setup Guide</a>
                 <a href="community-partners.html" class="quick-link">🤝 Community Partners</a>
             </div>
-            <div class="sd-supported-badge" aria-label="Supported badge">
-                <img src="assets/brands/stray-gear.png" alt="StrayDog logo">Supported by StrayDog
+            <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap;">
+                <div class="sd-supported-badge" aria-label="Supported by StrayDog">
+                    <img src="assets/brands/stray-gear.png" alt="StrayDog logo">Supported by StrayDog
+                </div>
             </div>
         </header>
 
@@ -528,8 +531,11 @@
 
         <div class="setup-section" id="about-creators">
             <h2>👥 About the Creators</h2>
-            <p style="color: var(--text-secondary); line-height: 1.8;">
-                Built with care by StrayDog Syndications LLC — Eric 'Hunter' Petross & Mia 'Mausi' Smith‑Petross — in partnership with Code the Dream.
+            <p style="color: var(--text-secondary); line-height: 1.8; max-width: 800px; margin: 0 auto;">
+                Built with care by <a href="https://www.straydog-syndications-llc.com/" target="_blank" rel="noopener" style="color: var(--accent-cyan); text-decoration: none;">StrayDog Syndications LLC</a> — 
+                <a href="https://github.com/StrayDogSyn" target="_blank" rel="noopener" style="color: var(--accent-cyan); text-decoration: none;">Eric 'Hunter' Petross</a> &amp; 
+                <a href="https://github.com/miasmith81" target="_blank" rel="noopener" style="color: var(--accent-cyan); text-decoration: none;">Mia 'Mausi' Smith‑Petross</a> — 
+                in partnership with Code the Dream.
                 Our mission is to bridge the "Digital Cliff" for justice‑impacted learners through accessible, career‑aligned education.
             </p>
         </div>
@@ -845,16 +851,27 @@
             </div>
         </div>
 
-        <footer class="footer">
-            <p>Built with ❤️ for <a href="https://codethedream.org" target="_blank">Code the Dream</a> fellows</p>
-            <p style="margin-top: 1rem;">
-                <a href="https://github.com/StrayDogSyn/Python-Essentials-Code-The-Dream" target="_blank">View on GitHub</a> • 
-                <a href="https://github.com/StrayDogSyn/Python-Essentials-Code-The-Dream/blob/main/CONTRIBUTING.md" target="_blank">Contribute</a> •
-                <a href="mailto:contact@codethedream.org">Contact</a>
-            </p>
-            <p style="margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary);">
-                Progress is saved locally in your browser. Complete all 11 weeks to unlock the final achievement! 🏆
-            </p>
+        <footer class="sd-footer">
+            <img class="sd-corner left" src="assets/brands/stray-gear.png" alt="StrayDog logo" aria-hidden="true">
+            <img class="sd-corner right" src="assets/brands/stray-gear.png" alt="StrayDog logo" aria-hidden="true">
+            <div class="sd-credits">
+                Created with care by <a href="https://www.straydog-syndications-llc.com/" target="_blank" rel="noopener">StrayDog Syndications LLC</a>
+            </div>
+            <div class="sd-credits" style="margin-top: 0.25rem;">
+                <a href="https://github.com/StrayDogSyn" target="_blank" rel="noopener">Eric 'Hunter' Petross</a> &amp; 
+                <a href="https://github.com/miasmith81" target="_blank" rel="noopener">Mia 'Mausi' Smith‑Petross</a>
+            </div>
+            <div class="sd-credits" style="margin-top: 0.5rem;">
+                In partnership with <a href="https://codethedream.org" target="_blank" rel="noopener">Code the Dream</a> — for the Returned Citizen community
+            </div>
+            <div class="sd-links">
+                <a href="https://github.com/StrayDogSyn/Python-Essentials-Code-The-Dream" target="_blank" rel="noopener" aria-label="View on GitHub">
+                    <svg class="sd-github" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
+                </a>
+            </div>
+            <div class="sd-credits" style="margin-top: 0.75rem; font-size: 0.8rem; opacity: 0.7;">
+                Progress saved locally in your browser • Complete all 11 weeks to unlock the final achievement! 🏆
+            </div>
         </footer>
     </div>
 
