@@ -1,0 +1,23 @@
+:root{--bg:#1a1a1a;--fg:#e0e0e0;--muted:#a0a0a0;--cyan:#00f0ff;--magenta:#ff00ff;--yellow:#ffff00;--green:#00ff41;--amber:#ffbf00}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--fg);font-family:"IBM Plex Mono",monospace;line-height:1.6}
+.skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+.skip-link:focus{left:0;top:0;width:auto;height:auto;background:var(--cyan);color:#000;padding:.5rem 1rem}
+.lesson-header{padding:1.5rem;border-bottom:2px solid var(--cyan)}
+.lesson-title{font-weight:800;letter-spacing:1px}
+.week-badge,.module-badge,.difficulty-badge{display:inline-block;margin-right:.5rem;background:var(--magenta);color:#000;padding:.2rem .6rem;border-radius:12px;font-weight:700}
+.lesson-stats span{margin-right:1rem;color:var(--green)}
+.lesson-progress{position:sticky;top:0;background:#111;padding:.5rem;border-bottom:1px solid var(--cyan);z-index:50}
+.progress-bar{width:100%;height:8px;background:#222;border-radius:4px}
+.progress-fill{height:8px;width:0;background:linear-gradient(90deg,var(--cyan),var(--magenta));border-radius:4px}
+.progress-text{margin-top:.25rem;color:var(--amber);font-size:.85rem}
+.lesson-content{max-width:960px;margin:0 auto;padding:1rem}
+.lesson-section{margin:2rem 0}
+.code-example{background:#111;border:1px solid #333;border-radius:8px;margin:1rem 0}
+.example-header{display:flex;justify-content:space-between;align-items:center;padding:.5rem 1rem;border-bottom:1px solid #333}
+.run-button{background:var(--yellow);color:#000;border:none;padding:.4rem .8rem;border-radius:6px;font-weight:700;cursor:pointer}
+.output-display{background:#0b0b0b;color:var(--green);padding:.75rem;border-top:1px solid #333;border-radius:0 0 8px 8px;min-height:1.5rem}
+.common-mistakes,.analogy-box{border:1px solid #333;border-radius:8px;padding:1rem;background:#0f0f0f}
+@media(max-width:768px){.lesson-content{padding:.5rem}.run-button{padding:.5rem .9rem}}
+

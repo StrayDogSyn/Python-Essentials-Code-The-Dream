@@ -1,0 +1,17 @@
+{
+  "name": "python-essentials-site",
+  "private": true,
+  "version": "0.1.0",
+  "devDependencies": {
+    "html-validate": "^8.0.0",
+    "pa11y": "^7.0.0",
+    "lighthouse": "^11.0.0",
+    "broken-link-checker": "^0.7.8"
+  },
+  "scripts": {
+    "validate:html": "html-validate lesson-plans/*.html",
+    "validate:a11y": "pa11y lesson-plans/lesson_week1_intro_python.html",
+    "validate:links": "blc http://localhost:8080 --filter-level 3",
+    "validate:lighthouse": "lighthouse http://localhost:8080 --output html --quiet"
+  }
+}
