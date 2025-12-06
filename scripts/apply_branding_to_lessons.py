@@ -12,8 +12,6 @@ FAVICON_LINE = '    <link rel="icon" type="image/png" href="../assets/brands/fav
 
 FOOTER_HTML = '''
     <footer class="sd-footer">
-        <img class="sd-corner left" src="../assets/brands/straydog-syndications-llc-main.png" alt="StrayDog Syndications LLC logo" aria-hidden="true">
-        <img class="sd-corner right" src="../assets/brands/straydog-syndications-llc-main.png" alt="StrayDog Syndications LLC logo" aria-hidden="true">
         <div class="sd-credits">
             Enhanced curriculum for the Returned Citizen community by <a href="https://www.straydog-syndications-llc.com/" target="_blank" rel="noopener">StrayDog Syndications LLC</a>
         </div>
@@ -56,12 +54,11 @@ def apply_branding_to_file(file_path):
     
     # 3. Update existing footer or add new footer
     if 'sd-footer' in content:
-        # Update existing footer logo references
-        old_footer_pattern = r'<img class="sd-corner (left|right)" src="\.\./assets/brands/stray-gear\.png"'
-        new_footer_img = r'<img class="sd-corner \1" src="../assets/brands/straydog-syndications-llc-main.png"'
-        if re.search(old_footer_pattern, content):
-            content = re.sub(old_footer_pattern, new_footer_img, content)
-            changes_made.append("Updated footer logos")
+        # Remove footer corner logo img tags
+        footer_logo_pattern = r'\s*<img class="sd-corner (left|right)" src="\.\./assets/brands/[^"]*" alt="[^"]*" aria-hidden="true">\s*'
+        if re.search(footer_logo_pattern, content):
+            content = re.sub(footer_logo_pattern, '\n            ', content)
+            changes_made.append("Removed footer corner logos")
         
         # Update footer text
         old_text_pattern = r'Created with care by'

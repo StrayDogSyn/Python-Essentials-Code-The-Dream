@@ -37,27 +37,7 @@
     text-shadow: 0 0 8px var(--sd-cyan);
 }
 
-/* Footer Corner Logos */
-.sd-footer .sd-corner {
-    position: absolute;
-    bottom: 20px;
-    width: 80px;
-    height: auto;
-    opacity: 0.3;
-    transition: opacity 0.3s ease;
-}
 
-.sd-footer .sd-corner:hover {
-    opacity: 0.6;
-}
-
-.sd-footer .sd-corner.left {
-    left: 20px;
-}
-
-.sd-footer .sd-corner.right {
-    right: 20px;
-}
 
 /* GitHub Links */
 .sd-footer .sd-links {
@@ -95,12 +75,12 @@
     z-index: 0;
 }
 
-/* Fixed Top-Left Corner Logo */
+/* Fixed Top-Left Corner Logo (matches stray-stencil positioning style) */
 .sd-watermark::after {
     content: "";
     position: fixed;
-    top: 20px;
-    left: 20px;
+    top: 10%;
+    left: 5%;
     width: 220px;
     height: 220px;
     background-image: url("../brands/straydog-syndications-llc-main.png");
@@ -114,10 +94,6 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .sd-footer .sd-corner {
-        display: none;
-    }
-    
     .sd-watermark::before {
         background-size: 140px;
         background-position: 90% 88%;
@@ -126,8 +102,8 @@
     .sd-watermark::after {
         width: 140px;
         height: 140px;
-        top: 15px;
-        left: 15px;
+        top: 12%;
+        left: 10%;
     }
 }
 
