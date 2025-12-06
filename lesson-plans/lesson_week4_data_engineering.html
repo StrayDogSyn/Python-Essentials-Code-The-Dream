@@ -966,6 +966,11 @@ df = pd.DataFrame({<span class="string">'a'</span>: [<span class="number">1</spa
                     <p><strong>4.</strong> Why does <code>from pandas import *</code> break things, but <code>import pandas as pd</code> doesn't?</p>
                 </div>
 
+                <div class="explanation-box info" data-notebook="week4-basics">
+                    <div class="explanation-title">📓 Practice in Notebook</div>
+                    <p>Open <code>notebook-sessions/week4/session1_data_engineering.ipynb</code> and implement standard imports (<code>pd</code>, <code>np</code>), version checks, and display options. Add a cell explaining why version verification matters.</p>
+                </div>
+
                 <button class="nav-btn complete-btn" data-topic="pandas-basics">Mark Topic Complete ✓</button>
                 <div class="nav-buttons">
                     <button class="nav-btn prev" onclick="navigateToSection('intro')">◀ Prev: Intro</button>
@@ -1140,6 +1145,11 @@ population = ...
 future_pop = ...
 
 print(future_pop)"></textarea>
+                </div>
+
+                <div class="explanation-box info" data-notebook="week4-series">
+                    <div class="explanation-title">📓 Practice in Notebook</div>
+                    <p>Open <code>notebook-sessions/week4/session1_data_engineering.ipynb</code> and build a <code>Series</code> with labels. Practice vectorized operations (discounts, taxes) and label-based access with <code>.loc</code>.</p>
                 </div>
 
                 <!-- Common Pitfalls -->
@@ -1332,6 +1342,11 @@ df = pd.DataFrame(students)
                     </div>
                 </div>
 
+                <div class="explanation-box info" data-notebook="week4-dataframes">
+                    <div class="explanation-title">📓 Practice in Notebook</div>
+                    <p>Open <code>notebook-sessions/week4/session1_data_engineering.ipynb</code> and create DataFrames from dicts and rows (list of dicts). Set a meaningful index (e.g., <code>id</code>) and verify with <code>df.info()</code>.</p>
+                </div>
+
                 <!-- Discussion Questions -->
                 <div class="analogy-box">
                     <div class="analogy-title">💬 Group Discussion Questions</div>
@@ -1339,6 +1354,11 @@ df = pd.DataFrame(students)
                     <p><strong>2.</strong> What's the difference between creating a DataFrame from a dict of lists vs a list of dicts? Which is more intuitive for row-oriented data (like API responses)?</p>
                     <p><strong>3.</strong> When should you call <code>df.info()</code>? Why is checking dtypes important before starting analysis?</p>
                     <p><strong>4.</strong> How would you explain the relationship between Series and DataFrames to someone new to Pandas?</p>
+                </div>
+
+                <div class="explanation-box info" data-notebook="week4-loading">
+                    <div class="explanation-title">📓 Practice in Notebook</div>
+                    <p>Open <code>notebook-sessions/week4/session2_data_engineering_group.ipynb</code> and load sample CSV/JSON files. Use <code>parse_dates</code>, <code>dtype</code>, and <code>usecols</code>. Add error handling and print shape.</p>
                 </div>
 
                 <button class="nav-btn complete-btn" data-topic="dataframes">Mark Topic Complete ✓</button>
@@ -1498,6 +1518,11 @@ dtypes = {
                     <p><strong>4.</strong> How would you handle a 10GB CSV file that doesn't fit in memory? (Hint: <code>chunksize</code> parameter!)</p>
                 </div>
 
+                <div class="explanation-box info" data-notebook="week4-inspection">
+                    <div class="explanation-title">📓 Practice in Notebook</div>
+                    <p>Open <code>notebook-sessions/week4/session2_data_engineering_group.ipynb</code> and perform the inspection trilogy on loaded data: <code>df.shape</code>, <code>df.info()</code>, <code>df.isna().sum()</code>, and <code>df.describe()</code>.</p>
+                </div>
+
                 <button class="nav-btn complete-btn" data-topic="loading-data">Mark Topic Complete ✓</button>
                 <div class="nav-buttons">
                     <button class="nav-btn prev" onclick="navigateToSection('dataframes')">◀ Prev: DataFrames</button>
@@ -1633,6 +1658,26 @@ dtypes = {
             <section id="cheatsheet" class="section">
                 <h2>📜 Data Engineering Cheat Sheet</h2>
                 <p>Quick reference for your daily ETL tasks with Pandas.</p>
+
+                <div class="explanation-box" data-quiz="week4-quiz">
+                    <div class="explanation-title">🧠 Quick Quiz: Week 4 Concepts</div>
+                    <form aria-label="Week 4 Quiz" style="color: var(--text-secondary);">
+                        <p>1) Which parameter converts a date column to datetime in <code>read_csv</code>?</p>
+                        <label><input type="radio" name="q1"> dtype</label>
+                        <label><input type="radio" name="q1" data-correct> parse_dates</label>
+                        <label><input type="radio" name="q1"> index_col</label>
+                        <p>2) Select by label vs by position:</p>
+                        <label><input type="radio" name="q2" data-correct> loc = by label, iloc = by position</label>
+                        <label><input type="radio" name="q2"> loc = by position, iloc = by label</label>
+                        <p>3) Which is MOST informative for types and nulls?</p>
+                        <label><input type="radio" name="q3"> head()</label>
+                        <label><input type="radio" name="q3" data-correct> info()</label>
+                        <label><input type="radio" name="q3"> shape</label>
+                        <div style="margin-top:0.75rem;">
+                            <button class="nav-btn" type="button" aria-label="Check quiz answers" onclick="(function(){var s=0;document.querySelectorAll('[data-quiz] input[data-correct]').forEach(function(el){if(el.checked)s++;});alert('Score: '+s+'/3');})();">Check Answers</button>
+                        </div>
+                    </form>
+                </div>
 
                 <div class="code-container level-best">
                     <div class="code-header">
