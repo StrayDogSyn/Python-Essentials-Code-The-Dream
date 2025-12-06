@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&family=Orbitron:wght@700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/curriculum.css">
     <style>
         :root {
             --bg-dark: #0a0e27;
@@ -617,8 +618,9 @@
     </style>
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <!-- Hamburger Menu Button -->
-    <button class="hamburger-btn" 
+    <button class="hamburger-btn" type="button"
             onclick="toggleSidebar()" 
             aria-label="Toggle navigation menu"
             aria-expanded="false"
@@ -636,6 +638,14 @@
         <div class="subtitle">Code the Dream — Interactive Lessons</div>
         <div class="week-badge">WEEK 1</div>
     </header>
+    <div class="lesson-progress">
+        <div class="progress-bar">
+            <div class="progress-fill" id="reading-progress"></div>
+        </div>
+        <div class="progress-text">
+            <span id="progress-percentage">0%</span> complete
+        </div>
+    </div>
 
     <div class="container">
         <aside class="sidebar" id="sidebar" role="navigation" aria-label="Lesson navigation">
@@ -1251,6 +1261,11 @@ count = <span class="number">0</span>
                 <div class="explanation-box info" data-notebook="session1">
                     <div class="explanation-title">📓 Practice in Notebook</div>
                     <p>Open <code>notebook-sessions/week1/session1_intro_to_python.ipynb</code> and implement the grade calculator and discount tiers with your own values.</p>
+                    <div class="notebook-actions" style="margin-top:0.75rem; display:flex; gap:0.5rem; flex-wrap:wrap;">
+                        <a class="nav-btn" href="../notebook-sessions/week1/session1_intro_to_python.ipynb" download>⬇️ Download</a>
+                        <a class="nav-btn" href="../notebook-sessions/week1/session1_intro_to_python.ipynb" target="_blank">👁️ View</a>
+                        <a class="nav-btn" href="https://colab.research.google.com/" target="_blank">🧪 Open in Colab</a>
+                    </div>
                 </div>
 
                 <div class="explanation-box" data-career="control-flow">
@@ -1363,6 +1378,11 @@ result = is_valid_email(<span class="string">'alice@example.com'</span>)
                 <div class="explanation-box info" data-notebook="session1">
                     <div class="explanation-title">📓 Practice in Notebook</div>
                     <p>Open <code>notebook-sessions/week1/session1_intro_to_python.ipynb</code> and build the calculator and validation examples with your own data.</p>
+                    <div class="notebook-actions" style="margin-top:0.75rem; display:flex; gap:0.5rem; flex-wrap:wrap;">
+                        <a class="nav-btn" href="../notebook-sessions/week1/session1_intro_to_python.ipynb" download>⬇️ Download</a>
+                        <a class="nav-btn" href="../notebook-sessions/week1/session1_intro_to_python.ipynb" target="_blank">👁️ View</a>
+                        <a class="nav-btn" href="https://colab.research.google.com/" target="_blank">🧪 Open in Colab</a>
+                    </div>
                 </div>
 
                 <div class="warning-box">
@@ -1420,9 +1440,9 @@ result = is_valid_email(<span class="string">'alice@example.com'</span>)
                     <div style="padding: 1rem;">
                         <table style="width:100%; border-collapse: collapse; color: var(--text-secondary);">
                             <tr style="border-bottom: 2px solid var(--bg-light);">
-                                <th style="text-align:left; padding:0.5rem; color: var(--accent-yellow);">Error</th>
-                                <th style="text-align:left; padding:0.5rem; color: var(--accent-yellow);">Cause</th>
-                                <th style="text-align:left; padding:0.5rem; color: var(--accent-yellow);">Fix</th>
+                                <th scope="col" style="text-align:left; padding:0.5rem; color: var(--accent-yellow);">Error</th>
+                                <th scope="col" style="text-align:left; padding:0.5rem; color: var(--accent-yellow);">Cause</th>
+                                <th scope="col" style="text-align:left; padding:0.5rem; color: var(--accent-yellow);">Fix</th>
                             </tr>
                             <tr style="border-bottom: 1px solid var(--bg-light);">
                                 <td style="padding:0.5rem;">SyntaxError</td>
@@ -1485,9 +1505,105 @@ result = calculate_average([<span class="number">5</span>, <span class="number">
                     <p><strong>Google the Error:</strong> Copy-paste error messages into Google. Chances are someone else solved it!</p>
                 </div>
 
-                <div class="explanation-box info" data-notebook="session1">
+                <div class="explanation-box info" data-notebook="session2">
                     <div class="explanation-title">📓 Practice in Notebook</div>
-                    <p>Open <code>notebook-sessions/week1/session1_intro_to_python.ipynb</code> and intentionally cause each error type above, then fix it.</p>
+                    <p>Open <code>notebook-sessions/week1/session2_intro_to_python_group.ipynb</code> and collaboratively reproduce error types, then document fixes.</p>
+                    <div class="notebook-actions" style="margin-top:0.75rem; display:flex; gap:0.5rem; flex-wrap:wrap;">
+                        <a class="nav-btn" href="../notebook-sessions/week1/session2_intro_to_python_group.ipynb" download>⬇️ Download</a>
+                        <a class="nav-btn" href="../notebook-sessions/week1/session2_intro_to_python_group.ipynb" target="_blank">👁️ View</a>
+                        <a class="nav-btn" href="https://colab.research.google.com/" target="_blank">🧪 Open in Colab</a>
+                    </div>
+                </div>
+
+                <h3>❌ Common Mistakes</h3>
+                <div class="common-mistakes">
+                    <div class="mistake-card">
+                        <div class="mistake-title">Forgetting return vs. print</div>
+                        <div class="mistake-example">
+                            <h4>❌ Wrong:</h4>
+<pre><code>def add(a, b):
+    print(a + b)  # prints but returns None
+</code></pre>
+                            <h4>✅ Correct:</h4>
+<pre><code>def add(a, b):
+    return a + b  # returns value to caller
+</code></pre>
+                        </div>
+                        <div class="mistake-explanation">
+                            <strong>Why it fails:</strong> Printed values can’t be reused. Return sends data back to the caller.
+                        </div>
+                    </div>
+                    <div class="mistake-card">
+                        <div class="mistake-title">Mutable default arguments</div>
+                        <div class="mistake-example">
+                            <h4>❌ Wrong:</h4>
+<pre><code>def append_item(item, items=[]):
+    items.append(item)
+    return items
+</code></pre>
+                            <h4>✅ Correct:</h4>
+<pre><code>def append_item(item, items=None):
+    if items is None:
+        items = []
+    items.append(item)
+    return items
+</code></pre>
+                        </div>
+                        <div class="mistake-explanation">
+                            <strong>Why it fails:</strong> The same list instance is reused across calls, causing hidden state bugs.
+                        </div>
+                    </div>
+                    <div class="mistake-card">
+                        <div class="mistake-title">Type mismatch in operations</div>
+                        <div class="mistake-example">
+                            <h4>❌ Wrong:</h4>
+<pre><code>total = "5" + 5
+</code></pre>
+                            <h4>✅ Correct:</h4>
+<pre><code>total = int("5") + 5  # convert string to int
+</code></pre>
+                        </div>
+                        <div class="mistake-explanation">
+                            <strong>Why it fails:</strong> Mixing strings and ints raises TypeError. Convert types explicitly.
+                        </div>
+                    </div>
+                </div>
+
+                <h3>✅ Best Practices</h3>
+                <div class="explanation-box">
+                    <ul style="margin-left: 1.5rem; color: var(--text-secondary);">
+                        <li>Use descriptive snake_case names: <code>total_price</code>, <code>customer_count</code>.</li>
+                        <li>Write small, single-purpose functions; avoid side effects.</li>
+                        <li>Return values instead of printing inside functions.</li>
+                        <li>Validate inputs and handle errors with <code>try/except</code>.</li>
+                        <li>Prefer f-strings for formatting: <code>f"Total: {total:.2f}"</code>.</li>
+                        <li>Consistent 4-space indentation; follow PEP 8 basics.</li>
+                        <li>Use <code>pathlib</code> for cross-platform file paths.</li>
+                    </ul>
+                </div>
+
+                <h3>🛠️ Mini-Project: Username Validator</h3>
+                <div class="explanation-box">
+                    <p><strong>Goal:</strong> Build a CLI tool that validates usernames for a registration system.</p>
+                    <p><strong>Requirements:</strong></p>
+                    <ul style="margin-left: 1.5rem; color: var(--text-secondary);">
+                        <li>Minimum length 3 characters</li>
+                        <li>Alphanumeric only (letters and numbers)</li>
+                        <li>Clear feedback messages</li>
+                        <li>Bonus: Retry loop until valid; collect summary</li>
+                    </ul>
+<pre><code>def validate_username(username):
+    if len(username) < 3:
+        return False, "Username must be at least 3 characters"
+    if not username.isalnum():
+        return False, "Username can only contain letters and numbers"
+    return True, "Valid username!"
+
+name = input("Enter a username: ")
+ok, msg = validate_username(name)
+print(msg)
+</code></pre>
+                    <p><strong>Example Output:</strong> <code>Username must be at least 3 characters</code> or <code>Valid username!</code></p>
                 </div>
 
                 <button class="nav-btn complete-btn" data-topic="debugging">Mark Complete ✓</button>
@@ -1513,7 +1629,7 @@ result = calculate_average([<span class="number">5</span>, <span class="number">
                         <label><input type="radio" name="q2" data-correct> Sends a value back</label>
                         <label><input type="radio" name="q2"> Stops the program</label>
                         <div style="margin-top:0.75rem;">
-                            <button class="nav-btn" type="button" aria-label="Check answers" onclick="(function(){var s=0;document.querySelectorAll('[data-correct]').forEach(function(el){if(el.checked)s++;});alert('Score: '+s+'/2');})();">Check Answers</button>
+                            <button class="nav-btn" type="submit" aria-label="Check answers" onclick="(function(e){e.preventDefault();var s=0;document.querySelectorAll('[data-correct]').forEach(function(el){if(el.checked)s++;});alert('Score: '+s+'/2');})(event)">Check Answers</button>
                         </div>
                     </form>
                 </div>
@@ -1718,5 +1834,8 @@ x ** y   <span class="comment"># Exponent</span>
             btn.disabled = true;
         }
     </script>
+    <script src="../assets/js/navigation.js" defer></script>
+    <script src="../assets/js/progress.js" defer></script>
+    <script src="../assets/js/code-runner.js" defer></script>
 </body>
 </html>
