@@ -226,7 +226,7 @@ notebook-sessions/week2/session2_data_structures_group.ipynb ✅
 
 ### Immediate (Required)
 1. ✅ Local testing complete
-2. ⏳ **Verify GitHub username in URLs** (StrayDogSyn/CTD - is this correct?)
+2. ⏳ **Verify GitHub username in URLs** (StrayDogSyn/Python-Essentials-Code-The-Dream - is this correct?)
 3. ⏳ Update email if needed (contact@codethedream.org)
 4. ⏳ Commit and push to GitHub
 5. ⏳ Enable GitHub Pages in repo settings
@@ -321,14 +321,14 @@ git push origin main
 - **GitHub Pages:** Not yet enabled (pending)
 
 ### Important URLs to Verify
-All links currently use: `StrayDogSyn/CTD`
+All links currently use: `StrayDogSyn/Python-Essentials-Code-The-Dream`
 - GitHub links (footer, quick links)
 - Colab links (22 buttons)
 - nbviewer links (11 buttons)
 
 **ACTION REQUIRED:** Confirm this is correct or update using:
 ```powershell
-(Get-Content index.html) -replace 'StrayDogSyn/CTD', 'YOUR/REPO' | Set-Content index.html
+(Get-Content index.html) -replace 'StrayDogSyn/Python-Essentials-Code-The-Dream', 'YOUR/REPO' | Set-Content index.html
 ```
 
 ---

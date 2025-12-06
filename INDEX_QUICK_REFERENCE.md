@@ -7,18 +7,18 @@
 
 ### 1. Update GitHub Username (If Needed)
 
-**Current:** `StrayDogSyn/CTD`  
+**Current:** `StrayDogSyn/Python-Essentials-Code-The-Dream`  
 **Appears:** 66 times (Colab links, nbviewer links, footer)
 
 **PowerShell Command:**
 ```powershell
 cd C:\Users\EHunt\Repos\Python\CTD
-(Get-Content index.html) -replace 'StrayDogSyn/CTD', 'YOUR-USERNAME/YOUR-REPO' | Set-Content index.html
+(Get-Content index.html) -replace 'StrayDogSyn/Python-Essentials-Code-The-Dream', 'YOUR-USERNAME/YOUR-REPO' | Set-Content index.html
 ```
 
 **Verify it's correct first!** Your repo URL structure should be:
-- GitHub: `https://github.com/StrayDogSyn/CTD`
-- Colab: `https://colab.research.google.com/github/StrayDogSyn/CTD/blob/main/...`
+- GitHub: `https://github.com/StrayDogSyn/Python-Essentials-Code-The-Dream`
+- Colab: `https://colab.research.google.com/github/StrayDogSyn/Python-Essentials-Code-The-Dream/blob/main/...`
 
 ---
 
@@ -51,7 +51,7 @@ git push origin main
 ```
 
 **Enable Pages:**
-1. Go to: `https://github.com/StrayDogSyn/CTD/settings/pages`
+1. Go to: `https://github.com/StrayDogSyn/Python-Essentials-Code-The-Dream/settings/pages`
 2. Source: **Deploy from a branch**
 3. Branch: **main**, Folder: **/ (root)**
 4. Click **Save**
@@ -193,7 +193,7 @@ CTD/
 cd C:\Users\EHunt\Repos\Python\CTD
 
 # 2. (Optional) Update GitHub username
-(Get-Content index.html) -replace 'StrayDogSyn/CTD', 'YOUR/REPO' | Set-Content index.html
+(Get-Content index.html) -replace 'StrayDogSyn/Python-Essentials-Code-The-Dream', 'YOUR/REPO' | Set-Content index.html
 
 # 3. Test locally
 python -m http.server 8000

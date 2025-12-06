@@ -28,10 +28,10 @@ Your enhanced `index.html` now includes:
 
 ### 1. Update GitHub Repository Name in URLs
 
-**Current URLs use:** `StrayDogSyn/CTD`  
+**Current URLs use:** `StrayDogSyn/Python-Essentials-Code-The-Dream`  
 **You need to verify this is correct or update to your actual repo URL**
 
-Search for `StrayDogSyn/CTD` in `index.html` and replace if needed (appears 66 times):
+Search for `StrayDogSyn/Python-Essentials-Code-The-Dream` in `index.html` and replace if needed (appears 66 times):
 - Colab links (22 times)
 - nbviewer links (11 times)  
 - Quick links (2 times)
@@ -40,7 +40,7 @@ Search for `StrayDogSyn/CTD` in `index.html` and replace if needed (appears 66 t
 **Find & Replace Command:**
 ```bash
 # PowerShell
-(Get-Content index.html) -replace 'StrayDogSyn/CTD', 'YOUR-USERNAME/YOUR-REPO' | Set-Content index.html
+(Get-Content index.html) -replace 'StrayDogSyn/Python-Essentials-Code-The-Dream', 'YOUR-USERNAME/YOUR-REPO' | Set-Content index.html
 ```
 
 ### 2. Verify Email Address
@@ -117,7 +117,7 @@ git push origin main
 ```
 
 ### Step 2: Enable GitHub Pages
-1. Go to `https://github.com/StrayDogSyn/CTD/settings/pages`
+1. Go to `https://github.com/StrayDogSyn/Python-Essentials-Code-The-Dream/settings/pages`
 2. **Source:** Deploy from a branch
 3. **Branch:** main
 4. **Folder:** / (root)
