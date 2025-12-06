@@ -592,12 +592,18 @@
                 
                 <p>Lists are Python's most versatile data structure. Think of them as dynamic arrays that can grow, shrink, and hold any type of data. They're <strong>ordered</strong> (items have positions), <strong>mutable</strong> (you can change them), and <strong>allow duplicates</strong>.</p>
 
+                <div class="explanation-box info" data-analogy="playlist">
+                    <div class="explanation-title">🎧 Analogy: Lists are Playlists</div>
+                    <p>A list is like your music playlist: the order matters, you can add and remove songs, and you can have the same song twice if you want. Index <code>0</code> is the first track.</p>
+                </div>
+
                 <h3>Creating and Accessing Lists</h3>
 
                 <div class="code-container">
                     <div class="code-header">
                         <span class="code-label">Python</span>
                         <span class="level-badge best">✓ BEST PRACTICE</span>
+                        <button class="nav-btn" type="button" aria-label="Run list example" onclick="runSim(this)" data-output="['orange', 'kiwi', 'cherry']">Run ▶</button>
                     </div>
 <pre><code><span class="comment"># ═══ CREATING LISTS ═══</span>
 <span class="comment"># Empty list</span>
@@ -625,8 +631,18 @@ removed = fruits.pop()     <span class="comment"># Remove and return last item</
 </code></pre>
                 </div>
 
+                <div class="explanation-box" data-tryit="todo-list">
+                    <div class="explanation-title">� Try It Yourself: To‑Do List Manager</div>
+                    <p>Create a list of tasks. Add tasks with <code>.append()</code>, insert urgent tasks, remove completed tasks, and print the remaining list.</p>
+                </div>
+
+                <div class="explanation-box info" data-notebook="week2-session1">
+                    <div class="explanation-title">📓 Practice in Notebook</div>
+                    <p>Open <code>notebook-sessions/week2/session1_data_structures.ipynb</code> and implement the to‑do list manager with your own tasks.</p>
+                </div>
+
                 <div class="explanation-box">
-                    <div class="explanation-title">💡 List Indexing: Zero-Based and Negative</div>
+                    <div class="explanation-title">� List Indexing: Zero-Based and Negative</div>
                     <p><strong>Zero-based indexing:</strong> The first item is at index <code>0</code>, the second at <code>1</code>, etc. This is standard in most programming languages.</p>
                     <p><strong>Negative indexing:</strong> Count backwards from the end. <code>-1</code> is the last item, <code>-2</code> is second-to-last, etc.</p>
                     <p><strong>Slicing:</strong> <code>list[start:end]</code> gets items from <code>start</code> up to (but not including) <code>end</code>. Omit <code>start</code> for beginning, omit <code>end</code> for end of list.</p>
@@ -696,12 +712,18 @@ evens = [x <span class="keyword">for</span> x <span class="keyword">in</span> nu
                 
                 <p>Dictionaries are Python's implementation of hash maps or associative arrays. They store data as <strong>key-value pairs</strong>, like a real dictionary maps words to definitions. They're <strong>unordered</strong> (no positions), <strong>mutable</strong> (you can change them), and <strong>keys must be unique</strong>.</p>
 
+                <div class="explanation-box info" data-analogy="phonebook">
+                    <div class="explanation-title">📖 Analogy: Phonebook / JSON Object</div>
+                    <p>A dictionary is like a phonebook: you look up a person (key) and get their number (value). In web APIs, JSON objects map property names to values the same way.</p>
+                </div>
+
                 <h3>Creating and Accessing Dictionaries</h3>
 
                 <div class="code-container">
                     <div class="code-header">
                         <span class="code-label">Python</span>
                         <span class="level-badge best">✓ BEST PRACTICE</span>
+                        <button class="nav-btn" type="button" aria-label="Run dict access" onclick="runSim(this)" data-output="Alice | 30 | N/A">Run ▶</button>
                     </div>
 <pre><code><span class="comment"># ═══ CREATING DICTIONARIES ═══</span>
 <span class="comment"># Empty dictionary</span>
@@ -728,6 +750,16 @@ person[<span class="string">'age'</span>] = <span class="number">31</span>      
 <span class="keyword">del</span> person[<span class="string">'is_student'</span>]  <span class="comment"># Remove key-value pair</span>
 removed = person.pop(<span class="string">'city'</span>)     <span class="comment"># Remove and return value</span>
 </code></pre>
+                </div>
+
+                <div class="explanation-box" data-tryit="contact-book">
+                    <div class="explanation-title">🚀 Try It Yourself: Contact Book</div>
+                    <p>Build a contact book with names as keys and emails as values. Add new contacts, update emails, and safely read with <code>.get()</code>.</p>
+                </div>
+
+                <div class="explanation-box info" data-notebook="week2-session1">
+                    <div class="explanation-title">📓 Practice in Notebook</div>
+                    <p>Open <code>notebook-sessions/week2/session1_data_structures.ipynb</code> and implement the contact book with at least 5 entries.</p>
                 </div>
 
                 <div class="explanation-box">
@@ -855,6 +887,11 @@ defaults.update(user_prefs)
                 
                 <p>Tuples and sets round out Python's core data structures. <strong>Tuples</strong> are like immutable lists—perfect for fixed data that shouldn't change. <strong>Sets</strong> are unordered collections of unique items—great for membership testing and removing duplicates.</p>
 
+                <div class="explanation-box info" data-analogy="tuples-sets">
+                    <div class="explanation-title">🔒 / 🎟️ Analogies: Locked Bag & Sticker Collection</div>
+                    <p><strong>Tuple:</strong> a locked bag—you can look inside, but you can’t change its contents. <strong>Set:</strong> a sticker collection—duplicates are automatically removed and order doesn’t matter.</p>
+                </div>
+
                 <h3>Tuples: Immutable Sequences</h3>
 
                 <div class="code-container">
@@ -970,6 +1007,7 @@ tags.discard(<span class="string">'data'</span>)     <span class="comment"># Rem
                     <div class="code-header">
                         <span class="code-label">Python</span>
                         <span class="level-badge best">✓ BEST PRACTICE</span>
+                        <button class="nav-btn" type="button" aria-label="Run set union" onclick="runSim(this)" data-output="Union: {'Alice','Bob','Charlie','Diana','Eve'}">Run ▶</button>
                     </div>
 <pre><code><span class="comment"># ★ SET OPERATIONS</span>
 python_devs = {<span class="string">'Alice'</span>, <span class="string">'Bob'</span>, <span class="string">'Charlie'</span>}
@@ -997,6 +1035,16 @@ exclusive = python_devs ^ javascript_devs
 <span class="comment"># ★ SET COMPREHENSIONS</span>
 squares = {x**<span class="number">2</span> <span class="keyword">for</span> x <span class="keyword">in</span> <span class="function">range</span>(<span class="number">10</span>)}  <span class="comment"># {0, 1, 4, 9, 16, 25, 36, 49, 64, 81}</span>
 </code></pre>
+                </div>
+
+                <div class="explanation-box" data-tryit="dedupe-emails">
+                    <div class="explanation-title">🚀 Try It Yourself: Dedupe Emails</div>
+                    <p>Given a list of emails with duplicates, use a <code>set</code> to remove duplicates and print the unique addresses. Bonus: write them to a CSV.</p>
+                </div>
+
+                <div class="explanation-box info" data-notebook="week2-session2">
+                    <div class="explanation-title">📓 Practice in Notebook</div>
+                    <p>Open <code>notebook-sessions/week2/session2_data_structures_group.ipynb</code> and collaborate on the dedupe exercise and tuple use cases.</p>
                 </div>
 
                 <div class="explanation-box tip">
@@ -1093,6 +1141,11 @@ squares = {x**<span class="number">2</span> <span class="keyword">for</span> x <
 
 <span class="comment"># File is automatically closed here, even if an exception occurred</span>
 </code></pre>
+                </div>
+
+                <div class="explanation-box" data-career="etl">
+                    <div class="explanation-title">💼 Career Connection: ETL Foundations</div>
+                    <p>Reading and writing files underpins ETL pipelines across e‑commerce, finance, and healthcare. CSV is a common interchange format for analytics teams.</p>
                 </div>
 
                 <div class="explanation-box">
@@ -1714,6 +1767,23 @@ set1 - set2                       <span class="comment"># Difference</span>
             // Subtle progress indicator (optional enhancement)
             document.getElementById('progressBar').style.opacity = 0.3 + (scrollProgress / 100) * 0.7;
         });
+
+        // Simple run simulation for code examples
+        function runSim(btn){
+            const container = btn.closest('.code-container');
+            let out = container.querySelector('.sim-output');
+            if(!out){
+                out = document.createElement('div');
+                out.className = 'sim-output';
+                out.style.padding = '0.75rem';
+                out.style.borderTop = '2px solid var(--bg-light)';
+                out.style.color = 'var(--text-secondary)';
+                container.appendChild(out);
+            }
+            const text = btn.getAttribute('data-output') || 'Output ready';
+            out.textContent = 'Output: ' + text;
+            btn.disabled = true;
+        }
     </script>
 </body>
 </html>
