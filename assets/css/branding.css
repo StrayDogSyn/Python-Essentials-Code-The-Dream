@@ -1,0 +1,17 @@
+:root{--sd-cyan:#00e5ff;--sd-green:#00ff41;--sd-amber:#ffbf00;--sd-magenta:#ff00ff;--sd-fg:#e0e0e0;--sd-muted:#a0a0a0}
+.sd-supported-badge{display:inline-flex;align-items:center;gap:.5rem;padding:.3rem .6rem;border:1px solid var(--sd-cyan);border-radius:12px;color:var(--sd-cyan);font-family:"IBM Plex Mono",monospace;font-size:.85rem}
+.sd-supported-badge img{width:18px;height:18px}
+.sd-footer{position:relative;margin-top:2rem;padding:1.5rem 0;border-top:1px solid #222;color:var(--sd-muted);font-family:"IBM Plex Mono",monospace}
+.sd-footer .sd-credits{margin-top:.5rem;font-size:.85rem}
+.sd-footer a{color:var(--sd-cyan);text-decoration:none}
+.sd-footer a:hover{text-decoration:underline}
+.sd-footer .sd-corner{position:absolute;bottom:12px;width:28px;height:28px;opacity:.6}
+.sd-footer .sd-corner.left{left:12px}
+.sd-footer .sd-corner.right{right:12px}
+.sd-footer .sd-links{display:flex;justify-content:center;gap:.75rem;margin-top:.5rem}
+.sd-github{width:18px;height:18px;fill:var(--sd-fg);opacity:.8}
+.sd-watermark::before{content:"";position:fixed;inset:0;background-image:url("../assets/brands/stray-stencil.png");background-repeat:no-repeat;background-position:95% 90%;background-size:220px;opacity:.04;pointer-events:none;z-index:0}
+@media(max-width:768px){.sd-footer .sd-corner{display:none}.sd-watermark::before{background-size:140px;background-position:90% 88%}}
+.sd-banner-logo{float:right;width:120px;max-width:25%;height:auto;margin-left:1rem;opacity:.9}
+@media(max-width:768px){.sd-banner-logo{display:none}}
+

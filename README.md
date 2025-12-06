@@ -228,6 +228,10 @@ CTD/
 ├── fix_notebooks.py                 # Notebook maintenance utility
 ├── validate_notebooks.py            # Notebook validation script
 ├── test.py                          # Testing utilities
+├── assets/                          # Shared styles, scripts, and brand assets
+│   ├── css/branding.css             # Branding styles (non-conflicting classes)
+│   ├── js/branding.js               # Branding module (footer, favicon, A/B)
+│   └── brands/                      # StrayDog logos and favicon
 └── README.md                        # This file
 ```
 
@@ -417,6 +421,36 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 ---
 
 ## 🙏 Acknowledgments
+
+---
+
+## 🏷️ Branding Module
+
+**Files**: `assets/css/branding.css`, `assets/js/branding.js`
+
+- Footer credits: “Created with care by StrayDog” (link to StrayDog site)
+- Corner logos with alt text from `assets/brands/`
+- GitHub links: `https://github.com/StrayDogSyn`, `https://github.com/miasmith81`
+- Favicon injection: `assets/brands/favicon-straydog.png`
+- Discreet watermark on select pages (`index.html`, `community-partners.html`)
+- Supported badge on homepage
+
+**Usage**: include CSS + JS on pages. JS automatically injects favicon and branded footer without altering existing layouts.
+
+### A/B Testing
+- Variant assignment: random A/B or via `?variant=A|B`
+- Metrics (localStorage): clicks on start lesson, notebook, complete buttons; max scroll depth
+- Keys: `sd-ab-variant`, `sd-ab-metrics`
+- Variant B sets `data-branding="minimal"` on `<html>` for future conditional styling
+
+### Community Partners Page
+- `community-partners.html` highlights Returned Citizen community and Code the Dream students
+- Uses existing lesson styles and the watermark effect
+
+### Accessibility & Performance
+- Alt text on all logos/icons
+- Responsive across device sizes
+- Minimal footprint: small PNGs, lightweight CSS/JS
 
 ### **Code the Dream**
 This curriculum is proudly developed for [Code the Dream](https://codethedream.org), a nonprofit organization providing free, high-quality technical training to people from diverse backgrounds who aspire to become professional programmers.
