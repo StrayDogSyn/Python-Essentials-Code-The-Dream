@@ -61,21 +61,24 @@
     filter: drop-shadow(0 0 4px var(--sd-cyan));
 }
 
-/* Subtle Watermark */
+/* Subtle Watermark - Bottom Right (Stray Stencil) */
 .sd-watermark::before {
     content: "";
     position: fixed;
-    inset: 0;
+    bottom: 10%;
+    right: 5%;
+    width: 220px;
+    height: 220px;
     background-image: url("../brands/stray-stencil.png");
     background-repeat: no-repeat;
-    background-position: 95% 90%;
-    background-size: 220px;
-    opacity: 0.03;
+    background-position: center;
+    background-size: contain;
+    opacity: 0.04;
     pointer-events: none;
     z-index: 0;
 }
 
-/* Fixed Top-Left Corner Logo (matches stray-stencil positioning style) */
+/* Fixed Top-Left Corner Logo (Silver StrayDog Logo) */
 .sd-watermark::after {
     content: "";
     position: fixed;
@@ -87,7 +90,7 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
-    opacity: 0.03;
+    opacity: 0.04;
     pointer-events: none;
     z-index: 1;
 }
@@ -95,15 +98,17 @@
 /* Responsive Design */
 @media (max-width: 768px) {
     .sd-watermark::before {
-        background-size: 140px;
-        background-position: 90% 88%;
+        width: 140px;
+        height: 140px;
+        bottom: 8%;
+        right: 5%;
     }
     
     .sd-watermark::after {
         width: 140px;
         height: 140px;
-        top: 12%;
-        left: 10%;
+        top: 8%;
+        left: 5%;
     }
 }
 
