@@ -1115,6 +1115,11 @@ qualifies_for_discount = is_premium_member <span class="keyword">or</span> (purc
                 <h2>🔀 Control Flow</h2>
                 <p>Control flow statements let your program make decisions and repeat actions.</p>
 
+                <div class="explanation-box info" data-analogy="gaming">
+                    <div class="explanation-title">🎮 Analogy: Gaming Dialogue Trees</div>
+                    <p>Think of <code>if/elif/else</code> like a role‑playing game dialogue tree. The player’s choice and stats decide which branch runs. If you have enough XP, you unlock a special response; if not, you follow a different path. Programs do the same: they evaluate conditions and branch to the matching outcome.</p>
+                </div>
+
                 <h3>Conditional Statements (if/elif/else)</h3>
 
                 <div class="code-container">
@@ -1129,6 +1134,71 @@ qualifies_for_discount = is_premium_member <span class="keyword">or</span> (purc
     <span class="keyword">print</span>(<span class="string">"You can drive!"</span>)
 <span class="keyword">else</span>:
     <span class="keyword">print</span>(<span class="string">"You're still young!"</span>)
+</code></pre>
+                </div>
+
+                <div class="code-container" data-example="age-verification">
+                    <div class="code-header">
+                        <span class="code-label">Python</span>
+                        <button class="nav-btn" type="button" aria-label="Run age verification" onclick="runSim(this)" data-output="Access: vote and drive.">Run ▶</button>
+                    </div>
+<pre><code><span class="comment"># Age verification with multiple thresholds</span>
+age = <span class="number">20</span>
+
+<span class="keyword">if</span> age >= <span class="number">21</span>:
+    <span class="keyword">print</span>(<span class="string">"Full access: vote, drive, and purchase alcohol."</span>)
+<span class="keyword">elif</span> age >= <span class="number">18</span>:
+    <span class="keyword">print</span>(<span class="string">"Access: vote and drive."</span>)
+<span class="keyword">elif</span> age >= <span class="number">16</span>:
+    <span class="keyword">print</span>(<span class="string">"Access: learner’s permit to drive."</span>)
+<span class="keyword">else</span>:
+    <span class="keyword">print</span>(<span class="string">"Access: supervised activities only."</span>)
+</code></pre>
+                </div>
+
+                <div class="code-container" data-example="grade-calculator">
+                    <div class="code-header">
+                        <span class="code-label">Python</span>
+                        <button class="nav-btn" type="button" aria-label="Run grade calculator" onclick="runSim(this)" data-output="Letter grade: B">Run ▶</button>
+                    </div>
+<pre><code><span class="comment"># Grade calculator: A/B/C/D/F</span>
+score = <span class="number">87</span>
+
+<span class="keyword">if</span> score >= <span class="number">90</span>:
+    letter = <span class="string">'A'</span>
+<span class="keyword">elif</span> score >= <span class="number">80</span>:
+    letter = <span class="string">'B'</span>
+<span class="keyword">elif</span> score >= <span class="number">70</span>:
+    letter = <span class="string">'C'</span>
+<span class="keyword">elif</span> score >= <span class="number">60</span>:
+    letter = <span class="string">'D'</span>
+<span class="keyword">else</span>:
+    letter = <span class="string">'F'</span>
+
+<span class="keyword">print</span>(<span class="string">f"Letter grade: {letter}"</span>)
+</code></pre>
+                </div>
+
+                <div class="code-container" data-example="discount-tiers">
+                    <div class="code-header">
+                        <span class="code-label">Python</span>
+                        <button class="nav-btn" type="button" aria-label="Run discount tiers" onclick="runSim(this)" data-output="Discount: 20% | Total: $144.00">Run ▶</button>
+                    </div>
+<pre><code><span class="comment"># Tiered discounts: membership + purchase amount</span>
+is_premium = <span class="keyword">True</span>
+amount = <span class="number">180.00</span>
+
+<span class="keyword">if</span> is_premium <span class="keyword">and</span> amount >= <span class="number">150</span>:
+    discount = <span class="number">0.20</span>
+<span class="keyword">elif</span> is_premium:
+    discount = <span class="number">0.15</span>
+<span class="keyword">elif</span> amount >= <span class="number">100</span>:
+    discount = <span class="number">0.10</span>
+<span class="keyword">else</span>:
+    discount = <span class="number">0.00</span>
+
+final = amount * (<span class="number">1</span> - discount)
+<span class="keyword">print</span>(<span class="string">f"Discount: {discount*100:.0f}% | Total: ${final:.2f}"</span>)
 </code></pre>
                 </div>
 
@@ -1167,6 +1237,27 @@ count = <span class="number">0</span>
 </code></pre>
                 </div>
 
+                <div class="explanation-box" data-tryit="temperature-converter">
+                    <div class="explanation-title">🚀 Try It Yourself: Temperature Converter</div>
+                    <p>Convert Celsius to Fahrenheit and back. Requirements:</p>
+                    <ul style="margin-left: 1.5rem; color: var(--text-secondary);">
+                        <li>Ask for a number input in Celsius</li>
+                        <li>Compute Fahrenheit: <code>F = C * 9/5 + 32</code></li>
+                        <li>Print both values with two decimals</li>
+                        <li>Bonus: Support Fahrenheit input and convert to Celsius</li>
+                    </ul>
+                </div>
+
+                <div class="explanation-box info" data-notebook="session1">
+                    <div class="explanation-title">📓 Practice in Notebook</div>
+                    <p>Open <code>notebook-sessions/week1/session1_intro_to_python.ipynb</code> and implement the grade calculator and discount tiers with your own values.</p>
+                </div>
+
+                <div class="explanation-box" data-career="control-flow">
+                    <div class="explanation-title">💼 Career Connection</div>
+                    <p>Tiered pricing logic powers promotions at Amazon and Target. Age and eligibility checks appear in fintech onboarding flows. Control flow decisions like these run on every checkout and registration pipeline.</p>
+                </div>
+
                 <div class="warning-box">
                     <div class="warning-title">⚠️ Common Pitfalls: Control Flow</div>
                     <ul>
@@ -1188,6 +1279,11 @@ count = <span class="number">0</span>
             <section id="functions" class="section">
                 <h2>⚡ Functions</h2>
                 <p>Functions are reusable blocks of code that perform specific tasks.</p>
+
+                <div class="explanation-box info" data-analogy="cooking">
+                    <div class="explanation-title">👩‍🍳 Analogy: Recipes, Ingredients, and Dishes</div>
+                    <p>A function is a recipe. <strong>Ingredients</strong> are parameters you pass in, the <strong>steps</strong> are the function body, and the <strong>dish</strong> is the value you <code>return</code>. Printing is like shouting in the kitchen—no one can reuse that result. Returning is plating the dish so other parts of your program can serve it.</p>
+                </div>
 
                 <div class="code-container">
                     <div class="code-header">
@@ -1217,6 +1313,58 @@ result = add(<span class="number">5</span>, <span class="number">3</span>)
 </code></pre>
                 </div>
 
+                <div class="code-container" data-example="calculator-functions">
+                    <div class="code-header">
+                        <span class="code-label">Python</span>
+                    </div>
+<pre><code><span class="comment"># Progressive: calculator functions</span>
+<span class="keyword">def</span> add(a, b):
+    <span class="keyword">return</span> a + b
+
+<span class="keyword">def</span> subtract(a, b):
+    <span class="keyword">return</span> a - b
+
+<span class="keyword">def</span> calc_tax(amount, rate=<span class="number">0.08</span>):
+    <span class="keyword">return</span> amount * rate
+
+total = add(<span class="number">50</span>, <span class="number">20</span>)
+tax = calc_tax(total)
+<span class="keyword">print</span>(<span class="string">f"Total: ${total:.2f} | Tax: ${tax:.2f}"</span>)
+</code></pre>
+                </div>
+
+                <div class="code-container" data-example="data-validation">
+                    <div class="code-header">
+                        <span class="code-label">Python</span>
+                    </div>
+<pre><code><span class="comment"># Data validation: return vs print</span>
+<span class="keyword">def</span> is_valid_email(email):
+    <span class="keyword">return</span> <span class="string">'@'</span> <span class="keyword">in</span> email <span class="keyword">and</span> <span class="string">'.'</span> <span class="keyword">in</span> email
+
+result = is_valid_email(<span class="string">'alice@example.com'</span>)
+<span class="keyword">if</span> result:
+    <span class="keyword">print</span>(<span class="string">"Email looks valid."</span>)
+<span class="keyword">else</span>:
+    <span class="keyword">print</span>(<span class="string">"Please check the address."</span>)
+</code></pre>
+                </div>
+
+                <div class="explanation-box" data-tryit="tax-calculator">
+                    <div class="explanation-title">🚀 Try It Yourself: Reusable Tax Calculator</div>
+                    <p>Create <code>calc_total_with_tax(subtotal, rate)</code> that returns the final amount. Requirements:</p>
+                    <ul style="margin-left: 1.5rem; color: var(--text-secondary);">
+                        <li>Default tax rate 8%</li>
+                        <li>Round to two decimals</li>
+                        <li>Return the value (don’t print)</li>
+                        <li>Bonus: Validate inputs are numbers</li>
+                    </ul>
+                </div>
+
+                <div class="explanation-box info" data-notebook="session1">
+                    <div class="explanation-title">📓 Practice in Notebook</div>
+                    <p>Open <code>notebook-sessions/week1/session1_intro_to_python.ipynb</code> and build the calculator and validation examples with your own data.</p>
+                </div>
+
                 <div class="warning-box">
                     <div class="warning-title">⚠️ Common Pitfalls: Functions</div>
                     <ul>
@@ -1239,6 +1387,11 @@ result = add(<span class="number">5</span>, <span class="number">3</span>)
                 <h2>🐛 Debugging & Error Handling</h2>
                 <p>Even the best programmers write code with bugs. Learning to debug is a critical skill!</p>
 
+                <div class="explanation-box info" data-analogy="detective">
+                    <div class="explanation-title">🕵️ Analogy: Detective & Doctor</div>
+                    <p>Debugging is detective work: collect clues (error messages), form a hypothesis, run experiments, and confirm the culprit. It’s also like medicine: symptoms → diagnosis → treatment. Read the traceback, isolate the issue, and apply the fix.</p>
+                </div>
+
                 <h3>Error Handling with try/except</h3>
 
                 <div class="code-container">
@@ -1257,6 +1410,47 @@ result = add(<span class="number">5</span>, <span class="number">3</span>)
 <span class="keyword">except</span> Exception <span class="keyword">as</span> e:
     <span class="keyword">print</span>(<span class="string">f"An error occurred: {e}"</span>)
 </code></pre>
+                </div>
+
+                <h3>Common Error Types and Fixes</h3>
+                <div class="code-container" data-table="error-types">
+                    <div class="code-header">
+                        <span class="code-label">Reference</span>
+                    </div>
+                    <div style="padding: 1rem;">
+                        <table style="width:100%; border-collapse: collapse; color: var(--text-secondary);">
+                            <tr style="border-bottom: 2px solid var(--bg-light);">
+                                <th style="text-align:left; padding:0.5rem; color: var(--accent-yellow);">Error</th>
+                                <th style="text-align:left; padding:0.5rem; color: var(--accent-yellow);">Cause</th>
+                                <th style="text-align:left; padding:0.5rem; color: var(--accent-yellow);">Fix</th>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--bg-light);">
+                                <td style="padding:0.5rem;">SyntaxError</td>
+                                <td style="padding:0.5rem;">Missing colon, bad indentation</td>
+                                <td style="padding:0.5rem;">Add <code>:</code>, use 4‑space indentation</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--bg-light);">
+                                <td style="padding:0.5rem;">TypeError</td>
+                                <td style="padding:0.5rem;">Wrong types (e.g., string + int)</td>
+                                <td style="padding:0.5rem;">Convert types: <code>int("5") + 5</code></td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--bg-light);">
+                                <td style="padding:0.5rem;">NameError</td>
+                                <td style="padding:0.5rem;">Variable not defined</td>
+                                <td style="padding:0.5rem;">Define before use; check spelling</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--bg-light);">
+                                <td style="padding:0.5rem;">ZeroDivisionError</td>
+                                <td style="padding:0.5rem;">Dividing by zero</td>
+                                <td style="padding:0.5rem;">Guard inputs; handle 0 explicitly</td>
+                            </tr>
+                            <tr>
+                                <td style="padding:0.5rem;">ValueError</td>
+                                <td style="padding:0.5rem;">Invalid conversion (e.g., int('abc'))</td>
+                                <td style="padding:0.5rem;">Validate input; wrap in <code>try/except</code></td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
 
                 <h3>Debugging with Print Statements</h3>
@@ -1291,6 +1485,11 @@ result = calculate_average([<span class="number">5</span>, <span class="number">
                     <p><strong>Google the Error:</strong> Copy-paste error messages into Google. Chances are someone else solved it!</p>
                 </div>
 
+                <div class="explanation-box info" data-notebook="session1">
+                    <div class="explanation-title">📓 Practice in Notebook</div>
+                    <p>Open <code>notebook-sessions/week1/session1_intro_to_python.ipynb</code> and intentionally cause each error type above, then fix it.</p>
+                </div>
+
                 <button class="nav-btn complete-btn" data-topic="debugging">Mark Complete ✓</button>
                 <div class="nav-buttons">
                     <button class="nav-btn prev" onclick="navigateToSection('functions')">◀ Prev: Functions</button>
@@ -1301,6 +1500,23 @@ result = calculate_average([<span class="number">5</span>, <span class="number">
             <!-- CHEAT SHEET -->
             <section id="cheatsheet" class="section">
                 <h2>📜 Week 1 Cheat Sheet</h2>
+
+                <div class="explanation-box" data-quiz="control-flow">
+                    <div class="explanation-title">🧠 Quick Quiz: Control Flow & Functions</div>
+                    <form aria-label="Quick quiz" style="color: var(--text-secondary);">
+                        <p>1) Which statement compares values?</p>
+                        <label><input type="radio" name="q1"> = </label>
+                        <label><input type="radio" name="q1" data-correct> == </label>
+                        <label><input type="radio" name="q1"> := </label>
+                        <p>2) What does a function’s return do?</p>
+                        <label><input type="radio" name="q2"> Prints to screen</label>
+                        <label><input type="radio" name="q2" data-correct> Sends a value back</label>
+                        <label><input type="radio" name="q2"> Stops the program</label>
+                        <div style="margin-top:0.75rem;">
+                            <button class="nav-btn" type="button" aria-label="Check answers" onclick="(function(){var s=0;document.querySelectorAll('[data-correct]').forEach(function(el){if(el.checked)s++;});alert('Score: '+s+'/2');})();">Check Answers</button>
+                        </div>
+                    </form>
+                </div>
 
                 <div class="code-container">
                     <div class="code-header">
@@ -1486,6 +1702,21 @@ x ** y   <span class="comment"># Exponent</span>
             document.body.style.overflowX = 'hidden';
             document.documentElement.style.overflowX = 'hidden';
         });
+        
+        function runSim(btn){
+            const container = btn.closest('.code-container');
+            let out = container.querySelector('.sim-output');
+            if(!out){
+                out = document.createElement('div');
+                out.className = 'sim-output';
+                out.style.padding = '0.75rem';
+                out.style.borderTop = '2px solid var(--bg-light)';
+                out.style.color = 'var(--text-secondary)';
+                container.appendChild(out);
+            }
+            out.textContent = 'Output: ' + (btn.getAttribute('data-output') || '');
+            btn.disabled = true;
+        }
     </script>
 </body>
 </html>
