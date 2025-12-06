@@ -51,3 +51,6 @@ htmlcov/
 
 # Logs
 *.log
+
+# AI Agent System (local development only)
+.agents/
