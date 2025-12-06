@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Essentials Curriculum - Interactive Lessons</title>
+    <meta name="description" content="Code the Dream Python Essentials - Interactive HTML lessons for aspiring developers">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+            color: #e0e0e0;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            padding: 3rem 0;
+            border-bottom: 3px solid #00f0ff;
+            margin-bottom: 3rem;
+        }
+
+        h1 {
+            font-size: 3rem;
+            background: linear-gradient(45deg, #00f0ff, #ff00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #00ff41;
+            margin-bottom: 1rem;
+        }
+
+        .description {
+            color: #a0a0a0;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .lessons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .lesson-card {
+            background: linear-gradient(135deg, #1a1f3a, #2a2f4a);
+            border: 2px solid #00f0ff;
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .lesson-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 240, 255, 0.3);
+            border-color: #00ff41;
+        }
+
+        .lesson-number {
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #00f0ff, #ff00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .lesson-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #00f0ff;
+            margin-bottom: 0.75rem;
+        }
+
+        .lesson-topics {
+            color: #a0a0a0;
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+
+        .lesson-status {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-top: 1rem;
+            background: #00ff41;
+            color: #0a0e27;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 3rem 0;
+            margin-top: 4rem;
+            border-top: 2px solid #2a2f4a;
+            color: #a0a0a0;
+        }
+
+        .footer a {
+            color: #00f0ff;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .info-banner {
+            background: linear-gradient(135deg, #2a2f4a, #1a1f3a);
+            border-left: 4px solid #ffff00;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+
+        .info-banner h3 {
+            color: #ffff00;
+            margin-bottom: 0.75rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🐍 Python Essentials Curriculum</h1>
+            <p class="subtitle">Interactive Lessons for Code the Dream Fellows</p>
+            <p class="description">
+                A comprehensive 11-week journey from Python fundamentals to web development and machine learning. 
+                Click any lesson below to start learning!
+            </p>
+        </header>
+
+        <div class="info-banner">
+            <h3>📚 How to Use These Lessons</h3>
+            <p>Each lesson features interactive navigation, progressive code examples, and real-world applications. 
+            Work through them sequentially for best results, or jump to specific topics as needed. 
+            All lessons include progress tracking and completion markers.</p>
+        </div>
+
+        <div class="lessons-grid">
+            <a href="lesson-plans/lesson_week1_intro_python.html" class="lesson-card">
+                <div class="lesson-number">Week 1</div>
+                <div class="lesson-title">Introduction to Python</div>
+                <div class="lesson-topics">
+                    Environment setup • Variables & data types • Control flow • Functions • Debugging
+                </div>
+                <span class="lesson-status">✓ Available</span>
+            </a>
+
+            <a href="lesson-plans/lesson_week2_data_structures.html" class="lesson-card">
+                <div class="lesson-number">Week 2</div>
+                <div class="lesson-title">Data Structures & File Handling</div>
+                <div class="lesson-topics">
+                    Lists • Dictionaries • Tuples & Sets • File I/O • CSV files • Modules
+                </div>
+                <span class="lesson-status">✓ Available</span>
+            </a>
+
+            <a href="lesson-plans/lesson_week3_python_skills.html" class="lesson-card">
+                <div class="lesson-number">Week 3</div>
+                <div class="lesson-title">Advanced Python Skills</div>
+                <div class="lesson-topics">
+                    Object-Oriented Programming • Decorators • List comprehensions • Closures
+                </div>
+                <span class="lesson-status">✓ Available</span>
+            </a>
+
+            <a href="lesson-plans/lesson_week4_data_engineering.html" class="lesson-card">
+                <div class="lesson-number">Week 4</div>
+                <div class="lesson-title">Data Engineering Fundamentals</div>
+                <div class="lesson-topics">
+                    Pandas basics • Series & DataFrames • ETL patterns • Data inspection
+                </div>
+                <span class="lesson-status">✓ Available</span>
+            </a>
+
+            <a href="lesson-plans/lesson_week5_data_visualization.html" class="lesson-card">
+                <div class="lesson-number">Week 5</div>
+                <div class="lesson-title">Data Visualization</div>
+                <div class="lesson-topics">
+                    Matplotlib • Seaborn • Plot types • Styling • Interactive visualizations
+                </div>
+                <span class="lesson-status">✓ Available</span>
+            </a>
+
+            <a href="lesson-plans/lesson_week6_sql_databases.html" class="lesson-card">
+                <div class="lesson-number">Week 6</div>
+                <div class="lesson-title">SQL & Databases</div>
+                <div class="lesson-topics">
+                    SQL syntax • Queries • Joins • Database design • Python integration
+                </div>
+                <span class="lesson-status">✓ Available</span>
+            </a>
+
+            <a href="lesson-plans/lesson_week7_apis_scraping.html" class="lesson-card">
+                <div class="lesson-number">Week 7</div>
+                <div class="lesson-title">APIs & Web Scraping</div>
+                <div class="lesson-topics">
+                    REST APIs • HTTP requests • JSON parsing • BeautifulSoup • Ethics
+                </div>
+                <span class="lesson-status">✓ Available</span>
+            </a>
+
+            <a href="lesson-plans/lesson_week8_advanced_pandas.html" class="lesson-card">
+                <div class="lesson-number">Week 8</div>
+                <div class="lesson-title">Advanced Pandas</div>
+                <div class="lesson-topics">
+                    Merging • GroupBy • Pivot tables • Time series • String operations
+                </div>
+                <span class="lesson-status">✓ Available</span>
+            </a>
+
+            <a href="lesson-plans/lesson_week9_intro_ml.html" class="lesson-card">
+                <div class="lesson-number">Week 9</div>
+                <div class="lesson-title">Introduction to Machine Learning</div>
+                <div class="lesson-topics">
+                    Supervised learning • Model training • Evaluation • scikit-learn
+                </div>
+                <span class="lesson-status">✓ Available</span>
+            </a>
+
+            <a href="lesson-plans/lesson_week10_flask_web.html" class="lesson-card">
+                <div class="lesson-number">Week 10</div>
+                <div class="lesson-title">Flask Web Development</div>
+                <div class="lesson-topics">
+                    Routes • Templates • Forms • Sessions • REST APIs
+                </div>
+                <span class="lesson-status">✓ Available</span>
+            </a>
+
+            <a href="lesson-plans/lesson_week11_deployment.html" class="lesson-card">
+                <div class="lesson-number">Week 11</div>
+                <div class="lesson-title">Deployment & DevOps</div>
+                <div class="lesson-topics">
+                    Environment variables • Docker • Production servers • CI/CD
+                </div>
+                <span class="lesson-status">✓ Available</span>
+            </a>
+        </div>
+
+        <footer class="footer">
+            <p>Built with ❤️ for <a href="https://codethedream.org" target="_blank">Code the Dream</a> fellows</p>
+            <p style="margin-top: 1rem;">
+                <a href="https://github.com/StrayDogSyn/CTD" target="_blank">View on GitHub</a> • 
+                <a href="https://github.com/StrayDogSyn/CTD/blob/main/CONTRIBUTING.md" target="_blank">Contribute</a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>

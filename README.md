@@ -313,6 +313,20 @@ CTD/
 
 We welcome contributions from educators, students, and the developer community!
 
+### **Quick Start for Contributors**
+
+1. **Read the Guidelines**: Check [CONTRIBUTING.md](CONTRIBUTING.md) for detailed instructions
+2. **Fork the Repository**: Create your own copy to work on
+3. **Make Your Changes**: Follow our style guides and best practices
+4. **Submit a Pull Request**: We'll review and provide feedback
+
+See our comprehensive [Contributing Guide](CONTRIBUTING.md) for:
+- Code of conduct
+- Development workflow
+- Style guides (Python, Markdown, HTML)
+- Review process
+- Recognition and community
+
 ### **How to Contribute**
 
 1. **Fork the Repository**
@@ -363,6 +377,29 @@ We welcome contributions from educators, students, and the developer community!
 - 📊 Data visualization examples
 - 🧪 Additional test cases
 - 📚 Supplementary learning resources
+
+---
+
+## 🌐 Live Lessons
+
+**Access the interactive lesson portal online:**
+
+🔗 **[https://straydogsyn.github.io/CTD/](https://straydogsyn.github.io/CTD/)**
+
+All 11 HTML lessons are hosted via GitHub Pages for easy access from any device, anywhere. No installation required—just click and learn!
+
+---
+
+## 🔄 Continuous Integration
+
+This repository uses **GitHub Actions** for automated quality assurance:
+
+- ✅ **Python Tests**: Automated testing across Python 3.8-3.11
+- 📝 **Code Linting**: Style validation with flake8 and black
+- 📓 **Notebook Validation**: Jupyter notebook integrity checks
+- 🚀 **Auto-Deployment**: GitHub Pages updates on every push
+
+View build status and test results in the [Actions tab](https://github.com/StrayDogSyn/CTD/actions).
 
 ---
 
