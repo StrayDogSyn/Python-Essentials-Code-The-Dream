@@ -3,9 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Python Essentials Curriculum - Interactive Lessons</title>
-    <meta name="description" content="Code the Dream Python Essentials - Interactive HTML lessons for aspiring developers">
+    <title>Python Essentials Curriculum - Interactive Lessons & Notebooks</title>
+    <meta name="description" content="Code the Dream Python Essentials - Interactive HTML lessons and Jupyter notebooks for aspiring developers">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-dark: #0a0e27;
+            --bg-medium: #1a1f3a;
+            --bg-card: #2a2f4a;
+            --accent-cyan: #00f0ff;
+            --accent-magenta: #ff00ff;
+            --accent-green: #00ff41;
+            --accent-yellow: #ffff00;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --border-glow: rgba(0, 240, 255, 0.3);
+            --font-mono: 'IBM Plex Mono', 'Space Mono', monospace;
+            --font-body: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -13,115 +31,377 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
-            color: #e0e0e0;
+            font-family: var(--font-body);
+            background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-medium) 100%);
+            color: var(--text-primary);
             line-height: 1.6;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 2rem;
         }
 
+        /* Progress Bar */
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--bg-medium);
+            z-index: 1000;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-magenta));
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .progress-text {
+            position: fixed;
+            top: 10px;
+            right: 20px;
+            background: var(--bg-card);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            border: 1px solid var(--accent-cyan);
+            z-index: 1001;
+        }
+
+        /* Header */
         header {
             text-align: center;
-            padding: 3rem 0;
-            border-bottom: 3px solid #00f0ff;
+            padding: 5rem 0 3rem 0;
             margin-bottom: 3rem;
         }
 
-        h1 {
-            font-size: 3rem;
-            background: linear-gradient(45deg, #00f0ff, #ff00ff);
+        .logo {
+            font-size: 3.5rem;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--accent-cyan), var(--accent-magenta));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             margin-bottom: 1rem;
+            text-shadow: 0 0 20px var(--border-glow);
         }
 
-        .subtitle {
-            font-size: 1.2rem;
-            color: #00ff41;
-            margin-bottom: 1rem;
+        .tagline {
+            font-size: 1.3rem;
+            color: var(--accent-green);
+            margin-bottom: 1.5rem;
+            font-family: var(--font-mono);
         }
 
-        .description {
-            color: #a0a0a0;
-            max-width: 700px;
+        .header-description {
+            color: var(--text-secondary);
+            max-width: 800px;
             margin: 0 auto;
+            font-size: 1.1rem;
+            line-height: 1.8;
         }
 
-        .lessons-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
+        /* Quick Links */
+        .quick-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
         }
 
-        .lesson-card {
-            background: linear-gradient(135deg, #1a1f3a, #2a2f4a);
-            border: 2px solid #00f0ff;
-            border-radius: 12px;
-            padding: 1.5rem;
-            transition: all 0.3s ease;
+        .quick-link {
+            padding: 0.75rem 1.5rem;
+            background: var(--bg-card);
+            border: 2px solid var(--accent-cyan);
+            border-radius: 8px;
+            color: var(--accent-cyan);
             text-decoration: none;
-            color: inherit;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .quick-link:hover {
+            background: var(--accent-cyan);
+            color: var(--bg-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px var(--border-glow);
+        }
+
+        /* Info Banner */
+        .info-banner {
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-medium));
+            border-left: 4px solid var(--accent-yellow);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+
+        .info-banner h3 {
+            color: var(--accent-yellow);
+            margin-bottom: 0.75rem;
+            font-family: var(--font-mono);
+        }
+
+        /* Setup Instructions */
+        .setup-section {
+            background: var(--bg-card);
+            border: 2px solid var(--accent-magenta);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 3rem 0;
+        }
+
+        .setup-section h2 {
+            color: var(--accent-magenta);
+            font-family: var(--font-mono);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .setup-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .setup-tab {
+            padding: 0.75rem 1.5rem;
+            background: var(--bg-medium);
+            border: 2px solid var(--text-secondary);
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: var(--font-mono);
+            transition: all 0.3s ease;
+        }
+
+        .setup-tab.active {
+            background: var(--accent-magenta);
+            color: var(--bg-dark);
+            border-color: var(--accent-magenta);
+        }
+
+        .setup-content {
+            display: none;
+        }
+
+        .setup-content.active {
             display: block;
         }
 
-        .lesson-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 240, 255, 0.3);
-            border-color: #00ff41;
+        .setup-steps {
+            background: var(--bg-dark);
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
         }
 
-        .lesson-number {
-            font-size: 2rem;
+        .setup-steps ol {
+            margin-left: 1.5rem;
+        }
+
+        .setup-steps li {
+            margin: 0.75rem 0;
+            color: var(--text-secondary);
+        }
+
+        .setup-steps code {
+            background: var(--bg-card);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            color: var(--accent-cyan);
+        }
+
+        /* Weeks Grid */
+        .weeks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .week-card {
+            background: linear-gradient(135deg, var(--bg-medium), var(--bg-card));
+            border: 2px solid var(--accent-cyan);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .week-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent, rgba(0, 240, 255, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .week-card:hover::before {
+            opacity: 1;
+        }
+
+        .week-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px var(--border-glow);
+            border-color: var(--accent-green);
+        }
+
+        .week-card.completed {
+            border-color: var(--accent-green);
+        }
+
+        .week-card.completed::after {
+            content: '✓';
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 30px;
+            height: 30px;
+            background: var(--accent-green);
+            color: var(--bg-dark);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-weight: 900;
-            background: linear-gradient(45deg, #00f0ff, #ff00ff);
+            font-size: 1.2rem;
+        }
+
+        .week-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            font-family: var(--font-mono);
+            background: linear-gradient(45deg, var(--accent-cyan), var(--accent-magenta));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             margin-bottom: 0.5rem;
         }
 
-        .lesson-title {
-            font-size: 1.3rem;
+        .week-title {
+            font-size: 1.4rem;
             font-weight: 600;
-            color: #00f0ff;
+            color: var(--accent-cyan);
             margin-bottom: 0.75rem;
+            font-family: var(--font-mono);
         }
 
-        .lesson-topics {
-            color: #a0a0a0;
+        .week-topics {
+            color: var(--text-secondary);
             font-size: 0.9rem;
             line-height: 1.8;
+            margin-bottom: 1.5rem;
         }
 
-        .lesson-status {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            margin-top: 1rem;
-            background: #00ff41;
-            color: #0a0e27;
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
         }
 
+        .action-btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            text-align: center;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid;
+            cursor: pointer;
+        }
+
+        .action-btn.primary {
+            background: var(--accent-cyan);
+            color: var(--bg-dark);
+            border-color: var(--accent-cyan);
+        }
+
+        .action-btn.primary:hover {
+            background: transparent;
+            color: var(--accent-cyan);
+            box-shadow: 0 0 15px var(--border-glow);
+        }
+
+        .notebook-buttons {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .notebook-btn {
+            flex: 1;
+            padding: 0.5rem;
+            background: var(--bg-dark);
+            border: 1px solid var(--text-secondary);
+            border-radius: 6px;
+            text-decoration: none;
+            text-align: center;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+
+        .notebook-btn:hover {
+            border-color: var(--accent-green);
+            color: var(--accent-green);
+            background: rgba(0, 255, 65, 0.1);
+        }
+
+        .notebook-btn.colab:hover {
+            border-color: #f9ab00;
+            color: #f9ab00;
+        }
+
+        .notebook-btn.view:hover {
+            border-color: var(--accent-magenta);
+            color: var(--accent-magenta);
+        }
+
+        .complete-btn {
+            background: transparent;
+            border-color: var(--text-secondary);
+            color: var(--text-secondary);
+        }
+
+        .complete-btn:hover {
+            border-color: var(--accent-green);
+            color: var(--accent-green);
+        }
+
+        /* Footer */
         .footer {
             text-align: center;
             padding: 3rem 0;
             margin-top: 4rem;
-            border-top: 2px solid #2a2f4a;
-            color: #a0a0a0;
+            border-top: 2px solid var(--bg-card);
+            color: var(--text-secondary);
         }
 
         .footer a {
-            color: #00f0ff;
+            color: var(--accent-cyan);
             text-decoration: none;
         }
 
@@ -129,146 +409,566 @@
             text-decoration: underline;
         }
 
-        .info-banner {
-            background: linear-gradient(135deg, #2a2f4a, #1a1f3a);
-            border-left: 4px solid #ffff00;
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin: 2rem 0;
+        /* Achievement Popup */
+        .achievement-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-medium));
+            border: 3px solid var(--accent-green);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            z-index: 2000;
+            transition: transform 0.3s ease;
         }
 
-        .info-banner h3 {
-            color: #ffff00;
-            margin-bottom: 0.75rem;
+        .achievement-popup.show {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .achievement-popup h3 {
+            color: var(--accent-green);
+            font-family: var(--font-mono);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Responsive */
+        @media screen and (max-width: 768px) {
+            .weeks-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .logo {
+                font-size: 2.5rem;
+            }
+
+            .progress-text {
+                font-size: 0.75rem;
+                padding: 0.4rem 0.8rem;
+            }
+
+            .notebook-buttons {
+                flex-direction: column;
+            }
+        }
+
+        @media screen and (max-width: 428px) {
+            .container {
+                padding: 1rem;
+            }
+
+            header {
+                padding: 3rem 0 2rem 0;
+            }
+
+            .quick-links {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+    <div class="progress-text" id="progressText">0/11 Complete (0%)</div>
+
+    <!-- Achievement Popup -->
+    <div class="achievement-popup" id="achievementPopup">
+        <h3>🎉 Achievement Unlocked!</h3>
+        <p id="achievementText"></p>
+    </div>
+
     <div class="container">
         <header>
-            <h1>🐍 Python Essentials Curriculum</h1>
-            <p class="subtitle">Interactive Lessons for Code the Dream Fellows</p>
-            <p class="description">
-                A comprehensive 11-week journey from Python fundamentals to web development and machine learning. 
-                Click any lesson below to start learning!
+            <h1 class="logo">▸ Python Essentials</h1>
+            <p class="tagline">Interactive Curriculum for Code The Dream</p>
+            <p class="header-description">
+                A comprehensive 11-week journey from Python fundamentals to web development and machine learning.
+                Each week includes interactive HTML lessons, hands-on Jupyter notebooks, and group activities.
+                Track your progress, practice in notebooks, and build real-world projects!
             </p>
+            <div class="quick-links">
+                <a href="https://github.com/StrayDogSyn/CTD" target="_blank" class="quick-link">📂 GitHub Repo</a>
+                <a href="https://github.com/StrayDogSyn/CTD/blob/main/CONTRIBUTING.md" target="_blank" class="quick-link">🤝 Contribute</a>
+                <a href="#setup" class="quick-link">⚙️ Setup Guide</a>
+            </div>
         </header>
 
         <div class="info-banner">
-            <h3>📚 How to Use These Lessons</h3>
-            <p>Each lesson features interactive navigation, progressive code examples, and real-world applications. 
-            Work through them sequentially for best results, or jump to specific topics as needed. 
-            All lessons include progress tracking and completion markers.</p>
+            <h3>📚 How to Use This Curriculum</h3>
+            <p>
+                <strong>1. Read the Lesson:</strong> Start with the interactive HTML lesson for theory and examples.<br>
+                <strong>2. Practice in Notebooks:</strong> Download or open notebooks in Colab for hands-on coding.<br>
+                <strong>3. Group Activities:</strong> Complete session 2 notebooks with peers for collaborative learning.<br>
+                <strong>4. Track Progress:</strong> Mark weeks complete to unlock achievements and track your journey!
+            </p>
         </div>
 
-        <div class="lessons-grid">
-            <a href="lesson-plans/lesson_week1_intro_python.html" class="lesson-card">
-                <div class="lesson-number">Week 1</div>
-                <div class="lesson-title">Introduction to Python</div>
-                <div class="lesson-topics">
+        <!-- Setup Instructions -->
+        <div class="setup-section" id="setup">
+            <h2>⚙️ Getting Started with Jupyter Notebooks</h2>
+            <div class="setup-tabs">
+                <div class="setup-tab active" onclick="switchSetupTab('colab')">🚀 Google Colab (Easiest)</div>
+                <div class="setup-tab" onclick="switchSetupTab('local')">💻 Local Setup</div>
+                <div class="setup-tab" onclick="switchSetupTab('vscode')">🔧 VS Code</div>
+            </div>
+
+            <div class="setup-content active" id="setup-colab">
+                <div class="setup-steps">
+                    <h3 style="color: var(--accent-cyan); margin-bottom: 1rem;">Google Colab (Recommended for Beginners)</h3>
+                    <ol>
+                        <li>Click any <strong>🚀 Colab</strong> button on a week card below</li>
+                        <li>Sign in with your Google account (free)</li>
+                        <li>The notebook opens ready to run in your browser</li>
+                        <li>Click the play button (▶) next to any code cell to run it</li>
+                        <li>Changes auto-save to your Google Drive</li>
+                    </ol>
+                    <p style="margin-top: 1rem; color: var(--accent-green);">
+                        ✅ <strong>Pros:</strong> No installation, runs in browser, free GPU access, auto-saves<br>
+                        ⚠️ <strong>Note:</strong> Requires internet connection
+                    </p>
+                </div>
+            </div>
+
+            <div class="setup-content" id="setup-local">
+                <div class="setup-steps">
+                    <h3 style="color: var(--accent-cyan); margin-bottom: 1rem;">Local Jupyter Setup</h3>
+                    <ol>
+                        <li>Install Python 3.8+ from <a href="https://python.org" target="_blank" style="color: var(--accent-cyan);">python.org</a></li>
+                        <li>Open terminal/command prompt</li>
+                        <li>Install Jupyter: <code>pip install jupyter notebook pandas matplotlib</code></li>
+                        <li>Clone/download this repo: <code>git clone https://github.com/StrayDogSyn/CTD.git</code></li>
+                        <li>Navigate to repo: <code>cd CTD</code></li>
+                        <li>Start Jupyter: <code>jupyter notebook</code></li>
+                        <li>Browser opens automatically - navigate to <code>notebook-sessions/</code></li>
+                    </ol>
+                    <p style="margin-top: 1rem; color: var(--accent-green);">
+                        ✅ <strong>Pros:</strong> Works offline, faster execution, full control<br>
+                        ⚠️ <strong>Requires:</strong> Python installation, ~500MB disk space
+                    </p>
+                </div>
+            </div>
+
+            <div class="setup-content" id="setup-vscode">
+                <div class="setup-steps">
+                    <h3 style="color: var(--accent-cyan); margin-bottom: 1rem;">VS Code Jupyter Extension</h3>
+                    <ol>
+                        <li>Install <a href="https://code.visualstudio.com/" target="_blank" style="color: var(--accent-cyan);">VS Code</a></li>
+                        <li>Install Python extension in VS Code</li>
+                        <li>Install Jupyter extension in VS Code</li>
+                        <li>Install Python 3.8+ and pip</li>
+                        <li>Open repo folder in VS Code</li>
+                        <li>Click any <code>.ipynb</code> file in <code>notebook-sessions/</code></li>
+                        <li>Select Python kernel when prompted</li>
+                        <li>Run cells with Shift+Enter</li>
+                    </ol>
+                    <p style="margin-top: 1rem; color: var(--accent-green);">
+                        ✅ <strong>Pros:</strong> Professional IDE, debugging, Git integration<br>
+                        ⚠️ <strong>Best for:</strong> Developers comfortable with IDEs
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Weeks Grid -->
+        <div class="weeks-grid">
+            <!-- Week 1 -->
+            <div class="week-card" data-week="1">
+                <div class="week-number">Week 1</div>
+                <div class="week-title">Introduction to Python</div>
+                <div class="week-topics">
                     Environment setup • Variables & data types • Control flow • Functions • Debugging
                 </div>
-                <span class="lesson-status">✓ Available</span>
-            </a>
+                <div class="action-buttons">
+                    <a href="lesson-plans/lesson_week1_intro_python.html" class="action-btn primary">Start Lesson →</a>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <a href="notebook-sessions/week1/session1_intro_to_python.ipynb" download class="notebook-btn">⬇️ Session 1</a>
+                        <a href="https://colab.research.google.com/github/StrayDogSyn/CTD/blob/main/notebook-sessions/week1/session1_intro_to_python.ipynb" target="_blank" class="notebook-btn colab">🚀 Colab</a>
+                        <a href="https://nbviewer.org/github/StrayDogSyn/CTD/blob/main/notebook-sessions/week1/session1_intro_to_python.ipynb" target="_blank" class="notebook-btn view">👁️ View</a>
+                    </div>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <a href="notebook-sessions/week1/session2_intro_to_python_group.ipynb" download class="notebook-btn">⬇️ Session 2 (Group)</a>
+                        <a href="https://colab.research.google.com/github/StrayDogSyn/CTD/blob/main/notebook-sessions/week1/session2_intro_to_python_group.ipynb" target="_blank" class="notebook-btn colab">🚀 Colab</a>
+                    </div>
+                    <button class="action-btn complete-btn" onclick="markComplete(1)">Mark Complete ✓</button>
+                </div>
+            </div>
 
-            <a href="lesson-plans/lesson_week2_data_structures.html" class="lesson-card">
-                <div class="lesson-number">Week 2</div>
-                <div class="lesson-title">Data Structures & File Handling</div>
-                <div class="lesson-topics">
+            <!-- Week 2 -->
+            <div class="week-card" data-week="2">
+                <div class="week-number">Week 2</div>
+                <div class="week-title">Data Structures & File Handling</div>
+                <div class="week-topics">
                     Lists • Dictionaries • Tuples & Sets • File I/O • CSV files • Modules
                 </div>
-                <span class="lesson-status">✓ Available</span>
-            </a>
+                <div class="action-buttons">
+                    <a href="lesson-plans/lesson_week2_data_structures.html" class="action-btn primary">Start Lesson →</a>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <a href="notebook-sessions/week2/session1_data_structures.ipynb" download class="notebook-btn">⬇️ Session 1</a>
+                        <a href="https://colab.research.google.com/github/StrayDogSyn/CTD/blob/main/notebook-sessions/week2/session1_data_structures.ipynb" target="_blank" class="notebook-btn colab">🚀 Colab</a>
+                        <a href="https://nbviewer.org/github/StrayDogSyn/CTD/blob/main/notebook-sessions/week2/session1_data_structures.ipynb" target="_blank" class="notebook-btn view">👁️ View</a>
+                    </div>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <a href="notebook-sessions/week2/session2_data_structures_group.ipynb" download class="notebook-btn">⬇️ Session 2 (Group)</a>
+                        <a href="https://colab.research.google.com/github/StrayDogSyn/CTD/blob/main/notebook-sessions/week2/session2_data_structures_group.ipynb" target="_blank" class="notebook-btn colab">🚀 Colab</a>
+                    </div>
+                    <button class="action-btn complete-btn" onclick="markComplete(2)">Mark Complete ✓</button>
+                </div>
+            </div>
 
-            <a href="lesson-plans/lesson_week3_python_skills.html" class="lesson-card">
-                <div class="lesson-number">Week 3</div>
-                <div class="lesson-title">Advanced Python Skills</div>
-                <div class="lesson-topics">
+            <!-- Week 3 -->
+            <div class="week-card" data-week="3">
+                <div class="week-number">Week 3</div>
+                <div class="week-title">Advanced Python Skills</div>
+                <div class="week-topics">
                     Object-Oriented Programming • Decorators • List comprehensions • Closures
                 </div>
-                <span class="lesson-status">✓ Available</span>
-            </a>
+                <div class="action-buttons">
+                    <a href="lesson-plans/lesson_week3_python_skills.html" class="action-btn primary">Start Lesson →</a>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <a href="notebook-sessions/week3/session1_more_python_skills.ipynb" download class="notebook-btn">⬇️ Session 1</a>
+                        <a href="https://colab.research.google.com/github/StrayDogSyn/CTD/blob/main/notebook-sessions/week3/session1_more_python_skills.ipynb" target="_blank" class="notebook-btn colab">🚀 Colab</a>
+                        <a href="https://nbviewer.org/github/StrayDogSyn/CTD/blob/main/notebook-sessions/week3/session1_more_python_skills.ipynb" target="_blank" class="notebook-btn view">👁️ View</a>
+                    </div>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <a href="notebook-sessions/week3/session2_more_python_skills_group.ipynb" download class="notebook-btn">⬇️ Session 2 (Group)</a>
+                        <a href="https://colab.research.google.com/github/StrayDogSyn/CTD/blob/main/notebook-sessions/week3/session2_more_python_skills_group.ipynb" target="_blank" class="notebook-btn colab">🚀 Colab</a>
+                    </div>
+                    <button class="action-btn complete-btn" onclick="markComplete(3)">Mark Complete ✓</button>
+                </div>
+            </div>
 
-            <a href="lesson-plans/lesson_week4_data_engineering.html" class="lesson-card">
-                <div class="lesson-number">Week 4</div>
-                <div class="lesson-title">Data Engineering Fundamentals</div>
-                <div class="lesson-topics">
+            <!-- Week 4 -->
+            <div class="week-card" data-week="4">
+                <div class="week-number">Week 4</div>
+                <div class="week-title">Data Engineering Fundamentals</div>
+                <div class="week-topics">
                     Pandas basics • Series & DataFrames • ETL patterns • Data inspection
                 </div>
-                <span class="lesson-status">✓ Available</span>
-            </a>
-
-            <a href="lesson-plans/lesson_week5_data_visualization.html" class="lesson-card">
-                <div class="lesson-number">Week 5</div>
-                <div class="lesson-title">Data Visualization</div>
-                <div class="lesson-topics">
-                    Matplotlib • Seaborn • Plot types • Styling • Interactive visualizations
+                <div class="action-buttons">
+                    <a href="lesson-plans/lesson_week4_data_engineering.html" class="action-btn primary">Start Lesson →</a>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <a href="notebook-sessions/week4/session1_intro_to_data_engineering.ipynb" download class="notebook-btn">⬇️ Session 1</a>
+                        <a href="https://colab.research.google.com/github/StrayDogSyn/CTD/blob/main/notebook-sessions/week4/session1_intro_to_data_engineering.ipynb" target="_blank" class="notebook-btn colab">🚀 Colab</a>
+                        <a href="https://nbviewer.org/github/StrayDogSyn/CTD/blob/main/notebook-sessions/week4/session1_intro_to_data_engineering.ipynb" target="_blank" class="notebook-btn view">👁️ View</a>
+                    </div>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <a href="notebook-sessions/week4/session2_intro_to_data_engineering_group.ipynb" download class="notebook-btn">⬇️ Session 2 (Group)</a>
+                        <a href="https://colab.research.google.com/github/StrayDogSyn/CTD/blob/main/notebook-sessions/week4/session2_intro_to_data_engineering_group.ipynb" target="_blank" class="notebook-btn colab">🚀 Colab</a>
+                    </div>
+                    <button class="action-btn complete-btn" onclick="markComplete(4)">Mark Complete ✓</button>
                 </div>
-                <span class="lesson-status">✓ Available</span>
-            </a>
+            </div>
 
-            <a href="lesson-plans/lesson_week6_sql_databases.html" class="lesson-card">
-                <div class="lesson-number">Week 6</div>
-                <div class="lesson-title">SQL & Databases</div>
-                <div class="lesson-topics">
-                    SQL syntax • Queries • Joins • Database design • Python integration
+            <!-- Week 5 -->
+            <div class="week-card" data-week="5">
+                <div class="week-number">Week 5</div>
+                <div class="week-title">Data Cleaning & Validation</div>
+                <div class="week-topics">
+                    Data quality • Missing values • Outliers • Validation techniques • Data profiling
                 </div>
-                <span class="lesson-status">✓ Available</span>
-            </a>
+                <div class="action-buttons">
+                    <a href="lesson-plans/lesson_week5_data_visualization.html" class="action-btn primary">Start Lesson →</a>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <a href="notebook-sessions/week5/session1_data_cleaning_validation.ipynb" download class="notebook-btn">⬇️ Session 1</a>
+                        <a href="https://colab.research.google.com/github/StrayDogSyn/CTD/blob/main/notebook-sessions/week5/session1_data_cleaning_validation.ipynb" target="_blank" class="notebook-btn colab">🚀 Colab</a>
+                        <a href="https://nbviewer.org/github/StrayDogSyn/CTD/blob/main/notebook-sessions/week5/session1_data_cleaning_validation.ipynb" target="_blank" class="notebook-btn view">👁️ View</a>
+                    </div>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <a href="notebook-sessions/week5/session2_data_cleaning_validation_group.ipynb" download class="notebook-btn">⬇️ Session 2 (Group)</a>
+                        <a href="https://colab.research.google.com/github/StrayDogSyn/CTD/blob/main/notebook-sessions/week5/session2_data_cleaning_validation_group.ipynb" target="_blank" class="notebook-btn colab">🚀 Colab</a>
+                    </div>
+                    <button class="action-btn complete-btn" onclick="markComplete(5)">Mark Complete ✓</button>
+                </div>
+            </div>
 
-            <a href="lesson-plans/lesson_week7_apis_scraping.html" class="lesson-card">
-                <div class="lesson-number">Week 7</div>
-                <div class="lesson-title">APIs & Web Scraping</div>
-                <div class="lesson-topics">
-                    REST APIs • HTTP requests • JSON parsing • BeautifulSoup • Ethics
+            <!-- Week 6 -->
+            <div class="week-card" data-week="6">
+                <div class="week-number">Week 6</div>
+                <div class="week-title">Data Wrangling & Aggregation</div>
+                <div class="week-topics">
+                    GroupBy operations • Pivot tables • Merging datasets • Aggregation functions
                 </div>
-                <span class="lesson-status">✓ Available</span>
-            </a>
+                <div class="action-buttons">
+                    <a href="lesson-plans/lesson_week6_sql_databases.html" class="action-btn primary">Start Lesson →</a>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <a href="notebook-sessions/week6/session1_data_wrangling_aggregation.ipynb" download class="notebook-btn">⬇️ Session 1</a>
+                        <a href="https://colab.research.google.com/github/StrayDogSyn/CTD/blob/main/notebook-sessions/week6/session1_data_wrangling_aggregation.ipynb" target="_blank" class="notebook-btn colab">🚀 Colab</a>
+                        <a href="https://nbviewer.org/github/StrayDogSyn/CTD/blob/main/notebook-sessions/week6/session1_data_wrangling_aggregation.ipynb" target="_blank" class="notebook-btn view">👁️ View</a>
+                    </div>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <a href="notebook-sessions/week6/session2_data_wrangling_aggregation_group.ipynb" download class="notebook-btn">⬇️ Session 2 (Group)</a>
+                        <a href="https://colab.research.google.com/github/StrayDogSyn/CTD/blob/main/notebook-sessions/week6/session2_data_wrangling_aggregation_group.ipynb" target="_blank" class="notebook-btn colab">🚀 Colab</a>
+                    </div>
+                    <button class="action-btn complete-btn" onclick="markComplete(6)">Mark Complete ✓</button>
+                </div>
+            </div>
 
-            <a href="lesson-plans/lesson_week8_advanced_pandas.html" class="lesson-card">
-                <div class="lesson-number">Week 8</div>
-                <div class="lesson-title">Advanced Pandas</div>
-                <div class="lesson-topics">
-                    Merging • GroupBy • Pivot tables • Time series • String operations
+            <!-- Week 7 -->
+            <div class="week-card" data-week="7">
+                <div class="week-number">Week 7</div>
+                <div class="week-title">Introduction to Data Visualization</div>
+                <div class="week-topics">
+                    Matplotlib fundamentals • Seaborn • Chart types • Styling • Customization
                 </div>
-                <span class="lesson-status">✓ Available</span>
-            </a>
+                <div class="action-buttons">
+                    <a href="lesson-plans/lesson_week7_apis_scraping.html" class="action-btn primary">Start Lesson →</a>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <a href="notebook-sessions/week7/session1_intro_to_data_visualization.ipynb" download class="notebook-btn">⬇️ Session 1</a>
+                        <a href="https://colab.research.google.com/github/StrayDogSyn/CTD/blob/main/notebook-sessions/week7/session1_intro_to_data_visualization.ipynb" target="_blank" class="notebook-btn colab">🚀 Colab</a>
+                        <a href="https://nbviewer.org/github/StrayDogSyn/CTD/blob/main/notebook-sessions/week7/session1_intro_to_data_visualization.ipynb" target="_blank" class="notebook-btn view">👁️ View</a>
+                    </div>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <a href="notebook-sessions/week7/session2_intro_to_data_visualization_group.ipynb" download class="notebook-btn">⬇️ Session 2 (Group)</a>
+                        <a href="https://colab.research.google.com/github/StrayDogSyn/CTD/blob/main/notebook-sessions/week7/session2_intro_to_data_visualization_group.ipynb" target="_blank" class="notebook-btn colab">🚀 Colab</a>
+                    </div>
+                    <button class="action-btn complete-btn" onclick="markComplete(7)">Mark Complete ✓</button>
+                </div>
+            </div>
 
-            <a href="lesson-plans/lesson_week9_intro_ml.html" class="lesson-card">
-                <div class="lesson-number">Week 9</div>
-                <div class="lesson-title">Introduction to Machine Learning</div>
-                <div class="lesson-topics">
-                    Supervised learning • Model training • Evaluation • scikit-learn
+            <!-- Week 8 -->
+            <div class="week-card" data-week="8">
+                <div class="week-number">Week 8</div>
+                <div class="week-title">Introduction to Web Scraping</div>
+                <div class="week-topics">
+                    HTTP requests • BeautifulSoup • HTML parsing • Ethics • Data extraction
                 </div>
-                <span class="lesson-status">✓ Available</span>
-            </a>
+                <div class="action-buttons">
+                    <a href="lesson-plans/lesson_week8_advanced_pandas.html" class="action-btn primary">Start Lesson →</a>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <a href="notebook-sessions/week8/session1_intro_to_web_scraping.ipynb" download class="notebook-btn">⬇️ Session 1</a>
+                        <a href="https://colab.research.google.com/github/StrayDogSyn/CTD/blob/main/notebook-sessions/week8/session1_intro_to_web_scraping.ipynb" target="_blank" class="notebook-btn colab">🚀 Colab</a>
+                        <a href="https://nbviewer.org/github/StrayDogSyn/CTD/blob/main/notebook-sessions/week8/session1_intro_to_web_scraping.ipynb" target="_blank" class="notebook-btn view">👁️ View</a>
+                    </div>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <a href="notebook-sessions/week8/session2_intro_to_web_scraping_group.ipynb" download class="notebook-btn">⬇️ Session 2 (Group)</a>
+                        <a href="https://colab.research.google.com/github/StrayDogSyn/CTD/blob/main/notebook-sessions/week8/session2_intro_to_web_scraping_group.ipynb" target="_blank" class="notebook-btn colab">🚀 Colab</a>
+                    </div>
+                    <button class="action-btn complete-btn" onclick="markComplete(8)">Mark Complete ✓</button>
+                </div>
+            </div>
 
-            <a href="lesson-plans/lesson_week10_flask_web.html" class="lesson-card">
-                <div class="lesson-number">Week 10</div>
-                <div class="lesson-title">Flask Web Development</div>
-                <div class="lesson-topics">
-                    Routes • Templates • Forms • Sessions • REST APIs
+            <!-- Week 9 -->
+            <div class="week-card" data-week="9">
+                <div class="week-number">Week 9</div>
+                <div class="week-title">Introduction to Databases & SQL</div>
+                <div class="week-topics">
+                    SQL fundamentals • Queries • Joins • Database design • Python integration
                 </div>
-                <span class="lesson-status">✓ Available</span>
-            </a>
+                <div class="action-buttons">
+                    <a href="lesson-plans/lesson_week9_intro_ml.html" class="action-btn primary">Start Lesson →</a>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <a href="notebook-sessions/week9/session1_intro_to_databases_sql.ipynb" download class="notebook-btn">⬇️ Session 1</a>
+                        <a href="https://colab.research.google.com/github/StrayDogSyn/CTD/blob/main/notebook-sessions/week9/session1_intro_to_databases_sql.ipynb" target="_blank" class="notebook-btn colab">🚀 Colab</a>
+                        <a href="https://nbviewer.org/github/StrayDogSyn/CTD/blob/main/notebook-sessions/week9/session1_intro_to_databases_sql.ipynb" target="_blank" class="notebook-btn view">👁️ View</a>
+                    </div>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <a href="notebook-sessions/week9/session2_intro_to_databases_sql_group.ipynb" download class="notebook-btn">⬇️ Session 2 (Group)</a>
+                        <a href="https://colab.research.google.com/github/StrayDogSyn/CTD/blob/main/notebook-sessions/week9/session2_intro_to_databases_sql_group.ipynb" target="_blank" class="notebook-btn colab">🚀 Colab</a>
+                    </div>
+                    <button class="action-btn complete-btn" onclick="markComplete(9)">Mark Complete ✓</button>
+                </div>
+            </div>
 
-            <a href="lesson-plans/lesson_week11_deployment.html" class="lesson-card">
-                <div class="lesson-number">Week 11</div>
-                <div class="lesson-title">Deployment & DevOps</div>
-                <div class="lesson-topics">
-                    Environment variables • Docker • Production servers • CI/CD
+            <!-- Week 10 -->
+            <div class="week-card" data-week="10">
+                <div class="week-number">Week 10</div>
+                <div class="week-title">Advanced SQL Integration</div>
+                <div class="week-topics">
+                    Complex queries • Optimization • Transactions • ORM patterns • Production use
                 </div>
-                <span class="lesson-status">✓ Available</span>
-            </a>
+                <div class="action-buttons">
+                    <a href="lesson-plans/lesson_week10_flask_web.html" class="action-btn primary">Start Lesson →</a>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <a href="notebook-sessions/week10/session1_advanced_sql_integration.ipynb" download class="notebook-btn">⬇️ Session 1</a>
+                        <a href="https://colab.research.google.com/github/StrayDogSyn/CTD/blob/main/notebook-sessions/week10/session1_advanced_sql_integration.ipynb" target="_blank" class="notebook-btn colab">🚀 Colab</a>
+                        <a href="https://nbviewer.org/github/StrayDogSyn/CTD/blob/main/notebook-sessions/week10/session1_advanced_sql_integration.ipynb" target="_blank" class="notebook-btn view">👁️ View</a>
+                    </div>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <a href="notebook-sessions/week10/session2_advanced_sql_integration_group.ipynb" download class="notebook-btn">⬇️ Session 2 (Group)</a>
+                        <a href="https://colab.research.google.com/github/StrayDogSyn/CTD/blob/main/notebook-sessions/week10/session2_advanced_sql_integration_group.ipynb" target="_blank" class="notebook-btn colab">🚀 Colab</a>
+                    </div>
+                    <button class="action-btn complete-btn" onclick="markComplete(10)">Mark Complete ✓</button>
+                </div>
+            </div>
+
+            <!-- Week 11 -->
+            <div class="week-card" data-week="11">
+                <div class="week-number">Week 11</div>
+                <div class="week-title">Advanced Data Visualization</div>
+                <div class="week-topics">
+                    Interactive plots • Plotly • Dashboards • Geographic data • Best practices
+                </div>
+                <div class="action-buttons">
+                    <a href="lesson-plans/lesson_week11_deployment.html" class="action-btn primary">Start Lesson →</a>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <a href="notebook-sessions/week11/session1_advanced_data_visualization.ipynb" download class="notebook-btn">⬇️ Session 1</a>
+                        <a href="https://colab.research.google.com/github/StrayDogSyn/CTD/blob/main/notebook-sessions/week11/session1_advanced_data_visualization.ipynb" target="_blank" class="notebook-btn colab">🚀 Colab</a>
+                        <a href="https://nbviewer.org/github/StrayDogSyn/CTD/blob/main/notebook-sessions/week11/session1_advanced_data_visualization.ipynb" target="_blank" class="notebook-btn view">👁️ View</a>
+                    </div>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <a href="notebook-sessions/week11/session2_advanced_data_visualization_group.ipynb" download class="notebook-btn">⬇️ Session 2 (Group)</a>
+                        <a href="https://colab.research.google.com/github/StrayDogSyn/CTD/blob/main/notebook-sessions/week11/session2_advanced_data_visualization_group.ipynb" target="_blank" class="notebook-btn colab">🚀 Colab</a>
+                    </div>
+                    <button class="action-btn complete-btn" onclick="markComplete(11)">Mark Complete ✓</button>
+                </div>
+            </div>
         </div>
 
         <footer class="footer">
             <p>Built with ❤️ for <a href="https://codethedream.org" target="_blank">Code the Dream</a> fellows</p>
             <p style="margin-top: 1rem;">
                 <a href="https://github.com/StrayDogSyn/CTD" target="_blank">View on GitHub</a> • 
-                <a href="https://github.com/StrayDogSyn/CTD/blob/main/CONTRIBUTING.md" target="_blank">Contribute</a>
+                <a href="https://github.com/StrayDogSyn/CTD/blob/main/CONTRIBUTING.md" target="_blank">Contribute</a> •
+                <a href="mailto:contact@codethedream.org">Contact</a>
+            </p>
+            <p style="margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary);">
+                Progress is saved locally in your browser. Complete all 11 weeks to unlock the final achievement! 🏆
             </p>
         </footer>
     </div>
+
+    <script>
+        // Progress tracking with localStorage
+        const PROGRESS_KEY = 'python-essentials-progress';
+        let completedWeeks = new Set();
+
+        // Load saved progress on page load
+        function loadProgress() {
+            const saved = localStorage.getItem(PROGRESS_KEY);
+            if (saved) {
+                completedWeeks = new Set(JSON.parse(saved));
+                completedWeeks.forEach(week => {
+                    const card = document.querySelector(`[data-week="${week}"]`);
+                    if (card) {
+                        card.classList.add('completed');
+                    }
+                });
+            }
+            updateProgressBar();
+        }
+
+        // Save progress to localStorage
+        function saveProgress() {
+            localStorage.setItem(PROGRESS_KEY, JSON.stringify([...completedWeeks]));
+        }
+
+        // Mark a week as complete
+        function markComplete(weekNum) {
+            if (!completedWeeks.has(weekNum)) {
+                completedWeeks.add(weekNum);
+                const card = document.querySelector(`[data-week="${weekNum}"]`);
+                if (card) {
+                    card.classList.add('completed');
+                }
+                saveProgress();
+                updateProgressBar();
+                checkAchievements();
+            }
+        }
+
+        // Update progress bar
+        function updateProgressBar() {
+            const total = 11;
+            const completed = completedWeeks.size;
+            const percentage = Math.round((completed / total) * 100);
+            
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+            
+            if (progressBar) {
+                progressBar.style.width = percentage + '%';
+            }
+            
+            if (progressText) {
+                progressText.textContent = `${completed}/${total} Complete (${percentage}%)`;
+            }
+        }
+
+        // Check for achievements
+        function checkAchievements() {
+            const count = completedWeeks.size;
+            let message = '';
+
+            if (count === 1) {
+                message = '🎉 First Week Complete! You\'ve started your Python journey!';
+            } else if (count === 3) {
+                message = '🔥 3 Weeks Down! You\'re building momentum!';
+            } else if (count === 5) {
+                message = '⭐ Halfway There! You\'re crushing it!';
+            } else if (count === 8) {
+                message = '💪 8 Weeks Complete! Almost at the finish line!';
+            } else if (count === 11) {
+                message = '🏆 CURRICULUM COMPLETE! You\'re now a Python pro! Congratulations! 🎊';
+            }
+
+            if (message) {
+                showAchievement(message);
+            }
+        }
+
+        // Show achievement popup
+        function showAchievement(message) {
+            const popup = document.getElementById('achievementPopup');
+            const text = document.getElementById('achievementText');
+            
+            if (popup && text) {
+                text.textContent = message;
+                popup.classList.add('show');
+                
+                setTimeout(() => {
+                    popup.classList.remove('show');
+                }, 4000);
+            }
+        }
+
+        // Setup tab switching
+        function switchSetupTab(tabName) {
+            // Remove active class from all tabs and content
+            document.querySelectorAll('.setup-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.setup-content').forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Add active class to selected tab and content
+            event.target.classList.add('active');
+            document.getElementById(`setup-${tabName}`).classList.add('active');
+        }
+
+        // Smooth scroll to setup section
+        document.querySelectorAll('a[href="#setup"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('setup').scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            });
+        });
+
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            loadProgress();
+            
+            // Add welcome message if first visit
+            if (completedWeeks.size === 0) {
+                setTimeout(() => {
+                    showAchievement('👋 Welcome to Python Essentials! Start with Week 1 and track your progress as you go!');
+                }, 1000);
+            }
+        });
+
+        // Prevent horizontal scroll
+        document.body.style.overflowX = 'hidden';
+        document.documentElement.style.overflowX = 'hidden';
+    </script>
 </body>
 </html>
