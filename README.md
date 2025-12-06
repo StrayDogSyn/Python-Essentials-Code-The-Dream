@@ -1,9 +1,10 @@
-# 🐍 Code the Dream - Python Essentials Curriculum
+# 🐍 Python Essentials - Interactive Curriculum for Code the Dream
 
-> **A comprehensive, interactive Python curriculum designed for aspiring developers transitioning into the tech industry.**
+> **Enhanced curriculum for the Returned Citizen community, especially Code the Dream students, by StrayDog Syndications LLC**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![Live Deployment](https://img.shields.io/badge/status-deployed-success.svg)](https://github.com/StrayDogSyn/Python-Essentials-Code-The-Dream)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 
 ---
@@ -27,13 +28,19 @@
 
 ## 🎯 Overview
 
-The **Code the Dream Python Essentials** curriculum is a production-ready educational program that takes students from Python fundamentals through advanced data engineering, web development, and machine learning concepts. Designed specifically for **Code the Dream fellows**, this curriculum emphasizes:
+The **Python Essentials** curriculum is an enhanced, production-ready educational platform that takes students from Python fundamentals through advanced data engineering, web development, and machine learning concepts. This comprehensive program was enhanced and deployed by **[StrayDog Syndications LLC](https://www.straydog-syndications-llc.com/)** specifically for the **Returned Citizen community**, with special focus on **Code the Dream students**.
+
+### Mission
+Our mission is to bridge the "Digital Cliff" for justice-impacted learners through accessible, career-aligned education that empowers the next generation of Python programmers.
+
+### Key Principles
 
 - **Progressive Learning**: Step-by-step skill building with clear learning objectives
 - **Real-World Applications**: Practical examples from industry use cases
-- **Interactive Experience**: Engaging HTML lessons with progress tracking
+- **Interactive Experience**: Premium HTML lessons with progress tracking and modern design
 - **Best Practices**: Pythonic code patterns and professional development workflows
 - **Inclusive Design**: Accessible materials for learners from diverse backgrounds
+- **Community Focus**: Built with care for those re-entering the workforce
 
 ---
 
@@ -131,8 +138,8 @@ xdg-open lesson-plans/lesson_week2_data_structures.html  # Linux
 ### **1. Clone the Repository**
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/CTD.git
-cd CTD
+git clone https://github.com/StrayDogSyn/Python-Essentials-Code-The-Dream.git
+cd Python-Essentials-Code-The-Dream
 ```
 
 ### **2. Set Up Python Environment**
@@ -452,11 +459,26 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 - Responsive across device sizes
 - Minimal footprint: small PNGs, lightweight CSS/JS
 
-### **Code the Dream**
-This curriculum is proudly developed for [Code the Dream](https://codethedream.org), a nonprofit organization providing free, high-quality technical training to people from diverse backgrounds who aspire to become professional programmers.
+### **Enhanced and Deployed By**
+
+**[StrayDog Syndications LLC](https://www.straydog-syndications-llc.com/)**
+- [Eric 'Hunter' Petross](https://github.com/StrayDogSyn) - Lead Developer & Curriculum Enhancement
+- [Mia 'Mausi' Smith-Petross](https://github.com/miasmith81) - Co-Developer & Platform Design
+
+This enhanced curriculum features:
+- Premium interactive HTML lesson platform with modern design
+- Integrated progress tracking and achievement system
+- Responsive, accessible interface optimized for all learners
+- Professional branding and deployment architecture
+- Comprehensive automation scripts for maintenance
+
+### **For the Community**
+
+Specially enhanced for the **Returned Citizen community** and **[Code the Dream](https://codethedream.org)** students. Code the Dream is a nonprofit organization providing free, high-quality technical training to people from diverse backgrounds who aspire to become professional programmers.
 
 ### **Contributors**
-- **Curriculum Designers**: Original lesson authors and educators
+- **Original Curriculum**: Code the Dream educators and lesson authors
+- **Enhancement Team**: StrayDog Syndications LLC
 - **Technical Reviewers**: Industry professionals providing feedback
 - **Students**: Past cohorts whose feedback shaped improvements
 - **Open Source Community**: Python, Jupyter, and web development tools
@@ -466,23 +488,28 @@ This curriculum is proudly developed for [Code the Dream](https://codethedream.o
 - Jupyter Project for interactive computing tools
 - VS Code team for an outstanding developer experience
 - All mentors and instructors who bring this curriculum to life
+- The Returned Citizen community for their resilience and determination
 
 ---
 
 ## 📞 Contact & Support
 
-- **Issues**: [GitHub Issues](https://github.com/YOUR_USERNAME/CTD/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/YOUR_USERNAME/CTD/discussions)
+- **Repository**: [Python-Essentials-Code-The-Dream](https://github.com/StrayDogSyn/Python-Essentials-Code-The-Dream)
+- **Issues**: [GitHub Issues](https://github.com/StrayDogSyn/Python-Essentials-Code-The-Dream/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/StrayDogSyn/Python-Essentials-Code-The-Dream/discussions)
+- **StrayDog**: [www.straydog-syndications-llc.com](https://www.straydog-syndications-llc.com/)
 - **Code the Dream**: [codethedream.org](https://codethedream.org)
 
 ---
 
 <div align="center">
 
-**Built with ❤️ for aspiring developers**
+**Enhanced curriculum for the Returned Citizen community by StrayDog Syndications LLC**
 
-*Empowering the next generation of Python programmers*
+*Especially for Code the Dream students*
 
-[⬆ Back to Top](#-code-the-dream---python-essentials-curriculum)
+**Bridging the Digital Cliff through accessible, career-aligned education**
+
+[⬆ Back to Top](#-python-essentials---interactive-curriculum-for-code-the-dream)
 
 </div>

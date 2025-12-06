@@ -44,6 +44,9 @@ Thumbs.db
 .env
 .env.local
 
+# Trae files
+.trae
+
 # Test coverage
 htmlcov/
 .coverage
