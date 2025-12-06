@@ -12,10 +12,10 @@ FAVICON_LINE = '    <link rel="icon" type="image/png" href="../assets/brands/fav
 
 FOOTER_HTML = '''
     <footer class="sd-footer">
-        <img class="sd-corner left" src="../assets/brands/stray-gear.png" alt="StrayDog logo" aria-hidden="true">
-        <img class="sd-corner right" src="../assets/brands/stray-gear.png" alt="StrayDog logo" aria-hidden="true">
+        <img class="sd-corner left" src="../assets/brands/straydog-syndications-llc-main.png" alt="StrayDog Syndications LLC logo" aria-hidden="true">
+        <img class="sd-corner right" src="../assets/brands/straydog-syndications-llc-main.png" alt="StrayDog Syndications LLC logo" aria-hidden="true">
         <div class="sd-credits">
-            Created with care by <a href="https://www.straydog-syndications-llc.com/" target="_blank" rel="noopener">StrayDog Syndications LLC</a>
+            Enhanced curriculum for the Returned Citizen community by <a href="https://www.straydog-syndications-llc.com/" target="_blank" rel="noopener">StrayDog Syndications LLC</a>
         </div>
         <div class="sd-links">
             <a href="https://github.com/StrayDogSyn/Python-Essentials-Code-The-Dream" target="_blank" rel="noopener" aria-label="View on GitHub">
@@ -54,18 +54,44 @@ def apply_branding_to_file(file_path):
         content = content.replace('<body>', '<body class="sd-watermark">')
         changes_made.append("Added watermark class to body")
     
-    # 3. Add footer before closing </div> and <script> if not present
-    if 'sd-footer' not in content:
-        # Find the pattern: </main>\n    </div>\n\n    <script>
-        footer_insert_pattern = r'(</main>\s*</div>)\s*(<script>)'
-        if re.search(footer_insert_pattern, content):
-            content = re.sub(
-                footer_insert_pattern,
-                r'\1\n' + FOOTER_HTML + r'\n\n    \2',
-                content,
-                count=1
-            )
-            changes_made.append("Added footer")
+    # 3. Update existing footer or add new footer
+    if 'sd-footer' in content:
+        # Update existing footer logo references
+        old_footer_pattern = r'<img class="sd-corner (left|right)" src="\.\./assets/brands/stray-gear\.png"'
+        new_footer_img = r'<img class="sd-corner \1" src="../assets/brands/straydog-syndications-llc-main.png"'
+        if re.search(old_footer_pattern, content):
+            content = re.sub(old_footer_pattern, new_footer_img, content)
+            changes_made.append("Updated footer logos")
+        
+        # Update footer text
+        old_text_pattern = r'Created with care by'
+        new_text = 'Enhanced curriculum for the Returned Citizen community by'
+        if old_text_pattern in content:
+            content = content.replace(old_text_pattern, new_text)
+            changes_made.append("Updated footer text")
+    else:
+        # Add footer before closing </div> and <script> if not present
+        # Try multiple patterns
+        patterns = [
+            r'(</main>\s*</div>)\s*(<script>)',  # Pattern 1: </main></div><script>
+            r'(</div>\s*</div>)\s*(<script>)',    # Pattern 2: </div></div><script>
+            r'(</section>\s*</main>\s*</div>)\s*(<script>)',  # Pattern 3: </section></main></div><script>
+        ]
+        
+        footer_added = False
+        for pattern in patterns:
+            if re.search(pattern, content):
+                content = re.sub(pattern, r'\1\n' + FOOTER_HTML + r'\n\n    \2', content, count=1)
+                changes_made.append("Added footer")
+                footer_added = True
+                break
+        
+        if not footer_added:
+            # Last resort: add before </body>
+            if '</body>' in content and '<footer' not in content:
+                content = content.replace('</body>', FOOTER_HTML + '\n</body>')
+                changes_made.append("Added footer (before body)")
+                footer_added = True
     
     # Only write if changes were made
     if content != original_content:
