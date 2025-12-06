@@ -1,0 +1,3113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Skills Level Up | Week 3 Interactive Lesson</title>
+    <meta name="description" content="Interactive Python lesson for Week 3 students covering OOP, Decorators, Comprehensions, and Closures with progressive code examples.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&family=Orbitron:wght@700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* ═══════════════════════════════════════════════════════════════════
+           CSS CUSTOM PROPERTIES (Variables)
+           These define our color palette and reusable values
+           ═══════════════════════════════════════════════════════════════════ */
+        :root {
+            /* Background Colors - Dark theme palette */
+            --bg-dark: #0a0e27;
+            --bg-medium: #1a1f3a;
+            --bg-light: #2a2f4a;
+            
+            /* Accent Colors - For highlights and emphasis */
+            --accent-cyan: #00f0ff;
+            --accent-magenta: #ff00ff;
+            --accent-yellow: #ffff00;
+            --accent-green: #00ff41;
+            --accent-orange: #ff6b35;
+            --accent-red: #ff3366;
+            --accent-blue: #4da6ff;
+            
+            /* Text Colors */
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            
+            /* Skill Level Colors - Used for code example badges */
+            --level-bad: #ff3366;        /* Red for broken/bad code */
+            --level-novice: #ff9f43;     /* Orange for novice */
+            --level-intermediate: #4da6ff; /* Blue for intermediate */
+            --level-best: #00ff41;       /* Green for best practices */
+            
+            /* Effects */
+            --shadow-glow: 0 0 20px rgba(0, 240, 255, 0.3);
+            --shadow-glow-green: 0 0 20px rgba(0, 255, 65, 0.3);
+            --shadow-glow-red: 0 0 20px rgba(255, 51, 102, 0.3);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════
+           RESET & BASE STYLES
+           ═══════════════════════════════════════════════════════════════════ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Mono', monospace;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Scanline effect for retro gaming feel */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(0, 240, 255, 0.03) 2px,
+                    rgba(0, 240, 255, 0.03) 4px
+                );
+            pointer-events: none;
+            z-index: 1;
+            animation: scanlines 8s linear infinite;
+        }
+
+        @keyframes scanlines {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(4px); }
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════
+           HEADER STYLES
+           ═══════════════════════════════════════════════════════════════════ */
+        header {
+            position: relative;
+            z-index: 10;
+            padding: 2rem;
+            text-align: center;
+            background: linear-gradient(135deg, var(--bg-medium) 0%, var(--bg-dark) 100%);
+            border-bottom: 3px solid var(--accent-cyan);
+            box-shadow: 0 4px 20px rgba(0, 240, 255, 0.2);
+        }
+
+        h1 {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, var(--accent-cyan), var(--accent-magenta));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 5px var(--accent-cyan)); }
+            to { filter: drop-shadow(0 0 20px var(--accent-magenta)); }
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--accent-green);
+            font-weight: 600;
+        }
+
+        .week-badge {
+            display: inline-block;
+            background: var(--accent-magenta);
+            color: var(--bg-dark);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-top: 0.5rem;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════
+           PROGRESS & XP BAR
+           ═══════════════════════════════════════════════════════════════════ */
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--bg-medium);
+            z-index: 1000;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-magenta));
+            width: 0%;
+            transition: width 0.3s ease;
+            box-shadow: var(--shadow-glow);
+        }
+
+        .xp-bar {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--bg-medium);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 2px solid var(--accent-cyan);
+            z-index: 100;
+            min-width: 220px;
+            box-shadow: var(--shadow-glow);
+        }
+
+        .xp-label {
+            font-size: 0.85rem;
+            color: var(--accent-yellow);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .xp-progress {
+            width: 100%;
+            height: 20px;
+            background: var(--bg-dark);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .xp-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-green), var(--accent-cyan));
+            width: 0%;
+            transition: width 0.5s ease;
+            box-shadow: 0 0 10px var(--accent-green);
+        }
+
+        .xp-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════
+           LAYOUT - Container, Sidebar, Main Content
+           ═══════════════════════════════════════════════════════════════════ */
+        .container {
+            display: flex;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .sidebar {
+            width: 300px;
+            position: sticky;
+            top: 20px;
+            height: calc(100vh - 40px);
+            padding: 2rem 1rem;
+            background: var(--bg-medium);
+            border-right: 2px solid var(--accent-cyan);
+            overflow-y: auto;
+        }
+
+        .nav-section {
+            margin-bottom: 2rem;
+        }
+
+        .nav-title {
+            font-size: 0.9rem;
+            color: var(--accent-yellow);
+            margin-bottom: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-item {
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            border-left: 3px solid transparent;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            background: var(--bg-dark);
+            border-radius: 4px;
+        }
+
+        .nav-item:hover {
+            border-left-color: var(--accent-cyan);
+            background: var(--bg-light);
+            transform: translateX(5px);
+        }
+
+        .nav-item.active {
+            border-left-color: var(--accent-magenta);
+            background: var(--bg-light);
+            color: var(--accent-cyan);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .nav-item.completed::after {
+            content: ' ✓';
+            color: var(--accent-green);
+            float: right;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════
+           TYPOGRAPHY
+           ═══════════════════════════════════════════════════════════════════ */
+        h2 {
+            font-family: 'Orbitron', monospace;
+            font-size: 2rem;
+            color: var(--accent-cyan);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h3 {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.5rem;
+            color: var(--accent-magenta);
+            margin: 2rem 0 1rem 0;
+        }
+
+        h4 {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.2rem;
+            color: var(--accent-yellow);
+            margin: 1.5rem 0 0.75rem 0;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════
+           SKILL LEVEL TAB SYSTEM
+           Interactive tabs for switching between Bad → Novice → Intermediate → Best
+           ═══════════════════════════════════════════════════════════════════ */
+        .skill-progression {
+            margin: 2rem 0;
+            background: var(--bg-medium);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid var(--bg-light);
+        }
+
+        .skill-tabs {
+            display: flex;
+            background: var(--bg-dark);
+            border-bottom: 2px solid var(--bg-light);
+            flex-wrap: wrap;
+        }
+
+        .skill-tab {
+            flex: 1;
+            min-width: 120px;
+            padding: 1rem;
+            cursor: pointer;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-family: 'Space Mono', monospace;
+            position: relative;
+        }
+
+        .skill-tab::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: transparent;
+            transition: background 0.3s ease;
+        }
+
+        .skill-tab:hover {
+            background: var(--bg-light);
+        }
+
+        .skill-tab.active {
+            color: var(--text-primary);
+        }
+
+        .skill-tab[data-level="bad"] { border-top: 3px solid var(--level-bad); }
+        .skill-tab[data-level="novice"] { border-top: 3px solid var(--level-novice); }
+        .skill-tab[data-level="intermediate"] { border-top: 3px solid var(--level-intermediate); }
+        .skill-tab[data-level="best"] { border-top: 3px solid var(--level-best); }
+
+        .skill-tab[data-level="bad"].active::after { background: var(--level-bad); }
+        .skill-tab[data-level="novice"].active::after { background: var(--level-novice); }
+        .skill-tab[data-level="intermediate"].active::after { background: var(--level-intermediate); }
+        .skill-tab[data-level="best"].active::after { background: var(--level-best); }
+
+        .skill-tab-icon {
+            display: block;
+            font-size: 1.2rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .skill-content {
+            display: none;
+            padding: 0;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .skill-content.active {
+            display: block;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════
+           CODE CONTAINERS - Different styles for each skill level
+           ═══════════════════════════════════════════════════════════════════ */
+        .code-container {
+            background: var(--bg-dark);
+            border: 2px solid var(--accent-cyan);
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            overflow: hidden;
+            box-shadow: var(--shadow-glow);
+        }
+
+        /* Skill level specific code containers */
+        .code-container.level-bad {
+            border-color: var(--level-bad);
+            box-shadow: 0 0 15px rgba(255, 51, 102, 0.2);
+        }
+
+        .code-container.level-novice {
+            border-color: var(--level-novice);
+            box-shadow: 0 0 15px rgba(255, 159, 67, 0.2);
+        }
+
+        .code-container.level-intermediate {
+            border-color: var(--level-intermediate);
+            box-shadow: 0 0 15px rgba(77, 166, 255, 0.2);
+        }
+
+        .code-container.level-best {
+            border-color: var(--level-best);
+            box-shadow: var(--shadow-glow-green);
+        }
+
+        .code-header {
+            background: var(--bg-medium);
+            padding: 0.75rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--accent-cyan);
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .code-header-left {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .code-label {
+            color: var(--accent-yellow);
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        /* Level Badge - Shows skill level of code example */
+        .level-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .level-badge.bad {
+            background: var(--level-bad);
+            color: white;
+        }
+
+        .level-badge.novice {
+            background: var(--level-novice);
+            color: var(--bg-dark);
+        }
+
+        .level-badge.intermediate {
+            background: var(--level-intermediate);
+            color: var(--bg-dark);
+        }
+
+        .level-badge.best {
+            background: var(--level-best);
+            color: var(--bg-dark);
+        }
+
+        /* Semantic Label - Describes what the code does */
+        .semantic-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            padding: 0.25rem 0.5rem;
+            background: var(--bg-dark);
+            border-radius: 4px;
+            border: 1px solid var(--bg-light);
+        }
+
+        .run-button {
+            background: var(--accent-green);
+            color: var(--bg-dark);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .run-button:hover {
+            background: var(--accent-cyan);
+            transform: scale(1.05);
+            box-shadow: 0 0 15px var(--accent-cyan);
+        }
+
+        .run-button:disabled {
+            opacity: 0.7;
+            cursor: default;
+            transform: none;
+        }
+
+        /* Code display area */
+        pre {
+            padding: 1.5rem;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            line-height: 1.7;
+            background: var(--bg-dark);
+        }
+
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-primary);
+        }
+
+        /* Inline code */
+        p code, li code {
+            background: var(--bg-medium);
+            padding: 0.15rem 0.4rem;
+            border-radius: 3px;
+            font-size: 0.9em;
+            color: var(--accent-cyan);
+        }
+
+        /* Code output display */
+        .output {
+            background: linear-gradient(135deg, var(--bg-medium), var(--bg-dark));
+            border-top: 2px solid var(--accent-green);
+            padding: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent-green);
+            display: none;
+        }
+
+        .output.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        .output-label {
+            color: var(--accent-yellow);
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .output.error {
+            color: var(--level-bad);
+            border-top-color: var(--level-bad);
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; max-height: 0; }
+            to { opacity: 1; max-height: 500px; }
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════
+           EXPLANATION BOXES
+           ═══════════════════════════════════════════════════════════════════ */
+        .explanation-box {
+            background: var(--bg-medium);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin: 1rem 0;
+            border-left: 4px solid var(--accent-blue);
+        }
+
+        .explanation-box.warning {
+            border-left-color: var(--level-bad);
+            background: linear-gradient(135deg, rgba(255, 51, 102, 0.1), var(--bg-medium));
+        }
+
+        .explanation-box.tip {
+            border-left-color: var(--level-best);
+            background: linear-gradient(135deg, rgba(0, 255, 65, 0.1), var(--bg-medium));
+        }
+
+        .explanation-box.info {
+            border-left-color: var(--accent-cyan);
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.1), var(--bg-medium));
+        }
+
+        .explanation-title {
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .explanation-box.warning .explanation-title { color: var(--level-bad); }
+        .explanation-box.tip .explanation-title { color: var(--level-best); }
+        .explanation-box.info .explanation-title { color: var(--accent-cyan); }
+
+        .explanation-box p {
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .explanation-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════
+           ANALOGY & CONCEPT BOXES
+           ═══════════════════════════════════════════════════════════════════ */
+        .analogy-box {
+            background: linear-gradient(135deg, rgba(255, 0, 255, 0.1), rgba(0, 240, 255, 0.1));
+            border-left: 4px solid var(--accent-magenta);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .analogy-box::before {
+            content: '💡';
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            font-size: 1.5rem;
+            background: var(--bg-dark);
+            padding: 0 10px;
+        }
+
+        .analogy-title {
+            color: var(--accent-magenta);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        /* Learning objectives box */
+        .objectives-box {
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.1), var(--bg-medium));
+            border: 2px solid var(--accent-cyan);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .objectives-title {
+            color: var(--accent-cyan);
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .objectives-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .objectives-list li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: var(--text-secondary);
+        }
+
+        .objectives-list li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--accent-green);
+            font-weight: bold;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════
+           INTERACTIVE PLAYGROUND
+           ═══════════════════════════════════════════════════════════════════ */
+        .playground {
+            background: var(--bg-medium);
+            border: 2px solid var(--accent-yellow);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .playground-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .playground-title {
+            color: var(--accent-yellow);
+            font-size: 1.2rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .playground-challenge {
+            background: var(--bg-dark);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: var(--accent-magenta);
+            font-weight: 700;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 180px;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            border: 1px solid var(--accent-cyan);
+            border-radius: 4px;
+            padding: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            resize: vertical;
+            line-height: 1.6;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--accent-magenta);
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.3);
+        }
+
+        .playground-hint {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            background: var(--bg-dark);
+            border-radius: 4px;
+            border-left: 3px solid var(--accent-yellow);
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════
+           CONCEPT CARDS GRID
+           ═══════════════════════════════════════════════════════════════════ */
+        .concept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.25rem;
+            margin: 2rem 0;
+        }
+
+        .concept-card {
+            background: var(--bg-medium);
+            border: 2px solid var(--accent-cyan);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .concept-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-glow);
+            border-color: var(--accent-magenta);
+        }
+
+        .concept-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .concept-title {
+            color: var(--accent-cyan);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            font-size: 1.05rem;
+        }
+
+        .concept-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════
+           NAVIGATION BUTTONS
+           ═══════════════════════════════════════════════════════════════════ */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--bg-light);
+        }
+
+        .nav-btn {
+            background: var(--bg-medium);
+            color: var(--text-primary);
+            border: 2px solid var(--accent-cyan);
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-btn:hover {
+            background: var(--accent-cyan);
+            color: var(--bg-dark);
+            transform: translateX(5px);
+        }
+
+        .nav-btn.prev:hover {
+            transform: translateX(-5px);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .complete-btn {
+            background: linear-gradient(135deg, var(--accent-green), var(--accent-cyan));
+            color: var(--bg-dark);
+            border: none;
+            margin-bottom: 1rem;
+        }
+
+        .complete-btn:hover {
+            transform: scale(1.02);
+            box-shadow: var(--shadow-glow-green);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════
+           ACHIEVEMENT POPUP
+           ═══════════════════════════════════════════════════════════════════ */
+        .achievement {
+            position: fixed;
+            bottom: -200px;
+            right: 20px;
+            background: var(--bg-medium);
+            border: 2px solid var(--accent-yellow);
+            border-radius: 8px;
+            padding: 1.5rem;
+            max-width: 300px;
+            box-shadow: 0 0 30px rgba(255, 255, 0, 0.3);
+            transition: bottom 0.5s ease;
+            z-index: 1000;
+        }
+
+        .achievement.show {
+            bottom: 20px;
+        }
+
+        .achievement-title {
+            color: var(--accent-yellow);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .achievement-icon {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════
+           SYNTAX HIGHLIGHTING CLASSES
+           ═══════════════════════════════════════════════════════════════════ */
+        .keyword { color: var(--accent-magenta); font-weight: 600; }
+        .string { color: var(--accent-green); }
+        .function { color: var(--accent-cyan); }
+        .comment { color: #6a9955; font-style: italic; }
+        .number { color: var(--accent-yellow); }
+        .decorator { color: var(--accent-orange); }
+        .builtin { color: var(--accent-blue); }
+        .operator { color: var(--text-primary); }
+        .variable { color: #9cdcfe; }
+        .class-name { color: #4ec9b0; }
+        .param { color: #9cdcfe; }
+        .error-line { background: rgba(255, 51, 102, 0.2); display: block; }
+
+        /* ═══════════════════════════════════════════════════════════════════
+           VOCABULARY / TERMINOLOGY SECTION
+           ═══════════════════════════════════════════════════════════════════ */
+        .vocab-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .vocab-item {
+            background: var(--bg-medium);
+            border-radius: 8px;
+            padding: 1rem;
+            border-left: 3px solid var(--accent-cyan);
+        }
+
+        .vocab-term {
+            color: var(--accent-cyan);
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .vocab-def {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════
+           COLLAPSIBLE SECTIONS
+           ═══════════════════════════════════════════════════════════════════ */
+        .collapsible {
+            background: var(--bg-medium);
+            border: 1px solid var(--bg-light);
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        .collapsible-header {
+            padding: 1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+            color: var(--text-primary);
+            transition: background 0.3s ease;
+        }
+
+        .collapsible-header:hover {
+            background: var(--bg-light);
+        }
+
+        .collapsible-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .collapsible.open .collapsible-icon {
+            transform: rotate(180deg);
+        }
+
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0 1rem;
+        }
+
+        .collapsible.open .collapsible-content {
+            max-height: 2000px;
+            padding: 0 1rem 1rem;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════
+           RESPONSIVE DESIGN
+           ═══════════════════════════════════════════════════════════════════ */
+        @media (max-width: 968px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+                border-right: none;
+                border-bottom: 2px solid var(--accent-cyan);
+            }
+
+            .xp-bar {
+                position: static;
+                margin: 1rem;
+            }
+
+            h1 {
+                font-size: 1.75rem;
+            }
+
+            .skill-tabs {
+                flex-direction: column;
+            }
+
+            .skill-tab {
+                width: 100%;
+                border-top: none;
+                border-left: 3px solid transparent;
+            }
+
+            .skill-tab[data-level="bad"] { border-left-color: var(--level-bad); border-top: none; }
+            .skill-tab[data-level="novice"] { border-left-color: var(--level-novice); border-top: none; }
+            .skill-tab[data-level="intermediate"] { border-left-color: var(--level-intermediate); border-top: none; }
+            .skill-tab[data-level="best"] { border-left-color: var(--level-best); border-top: none; }
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════
+           LOADING SPINNER
+           ═══════════════════════════════════════════════════════════════════ */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid var(--bg-light);
+            border-top: 3px solid var(--accent-cyan);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════
+           PRINT STYLES
+           ═══════════════════════════════════════════════════════════════════ */
+        @media print {
+            .sidebar, .xp-bar, .progress-container, .nav-buttons, .run-button {
+                display: none;
+            }
+            
+            .section {
+                display: block !important;
+            }
+            
+            body {
+                background: white;
+                color: black;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="xp-bar">
+        <div class="xp-label">LESSON PROGRESS</div>
+        <div class="xp-progress">
+            <div class="xp-fill" id="xpFill"></div>
+            <div class="xp-text" id="xpText">0 / 5 Topics</div>
+        </div>
+    </div>
+
+    <header>
+        <h1>▸ Level Up: Python Skills</h1>
+        <div class="subtitle">Master OOP, Decorators, Comprehensions & Closures</div>
+        <div class="week-badge">📅 Week 3 • Interactive Lesson</div>
+    </header>
+
+    <div class="container">
+        <nav class="sidebar">
+            <div class="nav-section">
+                <div class="nav-title">📚 Lesson Topics</div>
+                <div class="nav-item active" data-section="intro">📖 Introduction & Overview</div>
+                <div class="nav-item" data-section="oop">🏗️ Object-Oriented Programming</div>
+                <div class="nav-item" data-section="decorators">✨ Decorators</div>
+                <div class="nav-item" data-section="comprehensions">⚡ List Comprehensions</div>
+                <div class="nav-item" data-section="closures">🔒 Closures</div>
+            </div>
+            <div class="nav-section">
+                <div class="nav-title">🎯 Resources</div>
+                <div class="nav-item" data-section="cheatsheet">📋 Cheat Sheet</div>
+            </div>
+            <div class="nav-section">
+                <div class="nav-title">📊 Skill Level Legend</div>
+                <div style="padding: 0.5rem; font-size: 0.8rem;">
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin: 0.25rem 0;">
+                        <span style="width: 12px; height: 12px; border-radius: 50%; background: var(--level-bad);"></span>
+                        <span style="color: var(--level-bad);">Bad Practice</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin: 0.25rem 0;">
+                        <span style="width: 12px; height: 12px; border-radius: 50%; background: var(--level-novice);"></span>
+                        <span style="color: var(--level-novice);">Novice</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin: 0.25rem 0;">
+                        <span style="width: 12px; height: 12px; border-radius: 50%; background: var(--level-intermediate);"></span>
+                        <span style="color: var(--level-intermediate);">Intermediate</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin: 0.25rem 0;">
+                        <span style="width: 12px; height: 12px; border-radius: 50%; background: var(--level-best);"></span>
+                        <span style="color: var(--level-best);">Best Practice</span>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            <!-- ═══════════════════════════════════════════════════════════════
+                 SECTION: Introduction
+                 Purpose: Welcome students and provide learning objectives
+                 ═══════════════════════════════════════════════════════════════ -->
+            <section id="intro" class="section active">
+                <h2>📖 Welcome to Week 3: Level Up Your Python</h2>
+                
+                <p>Think of this lesson as unlocking new abilities in your Python skill tree. You've learned variables, loops, and functions—now it's time to learn the professional patterns that make your code cleaner, more powerful, and more Pythonic.</p>
+
+                <!-- Learning Objectives Box -->
+                <div class="objectives-box">
+                    <div class="objectives-title">🎯 What You'll Learn Today</div>
+                    <ul class="objectives-list">
+                        <li><strong>OOP (Object-Oriented Programming)</strong> — Create your own custom data types with classes</li>
+                        <li><strong>Decorators</strong> — Add superpowers to functions without changing their code</li>
+                        <li><strong>List Comprehensions</strong> — Transform data in one elegant line</li>
+                        <li><strong>Closures</strong> — Create functions that "remember" values</li>
+                        <li><strong>Code Quality</strong> — Recognize bad patterns and learn Pythonic solutions</li>
+                    </ul>
+                </div>
+
+                <!-- Key Vocabulary Section -->
+                <h3>📚 Key Terms to Know</h3>
+                <div class="vocab-list">
+                    <div class="vocab-item">
+                        <div class="vocab-term">Class</div>
+                        <div class="vocab-def">A blueprint or template for creating objects. Like a cookie cutter that defines shape.</div>
+                    </div>
+                    <div class="vocab-item">
+                        <div class="vocab-term">Object / Instance</div>
+                        <div class="vocab-def">A specific thing created from a class. The actual cookie made from the cutter.</div>
+                    </div>
+                    <div class="vocab-item">
+                        <div class="vocab-term">Method</div>
+                        <div class="vocab-def">A function that belongs to a class. Actions that objects can perform.</div>
+                    </div>
+                    <div class="vocab-item">
+                        <div class="vocab-term">Decorator</div>
+                        <div class="vocab-def">A function that wraps another function to add extra behavior. Starts with <code>@</code>.</div>
+                    </div>
+                    <div class="vocab-item">
+                        <div class="vocab-term">Comprehension</div>
+                        <div class="vocab-def">A concise way to create lists, dicts, or sets in a single expression.</div>
+                    </div>
+                    <div class="vocab-item">
+                        <div class="vocab-term">Closure</div>
+                        <div class="vocab-def">A function that remembers variables from its enclosing scope, even after that scope ends.</div>
+                    </div>
+                </div>
+
+                <!-- Topic Cards -->
+                <h3>🗺️ Today's Topics</h3>
+                <p>Click any card below to jump directly to that section:</p>
+                
+                <div class="concept-grid">
+                    <div class="concept-card" onclick="navigateToSection('oop')">
+                        <div class="concept-icon">🏗️</div>
+                        <div class="concept-title">OOP: Build Your Own Data Types</div>
+                        <div class="concept-desc">Create custom objects like building character classes in an RPG. Bundle data and behavior together.</div>
+                    </div>
+                    <div class="concept-card" onclick="navigateToSection('decorators')">
+                        <div class="concept-icon">✨</div>
+                        <div class="concept-title">Decorators: Power-Ups for Functions</div>
+                        <div class="concept-desc">Wrap functions with extra abilities (logging, timing, validation) without changing their core code.</div>
+                    </div>
+                    <div class="concept-card" onclick="navigateToSection('comprehensions')">
+                        <div class="concept-icon">⚡</div>
+                        <div class="concept-title">List Comprehensions: Speed Runs</div>
+                        <div class="concept-desc">Generate and transform lists in one line. The Pythonic way to work with collections.</div>
+                    </div>
+                    <div class="concept-card" onclick="navigateToSection('closures')">
+                        <div class="concept-icon">🔒</div>
+                        <div class="concept-title">Closures: Private Data Storage</div>
+                        <div class="concept-desc">Create functions that remember values. Protect data and create function factories.</div>
+                    </div>
+                </div>
+
+                <!-- How to Use This Lesson -->
+                <div class="analogy-box">
+                    <div class="analogy-title">💡 How to Use This Lesson</div>
+                    <p><strong>Each topic shows the same problem solved 4 different ways:</strong></p>
+                    <p>🔴 <strong>Bad Practice</strong> — Code that works but has problems (bugs, inefficiency, poor style)</p>
+                    <p>🟠 <strong>Novice Solution</strong> — Basic working code that beginners might write</p>
+                    <p>🔵 <strong>Intermediate Solution</strong> — Better code with some improvements</p>
+                    <p>🟢 <strong>Best Practice</strong> — The Pythonic way professionals write it</p>
+                    <p style="margin-top: 1rem; font-style: italic;">Click the tabs in each example to see the progression. Understanding <em>why</em> each level improves is more important than memorizing syntax!</p>
+                </div>
+
+                <!-- Real-World Context -->
+                <div class="explanation-box info">
+                    <div class="explanation-title">🌍 Why These Matter in the Real World</div>
+                    <p>These aren't just academic exercises—they're patterns used everywhere:</p>
+                    <p>• <strong>Flask's <code>@app.route()</code></strong> — That's a decorator!</p>
+                    <p>• <strong>Pandas DataFrames</strong> — That's OOP (objects with methods)</p>
+                    <p>• <strong>Data transformations</strong> — List comprehensions are the go-to tool</p>
+                    <p>• <strong>React-style callbacks</strong> — Closures power event handlers</p>
+                </div>
+
+                <!-- Learning Strategy -->
+                <div class="explanation-box tip">
+                    <div class="explanation-title">📚 How to Approach This Lesson</div>
+                    <p><strong>1. Don't memorize—understand the "why":</strong> Focus on WHY each level is better than the previous. The syntax will stick when you understand the reasoning.</p>
+                    <p><strong>2. Read code out loud:</strong> If you can't explain what a line does in plain English, you don't understand it yet. Ask questions!</p>
+                    <p><strong>3. Run the examples:</strong> Click "Run" on code blocks and modify them. Break things on purpose to see what error messages say.</p>
+                    <p><strong>4. Try the playgrounds:</strong> The challenges are designed to solidify your understanding. Struggle is part of learning—it's okay to need hints!</p>
+                    <p><strong>5. Discuss with peers:</strong> The discussion questions at each section's end are meant to spark conversation. Teaching others is the best way to learn.</p>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="nav-btn prev" disabled>◀ Prev</button>
+                    <button class="nav-btn next" onclick="navigateToSection('oop')">Start Learning: OOP ▶</button>
+                </div>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════════════════
+                 SECTION: Object-Oriented Programming (OOP)
+                 Purpose: Teach classes, objects, methods, and inheritance
+                 ═══════════════════════════════════════════════════════════════ -->
+            <section id="oop" class="section">
+                <h2>🏗️ Object-Oriented Programming (OOP)</h2>
+                
+                <p>OOP lets you create your own custom data types that bundle <strong>data</strong> (attributes) and <strong>behavior</strong> (methods) together. Think of a class as a blueprint, and objects as the actual things built from that blueprint.</p>
+
+                <!-- OOP Vocabulary -->
+                <div class="explanation-box info">
+                    <div class="explanation-title">📖 OOP Vocabulary Quick Reference</div>
+                    <p><code>class</code> — The blueprint/template that defines attributes and methods</p>
+                    <p><code>object</code> / <code>instance</code> — A specific thing created from a class</p>
+                    <p><code>self</code> — Reference to the current object (always first parameter in methods)</p>
+                    <p><code>__init__</code> — The constructor method, called when creating new objects</p>
+                    <p><code>method</code> — A function that belongs to a class</p>
+                    <p><code>attribute</code> — A variable that belongs to an object (e.g., <code>self.name</code>)</p>
+                </div>
+
+                <!-- EXAMPLE 1: Creating a Simple Class -->
+                <h3>Example 1: Creating a Player Class</h3>
+                <p>Let's model a game player with a name, level, and the ability to calculate attack power. Watch how the code improves at each level:</p>
+
+                <!-- Skill Progression Tabs -->
+                <div class="skill-progression" data-example="oop-player">
+                    <div class="skill-tabs">
+                        <button class="skill-tab active" data-level="bad" data-target="oop-player-bad">
+                            <span class="skill-tab-icon">🔴</span>
+                            Bad Practice
+                        </button>
+                        <button class="skill-tab" data-level="novice" data-target="oop-player-novice">
+                            <span class="skill-tab-icon">🟠</span>
+                            Novice
+                        </button>
+                        <button class="skill-tab" data-level="intermediate" data-target="oop-player-intermediate">
+                            <span class="skill-tab-icon">🔵</span>
+                            Intermediate
+                        </button>
+                        <button class="skill-tab" data-level="best" data-target="oop-player-best">
+                            <span class="skill-tab-icon">🟢</span>
+                            Best Practice
+                        </button>
+                    </div>
+
+                    <!-- BAD PRACTICE -->
+                    <div class="skill-content active" id="oop-player-bad">
+                        <div class="code-container level-bad">
+                            <div class="code-header">
+                                <div class="code-header-left">
+                                    <span class="code-label">Python</span>
+                                    <span class="level-badge bad">❌ Bad Practice</span>
+                                    <span class="semantic-label">Using dictionaries instead of classes</span>
+                                </div>
+                                <button class="run-button" data-output="{'name': 'Ada', 'level': 5}\nAda attacks with power 15">Run ▶</button>
+                            </div>
+<pre><code><span class="comment"># ❌ BAD PRACTICE: Using a dictionary instead of a class</span>
+<span class="comment"># Problem 1: No structure - anyone can add/remove keys</span>
+<span class="comment"># Problem 2: No methods - behavior is separate from data</span>
+<span class="comment"># Problem 3: No validation - can set invalid values</span>
+<span class="comment"># Problem 4: No IDE autocomplete or type hints</span>
+
+<span class="comment"># Creating a "player" as a dictionary</span>
+player = {
+    <span class="string">'name'</span>: <span class="string">'Ada'</span>,
+    <span class="string">'level'</span>: <span class="number">5</span>
+}
+
+<span class="comment"># Calculating power as a separate function (not connected to player)</span>
+<span class="keyword">def</span> <span class="function">get_power</span>(player_dict):
+    <span class="keyword">return</span> player_dict[<span class="string">'level'</span>] * <span class="number">3</span>
+
+<span class="comment"># Using the dictionary</span>
+<span class="keyword">print</span>(player)
+<span class="keyword">print</span>(<span class="string">f"{player['name']} attacks with power {get_power(player)}"</span>)
+
+<span class="comment"># ⚠️ Nothing stops us from doing bad things:</span>
+<span class="comment"># player['level'] = -999  # Invalid level!</span>
+<span class="comment"># player['naem'] = 'typo'  # Typo creates new key!</span>
+</code></pre>
+                            <div class="output"></div>
+                        </div>
+                        <div class="explanation-box warning">
+                            <div class="explanation-title">⚠️ Why This Is Bad</div>
+                            <p><strong>No structure:</strong> Dictionaries accept any keys, so typos create bugs silently.</p>
+                            <p><strong>No encapsulation:</strong> The <code>get_power()</code> function is separate from the data it operates on.</p>
+                            <p><strong>No validation:</strong> You can set <code>level</code> to -999 or "banana" and nothing stops you.</p>
+                            <p><strong>Hard to maintain:</strong> As your code grows, tracking what keys exist becomes a nightmare.</p>
+                        </div>
+                    </div>
+
+                    <!-- NOVICE -->
+                    <div class="skill-content" id="oop-player-novice">
+                        <div class="code-container level-novice">
+                            <div class="code-header">
+                                <div class="code-header-left">
+                                    <span class="code-label">Python</span>
+                                    <span class="level-badge novice">🔰 Novice</span>
+                                    <span class="semantic-label">Basic class with __init__</span>
+                                </div>
+                                <button class="run-button" data-output="<__main__.Player object at 0x...>\nAda attacks with power 15">Run ▶</button>
+                            </div>
+<pre><code><span class="comment"># 🔰 NOVICE: Basic class structure</span>
+<span class="comment"># ✓ Data and behavior are now together</span>
+<span class="comment"># ✓ Clear structure with defined attributes</span>
+<span class="comment"># ✗ Print output is ugly (memory address)</span>
+<span class="comment"># ✗ No default values</span>
+
+<span class="keyword">class</span> <span class="class-name">Player</span>:
+    <span class="comment"># __init__ is the CONSTRUCTOR - runs when you create an object</span>
+    <span class="comment"># 'self' refers to the object being created</span>
+    <span class="keyword">def</span> <span class="function">__init__</span>(<span class="param">self</span>, <span class="param">name</span>, <span class="param">level</span>):
+        <span class="comment"># Store the parameters as ATTRIBUTES on the object</span>
+        self.name = name    <span class="comment"># self.name belongs to THIS object</span>
+        self.level = level  <span class="comment"># self.level belongs to THIS object</span>
+    
+    <span class="comment"># A METHOD - a function that belongs to the class</span>
+    <span class="keyword">def</span> <span class="function">power</span>(<span class="param">self</span>):
+        <span class="comment"># 'self' gives us access to this object's attributes</span>
+        <span class="keyword">return</span> self.level * <span class="number">3</span>
+
+<span class="comment"># Create an INSTANCE (object) of the Player class</span>
+p = Player(<span class="string">'Ada'</span>, <span class="number">5</span>)
+
+<span class="comment"># Access attributes with dot notation</span>
+<span class="keyword">print</span>(p)  <span class="comment"># Ugly output: &lt;__main__.Player object at 0x...&gt;</span>
+<span class="keyword">print</span>(<span class="string">f"{p.name} attacks with power {p.power()}"</span>)
+</code></pre>
+                            <div class="output"></div>
+                        </div>
+                        <div class="explanation-box tip">
+                            <div class="explanation-title">✅ What's Better</div>
+                            <p><strong>Encapsulation:</strong> Data (<code>name</code>, <code>level</code>) and behavior (<code>power()</code>) are bundled together.</p>
+                            <p><strong>Clear structure:</strong> You know exactly what attributes a Player has.</p>
+                            <p><strong>IDE support:</strong> Your editor can now autocomplete <code>p.name</code>, <code>p.level</code>, <code>p.power()</code>.</p>
+                        </div>
+                    </div>
+
+                    <!-- INTERMEDIATE -->
+                    <div class="skill-content" id="oop-player-intermediate">
+                        <div class="code-container level-intermediate">
+                            <div class="code-header">
+                                <div class="code-header-left">
+                                    <span class="code-label">Python</span>
+                                    <span class="level-badge intermediate">📈 Intermediate</span>
+                                    <span class="semantic-label">Adding __repr__ and default values</span>
+                                </div>
+                                <button class="run-button" data-output="Player(name='Ada', level=5)\nAda attacks with power 15\nPlayer(name='Bob', level=1)">Run ▶</button>
+                            </div>
+<pre><code><span class="comment"># 📈 INTERMEDIATE: Better printing and defaults</span>
+<span class="comment"># ✓ __repr__ gives readable output when printing</span>
+<span class="comment"># ✓ Default parameter for level</span>
+<span class="comment"># ✗ Still no type hints</span>
+<span class="comment"># ✗ No docstrings explaining the class</span>
+
+<span class="keyword">class</span> <span class="class-name">Player</span>:
+    <span class="keyword">def</span> <span class="function">__init__</span>(<span class="param">self</span>, <span class="param">name</span>, <span class="param">level</span>=<span class="number">1</span>):  <span class="comment"># level defaults to 1</span>
+        self.name = name
+        self.level = level
+    
+    <span class="keyword">def</span> <span class="function">power</span>(<span class="param">self</span>):
+        <span class="keyword">return</span> self.level * <span class="number">3</span>
+    
+    <span class="comment"># __repr__ defines how the object looks when printed</span>
+    <span class="comment"># Convention: return a string that could recreate the object</span>
+    <span class="keyword">def</span> <span class="function">__repr__</span>(<span class="param">self</span>):
+        <span class="keyword">return</span> <span class="string">f"Player(name='</span>{self.name}<span class="string">', level=</span>{self.level}<span class="string">)"</span>
+
+<span class="comment"># Now printing shows useful information!</span>
+p = Player(<span class="string">'Ada'</span>, level=<span class="number">5</span>)
+<span class="keyword">print</span>(p)  <span class="comment"># Player(name='Ada', level=5)</span>
+<span class="keyword">print</span>(<span class="string">f"{p.name} attacks with power {p.power()}"</span>)
+
+<span class="comment"># Default value in action</span>
+newbie = Player(<span class="string">'Bob'</span>)  <span class="comment"># level defaults to 1</span>
+<span class="keyword">print</span>(newbie)
+</code></pre>
+                            <div class="output"></div>
+                        </div>
+                        <div class="explanation-box tip">
+                            <div class="explanation-title">✅ What's Better</div>
+                            <p><strong><code>__repr__</code>:</strong> Now <code>print(p)</code> shows <code>Player(name='Ada', level=5)</code> instead of a memory address.</p>
+                            <p><strong>Default values:</strong> <code>level=1</code> means new players start at level 1 automatically.</p>
+                            <p><strong>Debugging:</strong> When something goes wrong, you can see the object's state clearly.</p>
+                        </div>
+                    </div>
+
+                    <!-- BEST PRACTICE -->
+                    <div class="skill-content" id="oop-player-best">
+                        <div class="code-container level-best">
+                            <div class="code-header">
+                                <div class="code-header-left">
+                                    <span class="code-label">Python</span>
+                                    <span class="level-badge best">⭐ Best Practice</span>
+                                    <span class="semantic-label">Type hints, docstrings, validation</span>
+                                </div>
+                                <button class="run-button" data-output="Player(name='Ada', level=5)\nAda attacks with power 15\nPlayer(name='Bob', level=1)">Run ▶</button>
+                            </div>
+<pre><code><span class="comment"># ⭐ BEST PRACTICE: Production-ready class</span>
+<span class="comment"># ✓ Type hints for all parameters and return values</span>
+<span class="comment"># ✓ Docstrings explaining purpose and usage</span>
+<span class="comment"># ✓ Input validation to prevent invalid data</span>
+<span class="comment"># ✓ Clean, readable, maintainable code</span>
+
+<span class="keyword">class</span> <span class="class-name">Player</span>:
+    <span class="string">"""
+    Represents a game player with a name and level.
+    
+    Attributes:
+        name (str): The player's display name
+        level (int): The player's current level (1-100)
+    
+    Example:
+        >>> player = Player('Ada', level=5)
+        >>> player.power()
+        15
+    """</span>
+    
+    <span class="keyword">def</span> <span class="function">__init__</span>(<span class="param">self</span>, <span class="param">name</span>: <span class="builtin">str</span>, <span class="param">level</span>: <span class="builtin">int</span> = <span class="number">1</span>) -> <span class="keyword">None</span>:
+        <span class="string">"""Initialize a new Player instance."""</span>
+        <span class="comment"># Validate inputs to catch bugs early</span>
+        <span class="keyword">if</span> <span class="keyword">not</span> name:
+            <span class="keyword">raise</span> <span class="builtin">ValueError</span>(<span class="string">"Name cannot be empty"</span>)
+        <span class="keyword">if</span> <span class="keyword">not</span> <span class="number">1</span> <= level <= <span class="number">100</span>:
+            <span class="keyword">raise</span> <span class="builtin">ValueError</span>(<span class="string">"Level must be between 1 and 100"</span>)
+        
+        self.name = name
+        self.level = level
+    
+    <span class="keyword">def</span> <span class="function">power</span>(<span class="param">self</span>) -> <span class="builtin">int</span>:
+        <span class="string">"""Calculate the player's attack power."""</span>
+        <span class="keyword">return</span> self.level * <span class="number">3</span>
+    
+    <span class="keyword">def</span> <span class="function">__repr__</span>(<span class="param">self</span>) -> <span class="builtin">str</span>:
+        <span class="keyword">return</span> <span class="string">f"Player(name='</span>{self.name}<span class="string">', level=</span>{self.level}<span class="string">)"</span>
+
+<span class="comment"># Usage</span>
+p = Player(<span class="string">'Ada'</span>, level=<span class="number">5</span>)
+<span class="keyword">print</span>(p)
+<span class="keyword">print</span>(<span class="string">f"{p.name} attacks with power {p.power()}"</span>)
+
+newbie = Player(<span class="string">'Bob'</span>)
+<span class="keyword">print</span>(newbie)
+
+<span class="comment"># This would raise an error (uncomment to test):</span>
+<span class="comment"># bad_player = Player('', level=999)  # ValueError!</span>
+</code></pre>
+                            <div class="output"></div>
+                        </div>
+                        <div class="explanation-box tip">
+                            <div class="explanation-title">⭐ Why This Is Best</div>
+                            <p><strong>Type hints</strong> (<code>name: str</code>): Your IDE can catch type errors before you run the code.</p>
+                            <p><strong>Docstrings:</strong> Other developers (and future you) know how to use the class.</p>
+                            <p><strong>Validation:</strong> Invalid data is rejected immediately with clear error messages.</p>
+                            <p><strong>Professional standard:</strong> This is how classes look in production codebases.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- EXAMPLE 2: Inheritance -->
+                <h3>Example 2: Inheritance (Creating Specialized Classes)</h3>
+                <p>Inheritance lets you create new classes based on existing ones. A <code>Mage</code> is a type of <code>Character</code> with extra abilities.</p>
+
+                <div class="skill-progression" data-example="oop-inheritance">
+                    <div class="skill-tabs">
+                        <button class="skill-tab active" data-level="bad" data-target="oop-inherit-bad">
+                            <span class="skill-tab-icon">🔴</span>
+                            Bad Practice
+                        </button>
+                        <button class="skill-tab" data-level="novice" data-target="oop-inherit-novice">
+                            <span class="skill-tab-icon">🟠</span>
+                            Novice
+                        </button>
+                        <button class="skill-tab" data-level="intermediate" data-target="oop-inherit-intermediate">
+                            <span class="skill-tab-icon">🔵</span>
+                            Intermediate
+                        </button>
+                        <button class="skill-tab" data-level="best" data-target="oop-inherit-best">
+                            <span class="skill-tab-icon">🟢</span>
+                            Best Practice
+                        </button>
+                    </div>
+
+                    <!-- BAD -->
+                    <div class="skill-content active" id="oop-inherit-bad">
+                        <div class="code-container level-bad">
+                            <div class="code-header">
+                                <div class="code-header-left">
+                                    <span class="code-label">Python</span>
+                                    <span class="level-badge bad">❌ Bad Practice</span>
+                                    <span class="semantic-label">Copy-paste code duplication</span>
+                                </div>
+                                <button class="run-button" data-output="Turing casts Fireball for 24 damage">Run ▶</button>
+                            </div>
+<pre><code><span class="comment"># ❌ BAD: Copy-pasting code between similar classes</span>
+<span class="comment"># Problem: If you fix a bug in one, you must fix it everywhere!</span>
+
+<span class="keyword">class</span> <span class="class-name">Warrior</span>:
+    <span class="keyword">def</span> <span class="function">__init__</span>(<span class="param">self</span>, <span class="param">name</span>, <span class="param">level</span>):
+        self.name = name      <span class="comment"># Copied code</span>
+        self.level = level    <span class="comment"># Copied code</span>
+        self.strength = <span class="number">10</span>
+    
+    <span class="keyword">def</span> <span class="function">attack</span>(<span class="param">self</span>):
+        <span class="keyword">return</span> self.strength + self.level
+
+<span class="keyword">class</span> <span class="class-name">Mage</span>:
+    <span class="keyword">def</span> <span class="function">__init__</span>(<span class="param">self</span>, <span class="param">name</span>, <span class="param">level</span>):
+        self.name = name      <span class="comment"># Same copied code!</span>
+        self.level = level    <span class="comment"># Same copied code!</span>
+        self.mana = <span class="number">100</span>
+    
+    <span class="keyword">def</span> <span class="function">cast</span>(<span class="param">self</span>, <span class="param">spell</span>):
+        <span class="keyword">return</span> <span class="string">f"{self.name} casts {spell} for {self.level * 6} damage"</span>
+
+<span class="comment"># Works, but code is duplicated</span>
+m = Mage(<span class="string">'Turing'</span>, <span class="number">4</span>)
+<span class="keyword">print</span>(m.cast(<span class="string">'Fireball'</span>))
+</code></pre>
+                            <div class="output"></div>
+                        </div>
+                        <div class="explanation-box warning">
+                            <div class="explanation-title">⚠️ Why This Is Bad</div>
+                            <p><strong>DRY violation:</strong> "Don't Repeat Yourself" - the same code is in multiple places.</p>
+                            <p><strong>Maintenance nightmare:</strong> Fix a bug in <code>Warrior.__init__</code>? You have to remember to fix <code>Mage</code> too.</p>
+                            <p><strong>No relationship:</strong> Python doesn't know that Warriors and Mages are both "characters".</p>
+                        </div>
+                    </div>
+
+                    <!-- NOVICE -->
+                    <div class="skill-content" id="oop-inherit-novice">
+                        <div class="code-container level-novice">
+                            <div class="code-header">
+                                <div class="code-header-left">
+                                    <span class="code-label">Python</span>
+                                    <span class="level-badge novice">🔰 Novice</span>
+                                    <span class="semantic-label">Basic inheritance with super()</span>
+                                </div>
+                                <button class="run-button" data-output="Turing casts Fireball for 24 damage">Run ▶</button>
+                            </div>
+<pre><code><span class="comment"># 🔰 NOVICE: Basic inheritance</span>
+<span class="comment"># Parent class (also called "base" or "super" class)</span>
+<span class="keyword">class</span> <span class="class-name">Character</span>:
+    <span class="keyword">def</span> <span class="function">__init__</span>(<span class="param">self</span>, <span class="param">name</span>, <span class="param">level</span>=<span class="number">1</span>):
+        self.name = name
+        self.level = level
+
+<span class="comment"># Child class - inherits from Character</span>
+<span class="comment"># Syntax: class ChildClass(ParentClass)</span>
+<span class="keyword">class</span> <span class="class-name">Mage</span>(Character):  <span class="comment"># Mage "is a" Character</span>
+    <span class="keyword">def</span> <span class="function">__init__</span>(<span class="param">self</span>, <span class="param">name</span>, <span class="param">level</span>=<span class="number">1</span>, <span class="param">mana</span>=<span class="number">100</span>):
+        <span class="comment"># super() calls the parent class's method</span>
+        <span class="keyword">super</span>().__init__(name, level)  <span class="comment"># Let Character set name & level</span>
+        self.mana = mana  <span class="comment"># Mage-specific attribute</span>
+    
+    <span class="keyword">def</span> <span class="function">cast</span>(<span class="param">self</span>, <span class="param">spell</span>):
+        <span class="keyword">return</span> <span class="string">f"{self.name} casts {spell} for {self.level * 6} damage"</span>
+
+m = Mage(<span class="string">'Turing'</span>, <span class="number">4</span>)
+<span class="keyword">print</span>(m.cast(<span class="string">'Fireball'</span>))
+</code></pre>
+                            <div class="output"></div>
+                        </div>
+                        <div class="explanation-box tip">
+                            <div class="explanation-title">✅ What's Better</div>
+                            <p><strong><code>super().__init__()</code>:</strong> Calls the parent's constructor, avoiding code duplication.</p>
+                            <p><strong>Clear hierarchy:</strong> A <code>Mage</code> IS-A <code>Character</code> - Python knows the relationship.</p>
+                            <p><strong>Single source:</strong> Change how characters work? Just edit the <code>Character</code> class.</p>
+                        </div>
+                    </div>
+
+                    <!-- INTERMEDIATE -->
+                    <div class="skill-content" id="oop-inherit-intermediate">
+                        <div class="code-container level-intermediate">
+                            <div class="code-header">
+                                <div class="code-header-left">
+                                    <span class="code-label">Python</span>
+                                    <span class="level-badge intermediate">📈 Intermediate</span>
+                                    <span class="semantic-label">Composition over inheritance</span>
+                                </div>
+                                <button class="run-button" data-output="Ada picked up Health Potion\nAda's inventory: ['Health Potion']">Run ▶</button>
+                            </div>
+<pre><code><span class="comment"># 📈 INTERMEDIATE: Composition - "has a" vs "is a"</span>
+<span class="comment"># Instead of inheriting everything, objects can CONTAIN other objects</span>
+
+<span class="keyword">class</span> <span class="class-name">Inventory</span>:
+    <span class="string">"""Manages a collection of items."""</span>
+    <span class="keyword">def</span> <span class="function">__init__</span>(<span class="param">self</span>):
+        self.items = []
+    
+    <span class="keyword">def</span> <span class="function">add</span>(<span class="param">self</span>, <span class="param">item</span>):
+        self.items.append(item)
+    
+    <span class="keyword">def</span> <span class="function">remove</span>(<span class="param">self</span>, <span class="param">item</span>):
+        self.items.remove(item)
+
+<span class="keyword">class</span> <span class="class-name">Character</span>:
+    <span class="keyword">def</span> <span class="function">__init__</span>(<span class="param">self</span>, <span class="param">name</span>, <span class="param">level</span>=<span class="number">1</span>):
+        self.name = name
+        self.level = level
+        <span class="comment"># COMPOSITION: Character HAS-AN Inventory</span>
+        self.inventory = Inventory()  <span class="comment"># Create an Inventory object</span>
+    
+    <span class="keyword">def</span> <span class="function">pick_up</span>(<span class="param">self</span>, <span class="param">item</span>):
+        self.inventory.add(item)
+        <span class="keyword">print</span>(<span class="string">f"{self.name} picked up {item}"</span>)
+
+<span class="comment"># Using composition</span>
+hero = Character(<span class="string">'Ada'</span>)
+hero.pick_up(<span class="string">'Health Potion'</span>)
+<span class="keyword">print</span>(<span class="string">f"{hero.name}'s inventory: {hero.inventory.items}"</span>)
+</code></pre>
+                            <div class="output"></div>
+                        </div>
+                        <div class="explanation-box tip">
+                            <div class="explanation-title">✅ Composition vs Inheritance</div>
+                            <p><strong>Inheritance (is-a):</strong> "A Mage IS A Character" - use when there's a true hierarchy.</p>
+                            <p><strong>Composition (has-a):</strong> "A Character HAS AN Inventory" - use when objects contain other objects.</p>
+                            <p><strong>Rule of thumb:</strong> Prefer composition - it's more flexible and easier to change later.</p>
+                        </div>
+                    </div>
+
+                    <!-- BEST -->
+                    <div class="skill-content" id="oop-inherit-best">
+                        <div class="code-container level-best">
+                            <div class="code-header">
+                                <div class="code-header-left">
+                                    <span class="code-label">Python</span>
+                                    <span class="level-badge best">⭐ Best Practice</span>
+                                    <span class="semantic-label">Using @dataclass for simple data objects</span>
+                                </div>
+                                <button class="run-button" data-output="Item(name='Potion', price=9.99, quantity=3)\nTotal value: $29.97">Run ▶</button>
+                            </div>
+<pre><code><span class="comment"># ⭐ BEST PRACTICE: Use @dataclass for data-focused classes</span>
+<span class="comment"># dataclass auto-generates __init__, __repr__, __eq__, etc.</span>
+
+<span class="keyword">from</span> dataclasses <span class="keyword">import</span> dataclass
+
+<span class="decorator">@dataclass</span>
+<span class="keyword">class</span> <span class="class-name">Item</span>:
+    <span class="string">"""An item that can be bought or sold."""</span>
+    name: <span class="builtin">str</span>
+    price: <span class="builtin">float</span>
+    quantity: <span class="builtin">int</span> = <span class="number">1</span>  <span class="comment"># Default value</span>
+    
+    <span class="keyword">def</span> <span class="function">total_value</span>(<span class="param">self</span>) -> <span class="builtin">float</span>:
+        <span class="string">"""Calculate total value of this item stack."""</span>
+        <span class="keyword">return</span> self.price * self.quantity
+
+<span class="comment"># dataclass auto-generates:
+#   __init__(self, name, price, quantity=1)
+#   __repr__(self) -> "Item(name='...', price=..., quantity=...)"
+#   __eq__(self, other) -> compares all fields</span>
+
+potion = Item(<span class="string">'Potion'</span>, <span class="number">9.99</span>, quantity=<span class="number">3</span>)
+<span class="keyword">print</span>(potion)  <span class="comment"># Automatic nice output!</span>
+<span class="keyword">print</span>(<span class="string">f"Total value: ${potion.total_value():.2f}"</span>)
+</code></pre>
+                            <div class="output"></div>
+                        </div>
+                        <div class="explanation-box tip">
+                            <div class="explanation-title">⭐ Why Use @dataclass</div>
+                            <p><strong>Less boilerplate:</strong> No need to write <code>__init__</code>, <code>__repr__</code>, etc. manually.</p>
+                            <p><strong>Type hints required:</strong> Forces you to document your data types.</p>
+                            <p><strong>When to use:</strong> Classes that are mainly about storing data (like database records, API responses, game items).</p>
+                            <p><strong>When NOT to use:</strong> Classes with complex initialization logic or heavy behavior.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Common Pitfalls -->
+                <div class="explanation-box warning">
+                    <div class="explanation-title">⚠️ Common OOP Pitfalls to Avoid</div>
+                    <p><strong>Forgetting <code>self</code>:</strong> Every method needs <code>self</code> as the first parameter, and you must use <code>self.</code> to access attributes.</p>
+                    <p><strong>Calling methods wrong:</strong> Use <code>obj.method()</code> not <code>method(obj)</code> from outside the class.</p>
+                    <p><strong>Mutable default arguments:</strong> Never use <code>def __init__(self, items=[])</code> — all instances share the same list! Use <code>None</code> and create a new list inside.</p>
+                    <p><strong>Overusing inheritance:</strong> Ask "IS-A" vs "HAS-A". Often composition (objects containing other objects) is cleaner than inheritance.</p>
+                </div>
+
+                <!-- Practice Playground -->
+                <div class="playground">
+                    <div class="playground-header">
+                        <div class="playground-title">🎮 Try It Yourself: Design a Class</div>
+                        <span class="playground-challenge">Challenge</span>
+                    </div>
+                    <p>Create a <code>Weapon</code> class with <code>name</code>, <code>damage</code>, and <code>speed</code> attributes, plus a <code>dps()</code> method that returns damage per second (damage × speed).</p>
+                    <textarea placeholder="# Your code here!
+class Weapon:
+    def __init__(self, name, damage, speed):
+        # Store attributes
+        pass
+    
+    def dps(self):
+        # Return damage * speed
+        pass
+
+# Test it:
+# sword = Weapon('Iron Sword', 10, 1.5)
+# print(sword.dps())  # Should print 15.0"></textarea>
+                    <div class="playground-hint">
+                        <strong>Hint:</strong> Remember to use <code>self.attribute_name</code> to store values in <code>__init__</code> and access them in <code>dps()</code>.
+                    </div>
+                </div>
+
+                <!-- Discussion Questions -->
+                <div class="analogy-box">
+                    <div class="analogy-title">💬 Group Discussion Questions</div>
+                    <p><strong>1.</strong> When would you use a class vs just using dictionaries or functions? Give an example from a project you might build.</p>
+                    <p><strong>2.</strong> What's the difference between inheritance (IS-A) and composition (HAS-A)? Which is better for a game with characters that can equip weapons?</p>
+                    <p><strong>3.</strong> Why is <code>__repr__</code> useful for debugging? Have you ever been confused by seeing <code>&lt;object at 0x...&gt;</code> in your output?</p>
+                    <p><strong>4.</strong> When should you use <code>@dataclass</code> instead of writing a regular class? What are the trade-offs?</p>
+                </div>
+
+                <button class="nav-btn complete-btn" data-topic="oop">Mark Topic Complete ✓</button>
+                <div class="nav-buttons">
+                    <button class="nav-btn prev" onclick="navigateToSection('intro')">◀ Prev</button>
+                    <button class="nav-btn next" onclick="navigateToSection('decorators')">Next: Decorators ▶</button>
+                </div>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════════════════
+                 SECTION: Decorators
+                 Purpose: Teach function decoration patterns
+                 ═══════════════════════════════════════════════════════════════ -->
+            <section id="decorators" class="section">
+                <h2>✨ Decorators</h2>
+                
+                <p>Decorators are functions that <strong>wrap other functions</strong> to add extra behavior. They let you modify what happens before or after a function runs—without changing the function's code.</p>
+
+                <!-- Decorator Vocabulary -->
+                <div class="explanation-box info">
+                    <div class="explanation-title">📖 Decorator Vocabulary</div>
+                    <p><code>@decorator</code> — The @ syntax that applies a decorator to a function</p>
+                    <p><code>wrapper</code> — The inner function that wraps the original function</p>
+                    <p><code>*args, **kwargs</code> — Catch-all for any arguments passed to the function</p>
+                    <p><code>@wraps(fn)</code> — Preserves the original function's name and docstring</p>
+                </div>
+
+                <!-- Analogy -->
+                <div class="analogy-box">
+                    <div class="analogy-title">🎁 Think of Decorators Like Gift Wrapping</div>
+                    <p>Imagine you have a gift (your function). A decorator is like wrapping paper—it goes around the gift, can add a bow or tag (extra behavior), but the gift inside stays the same.</p>
+                    <p><code>@logging</code> adds a note saying "Gift was opened at 3pm"</p>
+                    <p><code>@timer</code> adds a stopwatch to see how long opening took</p>
+                    <p><code>@require_login</code> adds a lock that checks if you're allowed to open it</p>
+                </div>
+
+                <!-- Example 1: Logging Decorator -->
+                <h3>Example 1: Creating a Logging Decorator</h3>
+                <p>Let's create a decorator that prints a message whenever a function is called:</p>
+
+                <div class="skill-progression" data-example="decorator-logging">
+                    <div class="skill-tabs">
+                        <button class="skill-tab active" data-level="bad" data-target="dec-log-bad">
+                            <span class="skill-tab-icon">🔴</span>
+                            Bad Practice
+                        </button>
+                        <button class="skill-tab" data-level="novice" data-target="dec-log-novice">
+                            <span class="skill-tab-icon">🟠</span>
+                            Novice
+                        </button>
+                        <button class="skill-tab" data-level="intermediate" data-target="dec-log-intermediate">
+                            <span class="skill-tab-icon">🔵</span>
+                            Intermediate
+                        </button>
+                        <button class="skill-tab" data-level="best" data-target="dec-log-best">
+                            <span class="skill-tab-icon">🟢</span>
+                            Best Practice
+                        </button>
+                    </div>
+
+                    <!-- BAD -->
+                    <div class="skill-content active" id="dec-log-bad">
+                        <div class="code-container level-bad">
+                            <div class="code-header">
+                                <div class="code-header-left">
+                                    <span class="code-label">Python</span>
+                                    <span class="level-badge bad">❌ Bad Practice</span>
+                                    <span class="semantic-label">Copy-pasting logging into every function</span>
+                                </div>
+                                <button class="run-button" data-output="[LOG] Calling greet\nHello, Ada\n[LOG] Calling farewell\nGoodbye, Ada">Run ▶</button>
+                            </div>
+<pre><code><span class="comment"># ❌ BAD: Copy-pasting logging code into every function</span>
+<span class="comment"># Problem 1: Duplicate code everywhere</span>
+<span class="comment"># Problem 2: Hard to change logging format</span>
+<span class="comment"># Problem 3: Easy to forget in some functions</span>
+
+<span class="keyword">def</span> <span class="function">greet</span>(name):
+    <span class="keyword">print</span>(<span class="string">"[LOG] Calling greet"</span>)  <span class="comment"># Copied logging</span>
+    <span class="keyword">print</span>(<span class="string">f"Hello, {name}"</span>)
+
+<span class="keyword">def</span> <span class="function">farewell</span>(name):
+    <span class="keyword">print</span>(<span class="string">"[LOG] Calling farewell"</span>)  <span class="comment"># Same copied logging!</span>
+    <span class="keyword">print</span>(<span class="string">f"Goodbye, {name}"</span>)
+
+<span class="comment"># If you want to change the log format, you have to</span>
+<span class="comment"># change it in EVERY function!</span>
+greet(<span class="string">'Ada'</span>)
+farewell(<span class="string">'Ada'</span>)
+</code></pre>
+                            <div class="output"></div>
+                        </div>
+                        <div class="explanation-box warning">
+                            <div class="explanation-title">⚠️ Why This Is Bad</div>
+                            <p><strong>DRY violation:</strong> The same logging code is copied into every function.</p>
+                            <p><strong>Maintenance problem:</strong> Want to change "[LOG]" to "[DEBUG]"? Edit every single function.</p>
+                            <p><strong>Mixing concerns:</strong> The function now does two things: logging AND its actual job.</p>
+                        </div>
+                    </div>
+
+                    <!-- NOVICE -->
+                    <div class="skill-content" id="dec-log-novice">
+                        <div class="code-container level-novice">
+                            <div class="code-header">
+                                <div class="code-header-left">
+                                    <span class="code-label">Python</span>
+                                    <span class="level-badge novice">🔰 Novice</span>
+                                    <span class="semantic-label">Basic decorator structure</span>
+                                </div>
+                                <button class="run-button" data-output="[LOG] Calling a function\nHello, Ada">Run ▶</button>
+                            </div>
+<pre><code><span class="comment"># 🔰 NOVICE: First attempt at a decorator</span>
+<span class="comment"># ✓ Logging code is in one place</span>
+<span class="comment"># ✗ Doesn't show the actual function name</span>
+<span class="comment"># ✗ Doesn't handle function arguments properly</span>
+
+<span class="comment"># A decorator is a function that takes a function as input</span>
+<span class="keyword">def</span> <span class="function">log</span>(func):
+    <span class="comment"># It returns a NEW function (the "wrapper")</span>
+    <span class="keyword">def</span> <span class="function">wrapper</span>():
+        <span class="keyword">print</span>(<span class="string">"[LOG] Calling a function"</span>)
+        func()  <span class="comment"># Call the original function</span>
+    <span class="keyword">return</span> wrapper  <span class="comment"># Return the wrapper, NOT call it</span>
+
+<span class="comment"># @log is equivalent to: greet = log(greet)</span>
+<span class="decorator">@log</span>
+<span class="keyword">def</span> <span class="function">greet</span>():
+    <span class="keyword">print</span>(<span class="string">"Hello, Ada"</span>)
+
+<span class="comment"># When we call greet(), we're actually calling wrapper()</span>
+greet()
+
+<span class="comment"># ⚠️ Problem: This breaks if greet() takes arguments!</span>
+<span class="comment"># greet("Bob")  # TypeError: wrapper() takes 0 positional arguments</span>
+</code></pre>
+                            <div class="output"></div>
+                        </div>
+                        <div class="explanation-box tip">
+                            <div class="explanation-title">✅ What's Better</div>
+                            <p><strong>Separation:</strong> Logging logic is now separate from the function.</p>
+                            <p><strong>Reusable:</strong> Apply <code>@log</code> to any function.</p>
+                            <p><strong>But:</strong> This simple version can't handle functions with arguments!</p>
+                        </div>
+                    </div>
+
+                    <!-- INTERMEDIATE -->
+                    <div class="skill-content" id="dec-log-intermediate">
+                        <div class="code-container level-intermediate">
+                            <div class="code-header">
+                                <div class="code-header-left">
+                                    <span class="code-label">Python</span>
+                                    <span class="level-badge intermediate">📈 Intermediate</span>
+                                    <span class="semantic-label">Handling arguments with *args, **kwargs</span>
+                                </div>
+                                <button class="run-button" data-output="[LOG] Calling greet\nHello, Ada!\n[LOG] Calling add\nResult: 8">Run ▶</button>
+                            </div>
+<pre><code><span class="comment"># 📈 INTERMEDIATE: Handle any arguments</span>
+<span class="comment"># ✓ Works with any function signature</span>
+<span class="comment"># ✓ Shows the function name</span>
+<span class="comment"># ✗ Loses the original function's name and docstring</span>
+
+<span class="keyword">def</span> <span class="function">log</span>(func):
+    <span class="comment"># *args catches positional args: (1, 2, 3)</span>
+    <span class="comment"># **kwargs catches keyword args: (name="Ada", age=25)</span>
+    <span class="keyword">def</span> <span class="function">wrapper</span>(*args, **kwargs):
+        <span class="comment"># func.__name__ gets the original function's name</span>
+        <span class="keyword">print</span>(<span class="string">f"[LOG] Calling {func.__name__}"</span>)
+        <span class="comment"># Pass all arguments through to the original function</span>
+        result = func(*args, **kwargs)
+        <span class="keyword">return</span> result  <span class="comment"># Don't forget to return the result!</span>
+    <span class="keyword">return</span> wrapper
+
+<span class="decorator">@log</span>
+<span class="keyword">def</span> <span class="function">greet</span>(name):
+    <span class="keyword">print</span>(<span class="string">f"Hello, {name}!"</span>)
+
+<span class="decorator">@log</span>
+<span class="keyword">def</span> <span class="function">add</span>(a, b):
+    <span class="keyword">return</span> a + b
+
+greet(<span class="string">'Ada'</span>)
+<span class="keyword">print</span>(<span class="string">f"Result: {add(3, 5)}"</span>)
+
+<span class="comment"># ⚠️ Problem: greet.__name__ is now "wrapper", not "greet"!</span>
+</code></pre>
+                            <div class="output"></div>
+                        </div>
+                        <div class="explanation-box tip">
+                            <div class="explanation-title">✅ What's Better</div>
+                            <p><strong><code>*args, **kwargs</code>:</strong> The wrapper can accept ANY arguments and pass them through.</p>
+                            <p><strong><code>func.__name__</code>:</strong> We can access the original function's name.</p>
+                            <p><strong>Return value:</strong> We capture and return the result properly.</p>
+                        </div>
+                    </div>
+
+                    <!-- BEST -->
+                    <div class="skill-content" id="dec-log-best">
+                        <div class="code-container level-best">
+                            <div class="code-header">
+                                <div class="code-header-left">
+                                    <span class="code-label">Python</span>
+                                    <span class="level-badge best">⭐ Best Practice</span>
+                                    <span class="semantic-label">Using @wraps to preserve metadata</span>
+                                </div>
+                                <button class="run-button" data-output="[LOG] Calling greet with args=('Ada',) kwargs={}\nHello, Ada!\nFunction name: greet\nDocstring: Greet someone by name.">Run ▶</button>
+                            </div>
+<pre><code><span class="comment"># ⭐ BEST PRACTICE: Preserve function metadata</span>
+<span class="comment"># ✓ @wraps preserves __name__, __doc__, etc.</span>
+<span class="comment"># ✓ Type hints for the decorator</span>
+<span class="comment"># ✓ Logs arguments for debugging</span>
+
+<span class="keyword">from</span> functools <span class="keyword">import</span> wraps
+<span class="keyword">from</span> typing <span class="keyword">import</span> Callable, Any
+
+<span class="keyword">def</span> <span class="function">log</span>(func: Callable) -> Callable:
+    <span class="string">"""Decorator that logs function calls with arguments."""</span>
+    
+    <span class="decorator">@wraps</span>(func)  <span class="comment"># This copies __name__, __doc__, etc. from func to wrapper</span>
+    <span class="keyword">def</span> <span class="function">wrapper</span>(*args: Any, **kwargs: Any) -> Any:
+        <span class="comment"># Log the call with all arguments for debugging</span>
+        <span class="keyword">print</span>(<span class="string">f"[LOG] Calling {func.__name__} with args={args} kwargs={kwargs}"</span>)
+        <span class="keyword">return</span> func(*args, **kwargs)
+    
+    <span class="keyword">return</span> wrapper
+
+<span class="decorator">@log</span>
+<span class="keyword">def</span> <span class="function">greet</span>(name: <span class="builtin">str</span>) -> <span class="keyword">None</span>:
+    <span class="string">"""Greet someone by name."""</span>
+    <span class="keyword">print</span>(<span class="string">f"Hello, {name}!"</span>)
+
+greet(<span class="string">'Ada'</span>)
+
+<span class="comment"># Now the function keeps its original identity!</span>
+<span class="keyword">print</span>(<span class="string">f"Function name: {greet.__name__}"</span>)  <span class="comment"># "greet" not "wrapper"</span>
+<span class="keyword">print</span>(<span class="string">f"Docstring: {greet.__doc__}"</span>)  <span class="comment"># Preserved!</span>
+</code></pre>
+                            <div class="output"></div>
+                        </div>
+                        <div class="explanation-box tip">
+                            <div class="explanation-title">⭐ Why This Is Best</div>
+                            <p><strong><code>@wraps(func)</code>:</strong> Copies the original function's <code>__name__</code>, <code>__doc__</code>, and other metadata to the wrapper.</p>
+                            <p><strong>Debugging:</strong> Tools like debuggers and documentation generators see the real function name.</p>
+                            <p><strong>Type hints:</strong> Makes the decorator's purpose clear to other developers.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Example 2: Timing Decorator -->
+                <h3>Example 2: Timing How Long Functions Take</h3>
+                <p>A practical decorator that measures execution time—useful for performance profiling:</p>
+
+                <div class="skill-progression" data-example="decorator-timing">
+                    <div class="skill-tabs">
+                        <button class="skill-tab active" data-level="bad" data-target="dec-time-bad">
+                            <span class="skill-tab-icon">🔴</span>
+                            Bad Practice
+                        </button>
+                        <button class="skill-tab" data-level="novice" data-target="dec-time-novice">
+                            <span class="skill-tab-icon">🟠</span>
+                            Novice
+                        </button>
+                        <button class="skill-tab" data-level="best" data-target="dec-time-best">
+                            <span class="skill-tab-icon">🟢</span>
+                            Best Practice
+                        </button>
+                    </div>
+
+                    <!-- BAD -->
+                    <div class="skill-content active" id="dec-time-bad">
+                        <div class="code-container level-bad">
+                            <div class="code-header">
+                                <div class="code-header-left">
+                                    <span class="code-label">Python</span>
+                                    <span class="level-badge bad">❌ Bad Practice</span>
+                                    <span class="semantic-label">Timing code mixed into function</span>
+                                </div>
+                                <button class="run-button" data-output="slow_function took 0.50 seconds\nResult: Done!">Run ▶</button>
+                            </div>
+<pre><code><span class="comment"># ❌ BAD: Mixing timing code into the function</span>
+<span class="keyword">import</span> time
+
+<span class="keyword">def</span> <span class="function">slow_function</span>():
+    start = time.time()  <span class="comment"># Timing code</span>
+    
+    <span class="comment"># --- Actual function logic ---</span>
+    time.sleep(<span class="number">0.5</span>)  <span class="comment"># Simulate slow operation</span>
+    result = <span class="string">"Done!"</span>
+    <span class="comment"># --- End function logic ---</span>
+    
+    end = time.time()  <span class="comment"># More timing code</span>
+    <span class="keyword">print</span>(<span class="string">f"slow_function took {end - start:.2f} seconds"</span>)
+    <span class="keyword">return</span> result
+
+<span class="keyword">print</span>(<span class="string">f"Result: {slow_function()}"</span>)
+
+<span class="comment"># Problems:</span>
+<span class="comment"># - Function now does TWO things: its job AND timing</span>
+<span class="comment"># - Can't easily turn timing on/off</span>
+<span class="comment"># - Must add timing code to EVERY function you want to time</span>
+</code></pre>
+                            <div class="output"></div>
+                        </div>
+                    </div>
+
+                    <!-- NOVICE -->
+                    <div class="skill-content" id="dec-time-novice">
+                        <div class="code-container level-novice">
+                            <div class="code-header">
+                                <div class="code-header-left">
+                                    <span class="code-label">Python</span>
+                                    <span class="level-badge novice">🔰 Novice</span>
+                                    <span class="semantic-label">Basic timing decorator</span>
+                                </div>
+                                <button class="run-button" data-output="[TIMER] slow_function took 0.50s\nResult: Done!">Run ▶</button>
+                            </div>
+<pre><code><span class="comment"># 🔰 NOVICE: Basic timing decorator</span>
+<span class="keyword">import</span> time
+
+<span class="keyword">def</span> <span class="function">timer</span>(func):
+    <span class="keyword">def</span> <span class="function">wrapper</span>(*args, **kwargs):
+        start = time.time()
+        result = func(*args, **kwargs)
+        end = time.time()
+        <span class="keyword">print</span>(<span class="string">f"[TIMER] {func.__name__} took {end - start:.2f}s"</span>)
+        <span class="keyword">return</span> result
+    <span class="keyword">return</span> wrapper
+
+<span class="decorator">@timer</span>
+<span class="keyword">def</span> <span class="function">slow_function</span>():
+    time.sleep(<span class="number">0.5</span>)
+    <span class="keyword">return</span> <span class="string">"Done!"</span>
+
+<span class="keyword">print</span>(<span class="string">f"Result: {slow_function()}"</span>)
+</code></pre>
+                            <div class="output"></div>
+                        </div>
+                    </div>
+
+                    <!-- BEST -->
+                    <div class="skill-content" id="dec-time-best">
+                        <div class="code-container level-best">
+                            <div class="code-header">
+                                <div class="code-header-left">
+                                    <span class="code-label">Python</span>
+                                    <span class="level-badge best">⭐ Best Practice</span>
+                                    <span class="semantic-label">Production-ready timer with perf_counter</span>
+                                </div>
+                                <button class="run-button" data-output="[⏱️ TIMER] slow_function completed in 500.12ms\nResult: Done!">Run ▶</button>
+                            </div>
+<pre><code><span class="comment"># ⭐ BEST PRACTICE: Production-ready timing decorator</span>
+<span class="keyword">import</span> time
+<span class="keyword">from</span> functools <span class="keyword">import</span> wraps
+<span class="keyword">from</span> typing <span class="keyword">import</span> Callable, Any
+
+<span class="keyword">def</span> <span class="function">timer</span>(func: Callable) -> Callable:
+    <span class="string">"""
+    Decorator that measures and prints function execution time.
+    
+    Uses time.perf_counter() for high-precision timing.
+    """</span>
+    <span class="decorator">@wraps</span>(func)
+    <span class="keyword">def</span> <span class="function">wrapper</span>(*args: Any, **kwargs: Any) -> Any:
+        <span class="comment"># perf_counter() is more accurate than time.time()</span>
+        start = time.perf_counter()
+        <span class="keyword">try</span>:
+            result = func(*args, **kwargs)
+            <span class="keyword">return</span> result
+        <span class="keyword">finally</span>:
+            <span class="comment"># 'finally' ensures timing runs even if function raises error</span>
+            elapsed = time.perf_counter() - start
+            <span class="keyword">print</span>(<span class="string">f"[⏱️ TIMER] {func.__name__} completed in {elapsed*1000:.2f}ms"</span>)
+    <span class="keyword">return</span> wrapper
+
+<span class="decorator">@timer</span>
+<span class="keyword">def</span> <span class="function">slow_function</span>() -> <span class="builtin">str</span>:
+    <span class="string">"""Simulate a slow operation."""</span>
+    time.sleep(<span class="number">0.5</span>)
+    <span class="keyword">return</span> <span class="string">"Done!"</span>
+
+<span class="keyword">print</span>(<span class="string">f"Result: {slow_function()}"</span>)
+</code></pre>
+                            <div class="output"></div>
+                        </div>
+                        <div class="explanation-box tip">
+                            <div class="explanation-title">⭐ Professional Tips</div>
+                            <p><strong><code>time.perf_counter()</code>:</strong> More accurate than <code>time.time()</code> for measuring short durations.</p>
+                            <p><strong><code>try/finally</code>:</strong> The timing message prints even if the function crashes.</p>
+                            <p><strong>Milliseconds:</strong> <code>elapsed*1000</code> gives milliseconds for readability.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Real World Example -->
+                <div class="explanation-box info">
+                    <div class="explanation-title">🌍 Where You'll See Decorators</div>
+                    <p><strong>Flask:</strong> <code>@app.route('/home')</code> — registers a function as a URL handler</p>
+                    <p><strong>Django:</strong> <code>@login_required</code> — restricts access to logged-in users</p>
+                    <p><strong>Python:</strong> <code>@property</code> — makes a method act like an attribute</p>
+                    <p><strong>Python:</strong> <code>@staticmethod</code> — creates a method that doesn't need <code>self</code></p>
+                    <p><strong>Testing:</strong> <code>@pytest.fixture</code> — sets up test data</p>
+                </div>
+
+                <!-- Common Pitfalls -->
+                <div class="explanation-box warning">
+                    <div class="explanation-title">⚠️ Common Decorator Pitfalls</div>
+                    <p><strong>Forgetting to return the result:</strong> If the decorated function returns a value, your wrapper MUST <code>return func(*args, **kwargs)</code>.</p>
+                    <p><strong>Not using <code>@wraps</code>:</strong> Without it, your function loses its name and docstring, breaking help() and debugging tools.</p>
+                    <p><strong>Calling the decorator:</strong> Use <code>@timer</code> not <code>@timer()</code> for simple decorators. The <code>()</code> is only for decorators with parameters.</p>
+                    <p><strong>Confusing decorator order:</strong> <code>@a @b def func():</code> means <code>a(b(func))</code> — bottom decorator is applied first!</p>
+                </div>
+
+                <!-- Practice -->
+                <div class="playground">
+                    <div class="playground-header">
+                        <div class="playground-title">🎮 Try It: Create a Counter Decorator</div>
+                        <span class="playground-challenge">Challenge</span>
+                    </div>
+                    <p>Create a decorator called <code>@count_calls</code> that counts how many times a function has been called and prints the count.</p>
+                    <textarea placeholder="# Create a decorator that tracks call count
+
+def count_calls(func):
+    count = 0  # This will be 'remembered' by the inner function
+    
+    def wrapper(*args, **kwargs):
+        # Hint: Use 'nonlocal count' to modify outer variable
+        pass
+    
+    return wrapper
+
+@count_calls
+def say_hello():
+    print('Hello!')
+
+# Test it:
+# say_hello()  # Call #1 to say_hello
+# say_hello()  # Call #2 to say_hello"></textarea>
+                    <div class="playground-hint">
+                        <strong>Hint:</strong> Use <code>nonlocal count</code> inside the wrapper to modify the outer <code>count</code> variable. This is actually a closure (next topic!).
+                    </div>
+                </div>
+
+                <!-- Discussion Questions -->
+                <div class="analogy-box">
+                    <div class="analogy-title">💬 Group Discussion Questions</div>
+                    <p><strong>1.</strong> What are some real-world uses for decorators you can imagine? (Hint: Think about logging, security, validation, caching...)</p>
+                    <p><strong>2.</strong> Why is separation of concerns important? How do decorators help keep your code clean?</p>
+                    <p><strong>3.</strong> When would a decorator make code MORE confusing instead of clearer? When should you just use a regular function call?</p>
+                    <p><strong>4.</strong> Can you think of a decorator you'd want for your own projects? What behavior would it add?</p>
+                </div>
+
+                <button class="nav-btn complete-btn" data-topic="decorators">Mark Topic Complete ✓</button>
+                <div class="nav-buttons">
+                    <button class="nav-btn prev" onclick="navigateToSection('oop')">◀ Prev: OOP</button>
+                    <button class="nav-btn next" onclick="navigateToSection('comprehensions')">Next: Comprehensions ▶</button>
+                </div>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════════════════
+                 SECTION: List Comprehensions
+                 Purpose: Teach concise data transformation patterns
+                 ═══════════════════════════════════════════════════════════════ -->
+            <section id="comprehensions" class="section">
+                <h2>⚡ List Comprehensions</h2>
+                
+                <p>Comprehensions are Python's elegant way to create new lists, dicts, or sets by transforming existing data. They replace multi-line loops with a single, readable expression.</p>
+
+                <!-- Comprehension Anatomy -->
+                <div class="explanation-box info">
+                    <div class="explanation-title">📖 Comprehension Anatomy</div>
+                    <p><strong>Basic syntax:</strong> <code>[expression for item in iterable]</code></p>
+                    <p><strong>With filter:</strong> <code>[expression for item in iterable if condition]</code></p>
+                    <p><strong>Dict:</strong> <code>{key: value for item in iterable}</code></p>
+                    <p><strong>Set:</strong> <code>{expression for item in iterable}</code></p>
+                    <p><strong>Generator:</strong> <code>(expression for item in iterable)</code> — lazy, memory efficient</p>
+                </div>
+
+                <!-- Example 1: List Comprehensions -->
+                <h3>Example 1: Squaring Numbers</h3>
+                <p>Let's transform a list of numbers into their squares:</p>
+
+                <div class="skill-progression" data-example="comp-squares">
+                    <div class="skill-tabs">
+                        <button class="skill-tab active" data-level="bad" data-target="comp-sq-bad">
+                            <span class="skill-tab-icon">🔴</span>
+                            Bad Practice
+                        </button>
+                        <button class="skill-tab" data-level="novice" data-target="comp-sq-novice">
+                            <span class="skill-tab-icon">🟠</span>
+                            Novice
+                        </button>
+                        <button class="skill-tab" data-level="intermediate" data-target="comp-sq-intermediate">
+                            <span class="skill-tab-icon">🔵</span>
+                            Intermediate
+                        </button>
+                        <button class="skill-tab" data-level="best" data-target="comp-sq-best">
+                            <span class="skill-tab-icon">🟢</span>
+                            Best Practice
+                        </button>
+                    </div>
+
+                    <!-- BAD -->
+                    <div class="skill-content active" id="comp-sq-bad">
+                        <div class="code-container level-bad">
+                            <div class="code-header">
+                                <div class="code-header-left">
+                                    <span class="code-label">Python</span>
+                                    <span class="level-badge bad">❌ Bad Practice</span>
+                                    <span class="semantic-label">Using index-based loop</span>
+                                </div>
+                                <button class="run-button" data-output="[0, 1, 4, 9, 16]">Run ▶</button>
+                            </div>
+<pre><code><span class="comment"># ❌ BAD: Using index-based loop (C-style)</span>
+<span class="comment"># Problem 1: Verbose and error-prone</span>
+<span class="comment"># Problem 2: Easy to get off-by-one errors</span>
+<span class="comment"># Problem 3: Not Pythonic</span>
+
+nums = [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]
+squares = []
+
+<span class="comment"># Using index like in C/Java - NOT Pythonic!</span>
+i = <span class="number">0</span>
+<span class="keyword">while</span> i < <span class="builtin">len</span>(nums):
+    squares.append(nums[i] * nums[i])
+    i += <span class="number">1</span>  <span class="comment"># Easy to forget this line!</span>
+
+<span class="keyword">print</span>(squares)
+</code></pre>
+                            <div class="output"></div>
+                        </div>
+                        <div class="explanation-box warning">
+                            <div class="explanation-title">⚠️ Why This Is Bad</div>
+                            <p><strong>Verbose:</strong> 6 lines for a simple transformation.</p>
+                            <p><strong>Error-prone:</strong> Forgetting <code>i += 1</code> creates an infinite loop.</p>
+                            <p><strong>Unpythonic:</strong> Python has better iteration patterns.</p>
+                        </div>
+                    </div>
+
+                    <!-- NOVICE -->
+                    <div class="skill-content" id="comp-sq-novice">
+                        <div class="code-container level-novice">
+                            <div class="code-header">
+                                <div class="code-header-left">
+                                    <span class="code-label">Python</span>
+                                    <span class="level-badge novice">🔰 Novice</span>
+                                    <span class="semantic-label">Standard for loop with append</span>
+                                </div>
+                                <button class="run-button" data-output="[0, 1, 4, 9, 16]">Run ▶</button>
+                            </div>
+<pre><code><span class="comment"># 🔰 NOVICE: Standard for loop</span>
+<span class="comment"># ✓ Correct Python iteration</span>
+<span class="comment"># ✓ Clear and readable</span>
+<span class="comment"># ✗ Takes 4 lines for a simple task</span>
+
+nums = [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]
+squares = []  <span class="comment"># Start with empty list</span>
+
+<span class="keyword">for</span> n <span class="keyword">in</span> nums:  <span class="comment"># Iterate directly over elements</span>
+    squares.append(n * n)  <span class="comment"># Add squared value</span>
+
+<span class="keyword">print</span>(squares)
+</code></pre>
+                            <div class="output"></div>
+                        </div>
+                        <div class="explanation-box tip">
+                            <div class="explanation-title">✅ What's Better</div>
+                            <p><strong>Direct iteration:</strong> <code>for n in nums</code> is cleaner than index-based loops.</p>
+                            <p><strong>Readable:</strong> Anyone can follow the logic step by step.</p>
+                        </div>
+                    </div>
+
+                    <!-- INTERMEDIATE -->
+                    <div class="skill-content" id="comp-sq-intermediate">
+                        <div class="code-container level-intermediate">
+                            <div class="code-header">
+                                <div class="code-header-left">
+                                    <span class="code-label">Python</span>
+                                    <span class="level-badge intermediate">📈 Intermediate</span>
+                                    <span class="semantic-label">Basic list comprehension</span>
+                                </div>
+                                <button class="run-button" data-output="[0, 1, 4, 9, 16]">Run ▶</button>
+                            </div>
+<pre><code><span class="comment"># 📈 INTERMEDIATE: List comprehension</span>
+<span class="comment"># ✓ Single line, declarative style</span>
+<span class="comment"># ✓ The Pythonic way to transform lists</span>
+
+nums = [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]
+
+<span class="comment"># Read as: "n squared FOR each n IN nums"</span>
+<span class="comment"># [expression for variable in iterable]</span>
+squares = [n * n <span class="keyword">for</span> n <span class="keyword">in</span> nums]
+
+<span class="keyword">print</span>(squares)
+
+<span class="comment"># Anatomy of a list comprehension:</span>
+<span class="comment"># [  n * n    for   n   in   nums  ]</span>
+<span class="comment">#    └─────┘       └─┘       └────┘</span>
+<span class="comment">#    EXPRESSION  VARIABLE  ITERABLE</span>
+</code></pre>
+                            <div class="output"></div>
+                        </div>
+                        <div class="explanation-box tip">
+                            <div class="explanation-title">✅ What's Better</div>
+                            <p><strong>One line:</strong> Entire transformation in a single expression.</p>
+                            <p><strong>Declarative:</strong> Says WHAT you want, not HOW to get it step by step.</p>
+                            <p><strong>Faster:</strong> Comprehensions are optimized internally.</p>
+                        </div>
+                    </div>
+
+                    <!-- BEST -->
+                    <div class="skill-content" id="comp-sq-best">
+                        <div class="code-container level-best">
+                            <div class="code-header">
+                                <div class="code-header-left">
+                                    <span class="code-label">Python</span>
+                                    <span class="level-badge best">⭐ Best Practice</span>
+                                    <span class="semantic-label">Comprehension with filtering</span>
+                                </div>
+                                <button class="run-button" data-output="[1, 9, 25, 49, 81]">Run ▶</button>
+                            </div>
+<pre><code><span class="comment"># ⭐ BEST PRACTICE: Comprehension with condition</span>
+<span class="comment"># ✓ Transform AND filter in one expression</span>
+<span class="comment"># ✓ Highly readable when you know the pattern</span>
+
+nums = <span class="builtin">range</span>(<span class="number">10</span>)  <span class="comment"># 0, 1, 2, ..., 9</span>
+
+<span class="comment"># Square only the ODD numbers</span>
+<span class="comment"># Read as: "n squared FOR each n IN nums IF n is odd"</span>
+odd_squares = [n * n <span class="keyword">for</span> n <span class="keyword">in</span> nums <span class="keyword">if</span> n % <span class="number">2</span> == <span class="number">1</span>]
+
+<span class="keyword">print</span>(odd_squares)
+
+<span class="comment"># Multiple examples:</span>
+names = [<span class="string">'Ada'</span>, <span class="string">'Bob'</span>, <span class="string">'Grace'</span>, <span class="string">'Al'</span>]
+
+<span class="comment"># Names longer than 2 characters, uppercased</span>
+long_names = [name.upper() <span class="keyword">for</span> name <span class="keyword">in</span> names <span class="keyword">if</span> <span class="builtin">len</span>(name) > <span class="number">2</span>]
+<span class="comment"># Result: ['ADA', 'BOB', 'GRACE']</span>
+
+<span class="comment"># Anatomy with condition:</span>
+<span class="comment"># [expression for var in iterable if condition]</span>
+<span class="comment">#                                  └────────────┘</span>
+<span class="comment">#                                   FILTER (optional)</span>
+</code></pre>
+                            <div class="output"></div>
+                        </div>
+                        <div class="explanation-box tip">
+                            <div class="explanation-title">⭐ Pro Tips</div>
+                            <p><strong>Transform + Filter:</strong> One expression does both!</p>
+                            <p><strong>When NOT to use:</strong> If logic is complex, use a regular loop for clarity.</p>
+                            <p><strong>Rule of thumb:</strong> If you can't read it out loud naturally, it's too complex.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Example 2: Dict and Set Comprehensions -->
+                <h3>Example 2: Dictionary & Set Comprehensions</h3>
+                <p>The same pattern works for dicts and sets:</p>
+
+                <div class="code-container level-best">
+                    <div class="code-header">
+                        <div class="code-header-left">
+                            <span class="code-label">Python</span>
+                            <span class="level-badge best">⭐ Dict & Set Comprehensions</span>
+                            <span class="semantic-label">Creating dicts and sets concisely</span>
+                        </div>
+                        <button class="run-button" data-output="{'ada': 3, 'bob': 3, 'grace': 5}\n{3, 5, 6}">Run ▶</button>
+                    </div>
+<pre><code><span class="comment"># ⭐ DICT COMPREHENSION: {key: value for item in iterable}</span>
+names = [<span class="string">'ada'</span>, <span class="string">'bob'</span>, <span class="string">'grace'</span>]
+
+<span class="comment"># Create a dict mapping each name to its length</span>
+name_lengths = {name: <span class="builtin">len</span>(name) <span class="keyword">for</span> name <span class="keyword">in</span> names}
+<span class="keyword">print</span>(name_lengths)  <span class="comment"># {'ada': 3, 'bob': 3, 'grace': 5}</span>
+
+<span class="comment"># ⭐ SET COMPREHENSION: {expression for item in iterable}</span>
+words = [<span class="string">'ada'</span>, <span class="string">'bob'</span>, <span class="string">'grace'</span>, <span class="string">'turing'</span>]
+
+<span class="comment"># Get unique word lengths (sets automatically remove duplicates)</span>
+unique_lengths = {<span class="builtin">len</span>(w) <span class="keyword">for</span> w <span class="keyword">in</span> words}
+<span class="keyword">print</span>(unique_lengths)  <span class="comment"># {3, 5, 6}</span>
+
+<span class="comment"># Comparison: [] = list, {} = dict/set, () = generator</span>
+</code></pre>
+                    <div class="output"></div>
+                </div>
+
+                <!-- Common Pitfalls -->
+                <div class="explanation-box warning">
+                    <div class="explanation-title">⚠️ Common Comprehension Pitfalls</div>
+                    <p><strong>Too complex:</strong> If your comprehension spans multiple lines or is hard to read aloud, use a regular loop instead. Readability matters!</p>
+                    <p><strong>Nested comprehensions:</strong> <code>[x for row in matrix for x in row]</code> can be confusing. Sometimes nested loops are clearer.</p>
+                    <p><strong>Side effects:</strong> Don't use comprehensions for functions with side effects (printing, writing files). Use regular loops for that.</p>
+                    <p><strong>Memory with large data:</strong> List comprehensions create the entire list in memory. Use generator expressions <code>(x for x in ...)</code> for large datasets.</p>
+                </div>
+
+                <!-- Practice -->
+                <div class="playground">
+                    <div class="playground-header">
+                        <div class="playground-title">🎮 Try It: Transform Data</div>
+                        <span class="playground-challenge">Challenge</span>
+                    </div>
+                    <p>Create a dict mapping each name to its UPPERCASE form, but only for names longer than 3 characters.</p>
+                    <textarea placeholder="# Your code here!
+names = ['ada', 'alan', 'grace', 'al']
+
+# Expected output: {'alan': 'ALAN', 'grace': 'GRACE'}
+upper_names = {
+    # key: value for item in iterable if condition
+}
+
+print(upper_names)"></textarea>
+                    <div class="playground-hint">
+                        <strong>Hint:</strong> Use <code>{name: name.upper() for name in names if len(name) > 3}</code>
+                    </div>
+                </div>
+
+                <!-- Discussion Questions -->
+                <div class="analogy-box">
+                    <div class="analogy-title">💬 Group Discussion Questions</div>
+                    <p><strong>1.</strong> When would you choose a list comprehension over a regular for loop? When would you choose the loop?</p>
+                    <p><strong>2.</strong> What's the difference between <code>[x for x in range(1000000)]</code> and <code>(x for x in range(1000000))</code>? When does it matter?</p>
+                    <p><strong>3.</strong> Have you seen comprehensions in Pandas or other data science libraries? How do they relate to operations like <code>df['col'].apply()</code>?</p>
+                    <p><strong>4.</strong> Can you think of a data transformation problem where a comprehension would make your code much cleaner?</p>
+                </div>
+
+                <button class="nav-btn complete-btn" data-topic="comprehensions">Mark Topic Complete ✓</button>
+                <div class="nav-buttons">
+                    <button class="nav-btn prev" onclick="navigateToSection('decorators')">◀ Prev: Decorators</button>
+                    <button class="nav-btn next" onclick="navigateToSection('closures')">Next: Closures ▶</button>
+                </div>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════════════════
+                 SECTION: Closures
+                 Purpose: Teach function factories and state encapsulation
+                 ═══════════════════════════════════════════════════════════════ -->
+            <section id="closures" class="section">
+                <h2>🔒 Closures</h2>
+                
+                <p>A closure is a function that "remembers" variables from its enclosing scope, even after that scope has finished executing. This lets you create functions with persistent state.</p>
+
+                <!-- Closure Vocabulary -->
+                <div class="explanation-box info">
+                    <div class="explanation-title">📖 Closure Vocabulary</div>
+                    <p><code>enclosing scope</code> — The outer function that contains the inner function</p>
+                    <p><code>free variable</code> — A variable used in the inner function but defined in the enclosing scope</p>
+                    <p><code>nonlocal</code> — Keyword to modify a variable from the enclosing scope</p>
+                    <p><code>function factory</code> — A function that returns customized functions</p>
+                </div>
+
+                <!-- Analogy -->
+                <div class="analogy-box">
+                    <div class="analogy-title">📦 Think of Closures Like a Backpack</div>
+                    <p>Imagine a function is a person. When they leave a room (scope), they can take things with them in a backpack (the closure). Even after the room is gone, they still have access to what's in their backpack.</p>
+                    <p>The inner function "closes over" the variables it needs, keeping them alive.</p>
+                </div>
+
+                <!-- Example 1: Function Factory -->
+                <h3>Example 1: Creating a Multiplier Factory</h3>
+                <p>A function that creates customized multiplier functions:</p>
+
+                <div class="skill-progression" data-example="closure-multiplier">
+                    <div class="skill-tabs">
+                        <button class="skill-tab active" data-level="bad" data-target="clos-mult-bad">
+                            <span class="skill-tab-icon">🔴</span>
+                            Bad Practice
+                        </button>
+                        <button class="skill-tab" data-level="novice" data-target="clos-mult-novice">
+                            <span class="skill-tab-icon">🟠</span>
+                            Novice
+                        </button>
+                        <button class="skill-tab" data-level="best" data-target="clos-mult-best">
+                            <span class="skill-tab-icon">🟢</span>
+                            Best Practice
+                        </button>
+                    </div>
+
+                    <!-- BAD -->
+                    <div class="skill-content active" id="clos-mult-bad">
+                        <div class="code-container level-bad">
+                            <div class="code-header">
+                                <div class="code-header-left">
+                                    <span class="code-label">Python</span>
+                                    <span class="level-badge bad">❌ Bad Practice</span>
+                                    <span class="semantic-label">Using global variables</span>
+                                </div>
+                                <button class="run-button" data-output="double(5) = 10\nmultiplier = 3\ndouble(5) = 15  # WRONG!">Run ▶</button>
+                            </div>
+<pre><code><span class="comment"># ❌ BAD: Using global variables for configuration</span>
+<span class="comment"># Problem: The function's behavior depends on external state</span>
+
+multiplier = <span class="number">2</span>  <span class="comment"># Global variable - anyone can change it!</span>
+
+<span class="keyword">def</span> <span class="function">multiply</span>(x):
+    <span class="keyword">return</span> x * multiplier  <span class="comment"># Uses global - dangerous!</span>
+
+<span class="keyword">print</span>(<span class="string">f"double(5) = {multiply(5)}"</span>)  <span class="comment"># 10</span>
+
+<span class="comment"># Someone else changes the global...</span>
+multiplier = <span class="number">3</span>
+<span class="keyword">print</span>(<span class="string">f"multiplier = {multiplier}"</span>)
+
+<span class="comment"># Our "double" function is now broken!</span>
+<span class="keyword">print</span>(<span class="string">f"double(5) = {multiply(5)}"</span>)  <span class="comment"># 15 - should be 10!</span>
+
+<span class="comment"># Problems:</span>
+<span class="comment"># - Global state is hard to track and debug</span>
+<span class="comment"># - Can't have multiple multipliers at once</span>
+<span class="comment"># - Any code can accidentally change the behavior</span>
+</code></pre>
+                            <div class="output"></div>
+                        </div>
+                        <div class="explanation-box warning">
+                            <div class="explanation-title">⚠️ Why Globals Are Bad</div>
+                            <p><strong>Unpredictable:</strong> Any code anywhere can change the global and break your function.</p>
+                            <p><strong>Not reusable:</strong> Can't have both <code>double()</code> and <code>triple()</code> at the same time.</p>
+                            <p><strong>Hard to test:</strong> Tests can interfere with each other via shared global state.</p>
+                        </div>
+                    </div>
+
+                    <!-- NOVICE -->
+                    <div class="skill-content" id="clos-mult-novice">
+                        <div class="code-container level-novice">
+                            <div class="code-header">
+                                <div class="code-header-left">
+                                    <span class="code-label">Python</span>
+                                    <span class="level-badge novice">🔰 Novice</span>
+                                    <span class="semantic-label">Passing config as parameter</span>
+                                </div>
+                                <button class="run-button" data-output="double(5) = 10\ntriple(5) = 15">Run ▶</button>
+                            </div>
+<pre><code><span class="comment"># 🔰 NOVICE: Pass the multiplier as a parameter</span>
+<span class="comment"># ✓ No global state</span>
+<span class="comment"># ✗ Must pass the multiplier EVERY time you call</span>
+
+<span class="keyword">def</span> <span class="function">multiply</span>(x, factor):
+    <span class="keyword">return</span> x * factor
+
+<span class="comment"># Works, but clunky</span>
+<span class="keyword">print</span>(<span class="string">f"double(5) = {multiply(5, 2)}"</span>)
+<span class="keyword">print</span>(<span class="string">f"triple(5) = {multiply(5, 3)}"</span>)
+
+<span class="comment"># What if we want a "dedicated" double function?</span>
+<span class="comment"># We'd have to keep passing 2 everywhere...</span>
+<span class="comment"># multiply(10, 2), multiply(20, 2), multiply(30, 2)...</span>
+</code></pre>
+                            <div class="output"></div>
+                        </div>
+                        <div class="explanation-box tip">
+                            <div class="explanation-title">✅ What's Better</div>
+                            <p><strong>No global:</strong> The factor is explicit, not hidden state.</p>
+                            <p><strong>But:</strong> It's tedious to keep passing the same value repeatedly.</p>
+                        </div>
+                    </div>
+
+                    <!-- BEST -->
+                    <div class="skill-content" id="clos-mult-best">
+                        <div class="code-container level-best">
+                            <div class="code-header">
+                                <div class="code-header-left">
+                                    <span class="code-label">Python</span>
+                                    <span class="level-badge best">⭐ Best Practice</span>
+                                    <span class="semantic-label">Closure as function factory</span>
+                                </div>
+                                <button class="run-button" data-output="double(5) = 10\ntriple(5) = 15\ndouble(7) = 14\ntriple(7) = 21">Run ▶</button>
+                            </div>
+<pre><code><span class="comment"># ⭐ BEST PRACTICE: Use a closure to create specialized functions</span>
+<span class="comment"># ✓ Each function "remembers" its own factor</span>
+<span class="comment"># ✓ No global state, no repeated parameters</span>
+
+<span class="keyword">def</span> <span class="function">make_multiplier</span>(factor):
+    <span class="string">"""
+    Factory function that creates customized multiplier functions.
+    
+    Args:
+        factor: The number to multiply by
+    
+    Returns:
+        A function that multiplies its input by factor
+    """</span>
+    <span class="comment"># This inner function "closes over" the 'factor' variable</span>
+    <span class="keyword">def</span> <span class="function">multiply</span>(x):
+        <span class="keyword">return</span> x * factor  <span class="comment"># 'factor' is remembered!</span>
+    
+    <span class="keyword">return</span> multiply  <span class="comment"># Return the function itself</span>
+
+<span class="comment"># Create specialized functions</span>
+double = make_multiplier(<span class="number">2</span>)  <span class="comment"># double remembers factor=2</span>
+triple = make_multiplier(<span class="number">3</span>)  <span class="comment"># triple remembers factor=3</span>
+
+<span class="comment"># Each function has its own "memory"</span>
+<span class="keyword">print</span>(<span class="string">f"double(5) = {double(5)}"</span>)  <span class="comment"># 10</span>
+<span class="keyword">print</span>(<span class="string">f"triple(5) = {triple(5)}"</span>)  <span class="comment"># 15</span>
+<span class="keyword">print</span>(<span class="string">f"double(7) = {double(7)}"</span>)  <span class="comment"># 14</span>
+<span class="keyword">print</span>(<span class="string">f"triple(7) = {triple(7)}"</span>)  <span class="comment"># 21</span>
+</code></pre>
+                            <div class="output"></div>
+                        </div>
+                        <div class="explanation-box tip">
+                            <div class="explanation-title">⭐ Why Closures Are Powerful</div>
+                            <p><strong>Encapsulation:</strong> The <code>factor</code> is private to each function—no one can accidentally change it.</p>
+                            <p><strong>Reusable:</strong> Create as many specialized functions as you need.</p>
+                            <p><strong>Clean API:</strong> <code>double(5)</code> is cleaner than <code>multiply(5, 2)</code>.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Example 2: Stateful Counter -->
+                <h3>Example 2: Creating a Stateful Counter</h3>
+                <p>Closures can maintain mutable state between calls:</p>
+
+                <div class="code-container level-best">
+                    <div class="code-header">
+                        <div class="code-header-left">
+                            <span class="code-label">Python</span>
+                            <span class="level-badge best">⭐ Stateful Counter</span>
+                            <span class="semantic-label">Using nonlocal for mutable state</span>
+                        </div>
+                        <button class="run-button" data-output="counter_a: 1\ncounter_a: 2\ncounter_b: 1\ncounter_a: 3\ncounter_b: 2">Run ▶</button>
+                    </div>
+<pre><code><span class="comment"># ⭐ CLOSURE WITH MUTABLE STATE</span>
+<span class="comment"># Use 'nonlocal' to modify variables from enclosing scope</span>
+
+<span class="keyword">def</span> <span class="function">make_counter</span>(start=<span class="number">0</span>):
+    <span class="string">"""Create a counter that tracks its own count."""</span>
+    count = start  <span class="comment"># This variable is "enclosed" by inner function</span>
+    
+    <span class="keyword">def</span> <span class="function">increment</span>():
+        <span class="keyword">nonlocal</span> count  <span class="comment"># Required to MODIFY (not just read) outer variable</span>
+        count += <span class="number">1</span>
+        <span class="keyword">return</span> count
+    
+    <span class="keyword">return</span> increment
+
+<span class="comment"># Create two independent counters</span>
+counter_a = make_counter()
+counter_b = make_counter()
+
+<span class="comment"># Each maintains its own state!</span>
+<span class="keyword">print</span>(<span class="string">f"counter_a: {counter_a()}"</span>)  <span class="comment"># 1</span>
+<span class="keyword">print</span>(<span class="string">f"counter_a: {counter_a()}"</span>)  <span class="comment"># 2</span>
+<span class="keyword">print</span>(<span class="string">f"counter_b: {counter_b()}"</span>)  <span class="comment"># 1 (independent!)</span>
+<span class="keyword">print</span>(<span class="string">f"counter_a: {counter_a()}"</span>)  <span class="comment"># 3</span>
+<span class="keyword">print</span>(<span class="string">f"counter_b: {counter_b()}"</span>)  <span class="comment"># 2</span>
+</code></pre>
+                    <div class="output"></div>
+                </div>
+
+                <div class="explanation-box info">
+                    <div class="explanation-title">💡 nonlocal vs global</div>
+                    <p><code>nonlocal</code> — Refers to variable in the enclosing function (one level up)</p>
+                    <p><code>global</code> — Refers to variable at module level (top of file) — avoid when possible!</p>
+                    <p><strong>Without either:</strong> Python treats the variable as local, causing an error if you try to assign to it.</p>
+                </div>
+
+                <!-- Common Pitfalls -->
+                <div class="explanation-box warning">
+                    <div class="explanation-title">⚠️ Common Closure Pitfalls</div>
+                    <p><strong>Forgetting <code>nonlocal</code>:</strong> If you try to modify an outer variable without <code>nonlocal</code>, Python creates a new local variable instead!</p>
+                    <p><strong>Loop variable bug:</strong> In <code>[lambda: x for x in range(3)]</code>, all lambdas share the same <code>x</code> reference (value at loop end). Use default args to capture: <code>[lambda x=x: x for x in range(3)]</code>.</p>
+                    <p><strong>Overusing closures:</strong> Sometimes a class with methods is clearer than nested functions with <code>nonlocal</code>.</p>
+                    <p><strong>Memory leaks:</strong> Closures keep outer variables alive. Be careful with large objects in long-lived closures.</p>
+                </div>
+
+                <!-- Practice -->
+                <div class="playground">
+                    <div class="playground-header">
+                        <div class="playground-title">🎮 Try It: Running Average Calculator</div>
+                        <span class="playground-challenge">Challenge</span>
+                    </div>
+                    <p>Create a closure that tracks a running average. Each call adds a number and returns the current average.</p>
+                    <textarea placeholder="# Your code here!
+def make_averager():
+    total = 0
+    count = 0
+    
+    def add_number(n):
+        # Use nonlocal to modify total and count
+        # Return the new average
+        pass
+    
+    return add_number
+
+# Test:
+# avg = make_averager()
+# print(avg(10))  # 10.0
+# print(avg(20))  # 15.0 (average of 10 and 20)
+# print(avg(30))  # 20.0 (average of 10, 20, and 30)"></textarea>
+                    <div class="playground-hint">
+                        <strong>Hint:</strong> Use <code>nonlocal total, count</code> inside <code>add_number</code>. Update both, then return <code>total / count</code>.
+                    </div>
+                </div>
+
+                <!-- Discussion Questions -->
+                <div class="analogy-box">
+                    <div class="analogy-title">💬 Group Discussion Questions</div>
+                    <p><strong>1.</strong> What's the difference between a closure and a class? When would you choose one over the other?</p>
+                    <p><strong>2.</strong> How do closures relate to decorators? (Hint: Decorators ARE closures!)</p>
+                    <p><strong>3.</strong> Can you think of a situation where you'd want a function to "remember" previous values or configuration?</p>
+                    <p><strong>4.</strong> Why is <code>nonlocal</code> necessary? What happens if you forget it?</p>
+                </div>
+
+                <button class="nav-btn complete-btn" data-topic="closures">Mark Topic Complete ✓</button>
+                <div class="nav-buttons">
+                    <button class="nav-btn prev" onclick="navigateToSection('comprehensions')">◀ Prev: Comprehensions</button>
+                    <button class="nav-btn next" onclick="navigateToSection('cheatsheet')">Finish: Cheat Sheet ▶</button>
+                </div>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════════════════
+                 SECTION: Cheat Sheet
+                 Purpose: Quick reference for all patterns covered
+                 ═══════════════════════════════════════════════════════════════ -->
+            <section id="cheatsheet" class="section">
+                <h2>📋 Quick Reference Cheat Sheet</h2>
+                <p>Copy-paste these patterns as a quick reference for today's topics!</p>
+
+                <!-- OOP Cheat Sheet -->
+                <h3>🏗️ Object-Oriented Programming</h3>
+                <div class="code-container level-best">
+                    <div class="code-header">
+                        <div class="code-header-left">
+                            <span class="code-label">OOP Patterns</span>
+                            <span class="semantic-label">Classes, Inheritance, Dataclass</span>
+                        </div>
+                    </div>
+<pre><code><span class="comment"># ═══ BASIC CLASS ═══</span>
+<span class="keyword">class</span> <span class="class-name">Player</span>:
+    <span class="keyword">def</span> <span class="function">__init__</span>(<span class="param">self</span>, <span class="param">name</span>: <span class="builtin">str</span>, <span class="param">level</span>: <span class="builtin">int</span> = <span class="number">1</span>):
+        self.name = name      <span class="comment"># Attribute</span>
+        self.level = level
+    
+    <span class="keyword">def</span> <span class="function">power</span>(<span class="param">self</span>) -> <span class="builtin">int</span>:  <span class="comment"># Method</span>
+        <span class="keyword">return</span> self.level * <span class="number">3</span>
+    
+    <span class="keyword">def</span> <span class="function">__repr__</span>(<span class="param">self</span>):    <span class="comment"># Nice printing</span>
+        <span class="keyword">return</span> <span class="string">f"Player('{self.name}', {self.level})"</span>
+
+<span class="comment"># ═══ INHERITANCE ═══</span>
+<span class="keyword">class</span> <span class="class-name">Mage</span>(Player):       <span class="comment"># Mage IS-A Player</span>
+    <span class="keyword">def</span> <span class="function">__init__</span>(<span class="param">self</span>, <span class="param">name</span>, <span class="param">level</span>=<span class="number">1</span>, <span class="param">mana</span>=<span class="number">100</span>):
+        <span class="keyword">super</span>().__init__(name, level)  <span class="comment"># Call parent</span>
+        self.mana = mana
+
+<span class="comment"># ═══ DATACLASS (Python 3.7+) ═══</span>
+<span class="keyword">from</span> dataclasses <span class="keyword">import</span> dataclass
+
+<span class="decorator">@dataclass</span>
+<span class="keyword">class</span> <span class="class-name">Item</span>:
+    name: <span class="builtin">str</span>
+    price: <span class="builtin">float</span>
+    quantity: <span class="builtin">int</span> = <span class="number">1</span>  <span class="comment"># Auto-generates __init__, __repr__!</span>
+</code></pre>
+                </div>
+
+                <!-- Decorators Cheat Sheet -->
+                <h3>✨ Decorators</h3>
+                <div class="code-container level-best">
+                    <div class="code-header">
+                        <div class="code-header-left">
+                            <span class="code-label">Decorator Patterns</span>
+                            <span class="semantic-label">Basic, with @wraps, with parameters</span>
+                        </div>
+                    </div>
+<pre><code><span class="keyword">from</span> functools <span class="keyword">import</span> wraps
+
+<span class="comment"># ═══ BASIC DECORATOR ═══</span>
+<span class="keyword">def</span> <span class="function">my_decorator</span>(func):
+    <span class="decorator">@wraps</span>(func)  <span class="comment"># Preserves function name/docstring</span>
+    <span class="keyword">def</span> <span class="function">wrapper</span>(*args, **kwargs):
+        <span class="keyword">print</span>(<span class="string">"Before function call"</span>)
+        result = func(*args, **kwargs)
+        <span class="keyword">print</span>(<span class="string">"After function call"</span>)
+        <span class="keyword">return</span> result
+    <span class="keyword">return</span> wrapper
+
+<span class="decorator">@my_decorator</span>
+<span class="keyword">def</span> <span class="function">greet</span>(name):
+    <span class="keyword">print</span>(<span class="string">f"Hello, {name}!"</span>)
+
+<span class="comment"># ═══ DECORATOR WITH PARAMETERS ═══</span>
+<span class="keyword">def</span> <span class="function">repeat</span>(times):
+    <span class="keyword">def</span> <span class="function">decorator</span>(func):
+        <span class="keyword">def</span> <span class="function">wrapper</span>(*args, **kwargs):
+            <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="builtin">range</span>(times):
+                func(*args, **kwargs)
+        <span class="keyword">return</span> wrapper
+    <span class="keyword">return</span> decorator
+
+<span class="decorator">@repeat</span>(<span class="number">3</span>)  <span class="comment"># Calls say_hi() 3 times</span>
+<span class="keyword">def</span> <span class="function">say_hi</span>(): <span class="keyword">print</span>(<span class="string">"Hi!"</span>)
+</code></pre>
+                </div>
+
+                <!-- Comprehensions Cheat Sheet -->
+                <h3>⚡ Comprehensions</h3>
+                <div class="code-container level-best">
+                    <div class="code-header">
+                        <div class="code-header-left">
+                            <span class="code-label">Comprehension Patterns</span>
+                            <span class="semantic-label">List, Dict, Set, Generator</span>
+                        </div>
+                    </div>
+<pre><code><span class="comment"># ═══ LIST COMPREHENSION ═══</span>
+squares = [x**<span class="number">2</span> <span class="keyword">for</span> x <span class="keyword">in</span> <span class="builtin">range</span>(<span class="number">5</span>)]           <span class="comment"># [0, 1, 4, 9, 16]</span>
+evens = [x <span class="keyword">for</span> x <span class="keyword">in</span> <span class="builtin">range</span>(<span class="number">10</span>) <span class="keyword">if</span> x % <span class="number">2</span> == <span class="number">0</span>]  <span class="comment"># [0, 2, 4, 6, 8]</span>
+
+<span class="comment"># ═══ DICT COMPREHENSION ═══</span>
+name_lengths = {name: <span class="builtin">len</span>(name) <span class="keyword">for</span> name <span class="keyword">in</span> [<span class="string">'Ada'</span>, <span class="string">'Bob'</span>]}
+<span class="comment"># {'Ada': 3, 'Bob': 3}</span>
+
+<span class="comment"># ═══ SET COMPREHENSION ═══</span>
+unique_lengths = {<span class="builtin">len</span>(w) <span class="keyword">for</span> w <span class="keyword">in</span> [<span class="string">'hi'</span>, <span class="string">'hello'</span>, <span class="string">'yo'</span>]}
+<span class="comment"># {2, 5}</span>
+
+<span class="comment"># ═══ GENERATOR EXPRESSION (lazy, memory efficient) ═══</span>
+gen = (x**<span class="number">2</span> <span class="keyword">for</span> x <span class="keyword">in</span> <span class="builtin">range</span>(<span class="number">1000000</span>))  <span class="comment"># Doesn't compute until needed</span>
+<span class="keyword">print</span>(<span class="builtin">next</span>(gen))  <span class="comment"># 0 - compute one at a time</span>
+</code></pre>
+                </div>
+
+                <!-- Closures Cheat Sheet -->
+                <h3>🔒 Closures</h3>
+                <div class="code-container level-best">
+                    <div class="code-header">
+                        <div class="code-header-left">
+                            <span class="code-label">Closure Patterns</span>
+                            <span class="semantic-label">Function factory, Stateful closure</span>
+                        </div>
+                    </div>
+<pre><code><span class="comment"># ═══ FUNCTION FACTORY ═══</span>
+<span class="keyword">def</span> <span class="function">make_multiplier</span>(factor):
+    <span class="keyword">def</span> <span class="function">multiply</span>(x):
+        <span class="keyword">return</span> x * factor  <span class="comment"># 'factor' is remembered!</span>
+    <span class="keyword">return</span> multiply
+
+double = make_multiplier(<span class="number">2</span>)
+triple = make_multiplier(<span class="number">3</span>)
+<span class="keyword">print</span>(double(<span class="number">5</span>))  <span class="comment"># 10</span>
+
+<span class="comment"># ═══ STATEFUL CLOSURE ═══</span>
+<span class="keyword">def</span> <span class="function">make_counter</span>():
+    count = <span class="number">0</span>
+    <span class="keyword">def</span> <span class="function">increment</span>():
+        <span class="keyword">nonlocal</span> count  <span class="comment"># Required to MODIFY outer variable</span>
+        count += <span class="number">1</span>
+        <span class="keyword">return</span> count
+    <span class="keyword">return</span> increment
+
+counter = make_counter()
+<span class="keyword">print</span>(counter())  <span class="comment"># 1</span>
+<span class="keyword">print</span>(counter())  <span class="comment"># 2</span>
+</code></pre>
+                </div>
+
+                <!-- Key Takeaways -->
+                <div class="analogy-box">
+                    <div class="analogy-title">🎓 Key Takeaways from Today</div>
+                    <p><strong>OOP:</strong> Bundle data + behavior. Use <code>self</code> for attributes, <code>__init__</code> for construction, <code>@dataclass</code> for simple data objects.</p>
+                    <p><strong>Decorators:</strong> Wrap functions with <code>@decorator</code>. Use <code>@wraps</code> to preserve metadata. Great for logging, timing, auth.</p>
+                    <p><strong>Comprehensions:</strong> <code>[expr for x in iter if cond]</code>. Cleaner than loops for simple transformations.</p>
+                    <p><strong>Closures:</strong> Inner functions remember outer variables. Use <code>nonlocal</code> to modify them. Great for factories and state.</p>
+                </div>
+
+                <button class="nav-btn complete-btn" data-topic="cheatsheet">Mark Lesson Complete 🎉</button>
+                <div class="nav-buttons">
+                    <button class="nav-btn prev" onclick="navigateToSection('closures')">◀ Prev: Closures</button>
+                    <button class="nav-btn next" disabled>🏆 Lesson Complete!</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Achievement Popup -->
+    <div class="achievement" id="achievement">
+        <div class="achievement-icon">🏆</div>
+        <div class="achievement-title">Achievement Unlocked!</div>
+        <p>You've completed all Week 3 topics! You're now ready to write more Pythonic code.</p>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         JAVASCRIPT - Interactive functionality
+         ═══════════════════════════════════════════════════════════════════ -->
+    <script>
+        // ═══════════════════════════════════════════════════════════════
+        // CONFIGURATION
+        // ═══════════════════════════════════════════════════════════════
+        const sectionsOrder = ['intro', 'oop', 'decorators', 'comprehensions', 'closures', 'cheatsheet'];
+        const totalTopics = 5; // Excludes intro (oop, decorators, comprehensions, closures, cheatsheet)
+        
+        // DOM Elements
+        const progressBar = document.getElementById('progressBar');
+        const xpFill = document.getElementById('xpFill');
+        const xpText = document.getElementById('xpText');
+        const achievement = document.getElementById('achievement');
+        
+        // State
+        const completed = new Set();
+
+        // ═══════════════════════════════════════════════════════════════
+        // SECTION NAVIGATION
+        // ═══════════════════════════════════════════════════════════════
+        function navigateToSection(id) {
+            // Hide all sections, show the target
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            const targetSection = document.getElementById(id);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+            
+            // Update nav item styling
+            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+            const nav = document.querySelector(`.nav-item[data-section="${id}"]`);
+            if (nav) nav.classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Add click handlers to nav items
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', () => navigateToSection(item.dataset.section));
+        });
+
+        // ═══════════════════════════════════════════════════════════════
+        // XP / PROGRESS TRACKING
+        // ═══════════════════════════════════════════════════════════════
+        function updateXP() {
+            const percent = (completed.size / totalTopics) * 100;
+            xpFill.style.width = percent + '%';
+            xpText.textContent = `${completed.size} / ${totalTopics} Topics`;
+            
+            // Show achievement when all topics completed
+            if (completed.size === totalTopics) {
+                achievement.classList.add('show');
+                // Auto-hide after 6 seconds
+                setTimeout(() => achievement.classList.remove('show'), 6000);
+            }
+        }
+
+        // Topic completion buttons
+        document.querySelectorAll('.complete-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const topic = btn.dataset.topic;
+                if (!completed.has(topic)) {
+                    completed.add(topic);
+                    
+                    // Mark nav item as completed
+                    const item = document.querySelector(`.nav-item[data-section="${topic}"]`);
+                    if (item) item.classList.add('completed');
+                    
+                    // Update button state
+                    btn.textContent = 'Completed ✓';
+                    btn.disabled = true;
+                    btn.style.opacity = '0.7';
+                    
+                    // Update XP bar
+                    updateXP();
+                }
+            });
+        });
+
+        // ═══════════════════════════════════════════════════════════════
+        // SCROLL PROGRESS BAR
+        // ═══════════════════════════════════════════════════════════════
+        window.addEventListener('scroll', () => {
+            const doc = document.documentElement;
+            const scrolled = doc.scrollTop || document.body.scrollTop;
+            const height = (doc.scrollHeight - doc.clientHeight) || 1;
+            const percent = (scrolled / height) * 100;
+            progressBar.style.width = percent + '%';
+        });
+
+        // ═══════════════════════════════════════════════════════════════
+        // CODE RUN BUTTONS
+        // ═══════════════════════════════════════════════════════════════
+        document.querySelectorAll('.run-button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const container = btn.closest('.code-container');
+                const out = container.querySelector('.output');
+                
+                // Show the predefined output
+                out.innerHTML = '<div class="output-label">Output:</div>' + 
+                               (btn.dataset.output || 'No output').replace(/\n/g, '<br>');
+                out.classList.add('show');
+                
+                // Update button state
+                btn.disabled = true;
+                btn.innerHTML = '✔ Ran';
+            });
+        });
+
+        // ═══════════════════════════════════════════════════════════════
+        // SKILL LEVEL TABS (Bad → Novice → Intermediate → Best)
+        // ═══════════════════════════════════════════════════════════════
+        document.querySelectorAll('.skill-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                const progression = tab.closest('.skill-progression');
+                const targetId = tab.dataset.target;
+                
+                // Update tab active states
+                progression.querySelectorAll('.skill-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                // Update content visibility
+                progression.querySelectorAll('.skill-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                const targetContent = document.getElementById(targetId);
+                if (targetContent) {
+                    targetContent.classList.add('active');
+                }
+            });
+        });
+
+        // ═══════════════════════════════════════════════════════════════
+        // COLLAPSIBLE SECTIONS (if any)
+        // ═══════════════════════════════════════════════════════════════
+        document.querySelectorAll('.collapsible-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const collapsible = header.closest('.collapsible');
+                collapsible.classList.toggle('open');
+            });
+        });
+
+        // ═══════════════════════════════════════════════════════════════
+        // KEYBOARD NAVIGATION
+        // ═══════════════════════════════════════════════════════════════
+        document.addEventListener('keydown', (e) => {
+            // Arrow keys for navigation between sections
+            if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+                const activeSection = document.querySelector('.section.active');
+                if (!activeSection) return;
+                
+                const currentIndex = sectionsOrder.indexOf(activeSection.id);
+                let newIndex;
+                
+                if (e.key === 'ArrowRight' && currentIndex < sectionsOrder.length - 1) {
+                    newIndex = currentIndex + 1;
+                } else if (e.key === 'ArrowLeft' && currentIndex > 0) {
+                    newIndex = currentIndex - 1;
+                }
+                
+                if (newIndex !== undefined) {
+                    navigateToSection(sectionsOrder[newIndex]);
+                }
+            }
+        });
+
+        // ═══════════════════════════════════════════════════════════════
+        // INITIALIZE
+        // ═══════════════════════════════════════════════════════════════
+        console.log('🐍 Python Skills Level Up - Week 3 Lesson Loaded!');
+        console.log('📖 Use arrow keys (← →) to navigate between sections.');
+    </script>
+</body>
+</html>
+

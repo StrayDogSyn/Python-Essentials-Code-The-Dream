@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 1: Introduction to Python | Python Course</title>
+    <meta name="description" content="Interactive Python lesson covering environment setup, variables, data types, control flow, functions, and debugging.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&family=Orbitron:wght@700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0e27;
+            --bg-medium: #1a1f3a;
+            --bg-light: #2a2f4a;
+            --accent-cyan: #00f0ff;
+            --accent-magenta: #ff00ff;
+            --accent-yellow: #ffff00;
+            --accent-green: #00ff41;
+            --accent-orange: #ff6b35;
+            --accent-red: #ff3366;
+            --accent-blue: #4da6ff;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --level-bad: #ff3366;
+            --level-novice: #ff9f43;
+            --level-intermediate: #4da6ff;
+            --level-best: #00ff41;
+            --shadow-glow: 0 0 20px rgba(0, 240, 255, 0.3);
+            --shadow-glow-green: 0 0 20px rgba(0, 255, 65, 0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Space Mono', monospace;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 240, 255, 0.03) 2px, rgba(0, 240, 255, 0.03) 4px);
+            pointer-events: none;
+            z-index: 1;
+            animation: scanlines 8s linear infinite;
+        }
+
+        @keyframes scanlines {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(4px); }
+        }
+
+        header {
+            position: relative;
+            z-index: 10;
+            padding: 2rem;
+            text-align: center;
+            background: linear-gradient(135deg, var(--bg-medium) 0%, var(--bg-dark) 100%);
+            border-bottom: 3px solid var(--accent-cyan);
+            box-shadow: 0 4px 20px rgba(0, 240, 255, 0.2);
+        }
+
+        h1 {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, var(--accent-cyan), var(--accent-magenta));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 5px var(--accent-cyan)); }
+            to { filter: drop-shadow(0 0 20px var(--accent-magenta)); }
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--accent-green);
+            font-weight: 600;
+        }
+
+        .week-badge {
+            display: inline-block;
+            background: var(--accent-magenta);
+            color: var(--bg-dark);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-top: 0.5rem;
+        }
+
+        .container {
+            display: flex;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .sidebar {
+            width: 300px;
+            position: sticky;
+            top: 20px;
+            height: calc(100vh - 40px);
+            padding: 2rem 1rem;
+            background: var(--bg-medium);
+            border-right: 2px solid var(--accent-cyan);
+            overflow-y: auto;
+        }
+
+        .nav-section {
+            margin-bottom: 2rem;
+        }
+
+        .nav-title {
+            font-size: 0.9rem;
+            color: var(--accent-yellow);
+            margin-bottom: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-item {
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            border-left: 3px solid transparent;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            background: var(--bg-dark);
+            border-radius: 4px;
+        }
+
+        .nav-item:hover {
+            border-left-color: var(--accent-cyan);
+            background: var(--bg-light);
+            transform: translateX(5px);
+        }
+
+        .nav-item.active {
+            border-left-color: var(--accent-magenta);
+            background: var(--bg-light);
+            color: var(--accent-cyan);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            font-family: 'Orbitron', monospace;
+            font-size: 2rem;
+            color: var(--accent-cyan);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h3 {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.5rem;
+            color: var(--accent-magenta);
+            margin: 2rem 0 1rem 0;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .objectives-box {
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.1), rgba(255, 0, 255, 0.1));
+            border-left: 4px solid var(--accent-cyan);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+        }
+
+        .objectives-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent-yellow);
+            margin-bottom: 1rem;
+            font-family: 'Orbitron', monospace;
+        }
+
+        .objectives-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .objectives-list li::before {
+            content: '▸ ';
+            color: var(--accent-green);
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        .vocab-list {
+            background: var(--bg-medium);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            border: 2px solid var(--accent-magenta);
+        }
+
+        .vocab-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent-magenta);
+            margin-bottom: 1rem;
+            font-family: 'Orbitron', monospace;
+        }
+
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+
+        .vocab-item {
+            background: var(--bg-dark);
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 3px solid var(--accent-cyan);
+        }
+
+        .vocab-term {
+            display: block;
+            font-weight: 700;
+            color: var(--accent-yellow);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .vocab-definition {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .explanation-box {
+            background: var(--bg-medium);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--accent-orange);
+        }
+
+        .explanation-box.info {
+            border-left-color: var(--accent-blue);
+        }
+
+        .explanation-title {
+            font-weight: 700;
+            color: var(--accent-orange);
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+        }
+
+        .explanation-box.info .explanation-title {
+            color: var(--accent-blue);
+        }
+
+        .warning-box {
+            background: rgba(255, 51, 102, 0.1);
+            border-left: 4px solid var(--accent-red);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+        }
+
+        .warning-title {
+            font-weight: 700;
+            color: var(--accent-red);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .warning-box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .warning-box li {
+            margin-bottom: 0.75rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .warning-box li::before {
+            content: '⚠️';
+            position: absolute;
+            left: 0;
+        }
+
+        code {
+            background: var(--bg-dark);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent-green);
+            font-size: 0.9em;
+        }
+
+        .code-container {
+            background: var(--bg-dark);
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 1.5rem 0;
+            border: 2px solid var(--bg-light);
+        }
+
+        .code-header {
+            background: var(--bg-medium);
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--bg-light);
+        }
+
+        .code-label {
+            color: var(--accent-cyan);
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        pre {
+            padding: 1.5rem;
+            overflow-x: auto;
+            margin: 0;
+            background: var(--bg-dark);
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .keyword { color: var(--accent-magenta); }
+        .string { color: var(--accent-green); }
+        .number { color: var(--accent-cyan); }
+        .comment { color: var(--text-secondary); font-style: italic; }
+
+        .nav-btn {
+            background: var(--bg-medium);
+            color: var(--accent-cyan);
+            border: 2px solid var(--accent-cyan);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .nav-btn:hover {
+            background: var(--accent-cyan);
+            color: var(--bg-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+            gap: 1rem;
+        }
+
+        .complete-btn {
+            background: var(--accent-green);
+            color: var(--bg-dark);
+            border-color: var(--accent-green);
+            margin: 2rem 0;
+        }
+
+        .complete-btn:hover {
+            background: var(--accent-cyan);
+            border-color: var(--accent-cyan);
+            box-shadow: var(--shadow-glow-green);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🐍 Python Essentials</h1>
+        <div class="subtitle">Code the Dream — Interactive Lessons</div>
+        <div class="week-badge">WEEK 1</div>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar">
+            <div class="nav-section">
+                <div class="nav-title">📚 Week 1 Topics</div>
+                <div class="nav-item active" onclick="navigateToSection('intro')">👋 Introduction</div>
+                <div class="nav-item" onclick="navigateToSection('setup')">⚙️ Environment Setup</div>
+                <div class="nav-item" onclick="navigateToSection('basics')">🔤 Python Basics</div>
+                <div class="nav-item" onclick="navigateToSection('control-flow')">🔀 Control Flow</div>
+                <div class="nav-item" onclick="navigateToSection('functions')">⚡ Functions</div>
+                <div class="nav-item" onclick="navigateToSection('debugging')">🐛 Debugging</div>
+                <div class="nav-item" onclick="navigateToSection('cheatsheet')">📜 Cheat Sheet</div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <!-- INTRO -->
+            <section id="intro" class="section active">
+                <h2>👋 Welcome to Python!</h2>
+                
+                <div class="objectives-box">
+                    <div class="objectives-title">🎯 Learning Objectives</div>
+                    <ul class="objectives-list">
+                        <li>Set up Python development environment (Python, pip, VS Code)</li>
+                        <li>Understand variables, data types, and operators</li>
+                        <li>Write control flow statements (if/elif/else, loops)</li>
+                        <li>Define and call functions with parameters and return values</li>
+                        <li>Debug code using print statements and error handling</li>
+                    </ul>
+                </div>
+
+                <div class="vocab-list">
+                    <div class="vocab-title">📚 Key Vocabulary</div>
+                    <div class="vocab-grid">
+                        <div class="vocab-item">
+                            <span class="vocab-term">Variable</span>
+                            <span class="vocab-definition">A named container that stores a value. Think of it as a labeled box where you put data: <code>name = "Alice"</code></span>
+                        </div>
+                        <div class="vocab-item">
+                            <span class="vocab-term">Data Type</span>
+                            <span class="vocab-definition">The kind of value stored: int (integers), float (decimals), str (text), bool (True/False).</span>
+                        </div>
+                        <div class="vocab-item">
+                            <span class="vocab-term">Function</span>
+                            <span class="vocab-definition">A reusable block of code that performs a specific task. Defined with <code>def function_name():</code></span>
+                        </div>
+                        <div class="vocab-item">
+                            <span class="vocab-term">Loop</span>
+                            <span class="vocab-definition">Code that repeats multiple times. <code>for</code> loops iterate over sequences, <code>while</code> loops repeat until a condition is false.</span>
+                        </div>
+                        <div class="vocab-item">
+                            <span class="vocab-term">Indentation</span>
+                            <span class="vocab-definition">Whitespace (spaces/tabs) at the start of lines. Python uses indentation to define code blocks instead of curly braces {}.</span>
+                        </div>
+                        <div class="vocab-item">
+                            <span class="vocab-term">Exception</span>
+                            <span class="vocab-definition">An error that occurs during program execution. Handle with <code>try/except</code> blocks to prevent crashes.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="explanation-box info">
+                    <div class="explanation-title">💡 Why Learn Python?</div>
+                    <p>Python is one of the most popular programming languages in the world. It's used in web development, data science, machine learning, automation, and more.</p>
+                    <p><strong>Python's Philosophy:</strong> Code should be readable, simple, and beautiful. If you can read English, you can often guess what Python code does!</p>
+                    <ul>
+                        <li><strong>Data Science:</strong> Libraries like Pandas, NumPy, Matplotlib make data analysis easy</li>
+                        <li><strong>Web Development:</strong> Frameworks like Flask and Django power millions of websites</li>
+                        <li><strong>Automation:</strong> Write scripts to automate repetitive tasks and save time</li>
+                        <li><strong>Machine Learning:</strong> TensorFlow, PyTorch, and scikit-learn make AI accessible</li>
+                    </ul>
+                </div>
+
+                <div class="explanation-box">
+                    <div class="explanation-title">💡 Learning Strategy: Your First Week</div>
+                    <p><strong>Type Every Example:</strong> Don't copy-paste. Typing builds muscle memory and helps you learn syntax.</p>
+                    <p><strong>Experiment:</strong> Change examples and see what happens. Breaking code teaches you how it works.</p>
+                    <p><strong>Use the Interactive Shell:</strong> Type <code>python</code> in terminal to test quick ideas without creating files.</p>
+                    <p><strong>Read Error Messages:</strong> Python's errors are helpful! They tell you what went wrong and where.</p>
+                    <p><strong>Ask Questions:</strong> No question is too basic. Use Slack, forums, and your mentor.</p>
+                </div>
+
+                <button class="nav-btn complete-btn" data-topic="intro">Mark Complete ✓</button>
+                <div class="nav-buttons">
+                    <button class="nav-btn" disabled>◀ Previous</button>
+                    <button class="nav-btn next" onclick="navigateToSection('setup')">Next: Setup ▶</button>
+                </div>
+            </section>
+
+            <!-- SETUP -->
+            <section id="setup" class="section">
+                <h2>⚙️ Environment Setup</h2>
+                <p>Before we code, let's set up your development environment.</p>
+
+                <h3>1. Install Python</h3>
+                <p>Download Python from <a href="https://www.python.org/downloads/" style="color: var(--accent-cyan);">python.org</a>. This course requires Python 3.9 or newer.</p>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span class="code-label">Terminal</span>
+                    </div>
+<pre><code><span class="comment"># Verify Python installation</span>
+python --version
+<span class="comment"># Output: Python 3.11.5</span>
+
+<span class="comment"># Or on some systems:</span>
+python3 --version
+</code></pre>
+                </div>
+
+                <div class="warning-box">
+                    <div class="warning-title">⚠️ Common Setup Pitfalls</div>
+                    <ul>
+                        <li><strong>PATH Not Set (Windows):</strong> During installation, check "Add Python to PATH". Without it, terminal won't find <code>python</code> command.</li>
+                        <li><strong>Python 2 vs Python 3:</strong> Python 2 is deprecated. Always use Python 3. Check version with <code>python --version</code>.</li>
+                        <li><strong>Multiple Python Versions:</strong> If <code>python</code> points to Python 2, use <code>python3</code> command explicitly.</li>
+                        <li><strong>VS Code Not Finding Python:</strong> Install Python extension from VS Code marketplace and select the correct interpreter (Ctrl+Shift+P → "Python: Select Interpreter").</li>
+                    </ul>
+                </div>
+
+                <h3>2. Install pip</h3>
+                <p>pip is Python's package installer, included with Python 3.4+.</p>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span class="code-label">Terminal</span>
+                    </div>
+<pre><code><span class="comment"># Verify pip installation</span>
+pip --version
+<span class="comment"># Output: pip 23.2.1 from ...</span>
+
+<span class="comment"># Or on some systems:</span>
+pip3 --version
+</code></pre>
+                </div>
+
+                <h3>3. Install VS Code</h3>
+                <p>Visual Studio Code is a free, powerful code editor. Download from <a href="https://code.visualstudio.com/" style="color: var(--accent-cyan);">code.visualstudio.com</a>.</p>
+                <p><strong>Recommended Extensions:</strong></p>
+                <ul style="margin-left: 1.5rem; color: var(--text-secondary);">
+                    <li>Python (by Microsoft) - Essential for Python development</li>
+                    <li>Pylance - Advanced language server for better IntelliSense</li>
+                    <li>Code Runner - Run Python files with a single click</li>
+                </ul>
+
+                <button class="nav-btn complete-btn" data-topic="setup">Mark Complete ✓</button>
+                <div class="nav-buttons">
+                    <button class="nav-btn prev" onclick="navigateToSection('intro')">◀ Prev: Intro</button>
+                    <button class="nav-btn next" onclick="navigateToSection('basics')">Next: Basics ▶</button>
+                </div>
+            </section>
+
+            <!-- BASICS -->
+            <section id="basics" class="section">
+                <h2>🔤 Python Basics</h2>
+                <p>Let's write your first Python code!</p>
+
+                <h3>Variables & Data Types</h3>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span class="code-label">Python</span>
+                    </div>
+<pre><code><span class="comment"># Variables - storing data</span>
+name = <span class="string">"Alice"</span>        <span class="comment"># str (string)</span>
+age = <span class="number">25</span>              <span class="comment"># int (integer)</span>
+height = <span class="number">5.6</span>          <span class="comment"># float (decimal)</span>
+is_student = <span class="keyword">True</span>    <span class="comment"># bool (boolean)</span>
+
+<span class="comment"># Print to console</span>
+<span class="keyword">print</span>(<span class="string">f"Name: {name}"</span>)
+<span class="keyword">print</span>(<span class="string">f"Age: {age}"</span>)
+<span class="keyword">print</span>(<span class="string">f"Is student: {is_student}"</span>)
+</code></pre>
+                </div>
+
+                <h3>Operators</h3>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span class="code-label">Python</span>
+                    </div>
+<pre><code><span class="comment"># Arithmetic operators</span>
+x = <span class="number">10</span>
+y = <span class="number">3</span>
+
+<span class="keyword">print</span>(x + y)  <span class="comment"># Addition: 13</span>
+<span class="keyword">print</span>(x - y)  <span class="comment"># Subtraction: 7</span>
+<span class="keyword">print</span>(x * y)  <span class="comment"># Multiplication: 30</span>
+<span class="keyword">print</span>(x / y)  <span class="comment"># Division: 3.333...</span>
+<span class="keyword">print</span>(x // y) <span class="comment"># Floor division: 3</span>
+<span class="keyword">print</span>(x % y)  <span class="comment"># Modulo (remainder): 1</span>
+<span class="keyword">print</span>(x ** y) <span class="comment"># Exponent: 1000</span>
+
+<span class="comment"># Comparison operators</span>
+<span class="keyword">print</span>(x > y)   <span class="comment"># True</span>
+<span class="keyword">print</span>(x == y)  <span class="comment"># False</span>
+<span class="keyword">print</span>(x != y)  <span class="comment"># True</span>
+</code></pre>
+                </div>
+
+                <div class="warning-box">
+                    <div class="warning-title">⚠️ Common Pitfalls: Basics</div>
+                    <ul>
+                        <li><strong>Naming Variables:</strong> Use descriptive names. <code>age</code> is better than <code>a</code>. Can't start with numbers or use spaces.</li>
+                        <li><strong>= vs ==:</strong> <code>=</code> assigns values (<code>x = 5</code>). <code>==</code> compares values (<code>x == 5</code> is True/False).</li>
+                        <li><strong>Type Confusion:</strong> <code>"5" + 5</code> causes TypeError. String + integer doesn't work. Convert: <code>int("5") + 5</code>.</li>
+                        <li><strong>Indentation Matters:</strong> Python uses indentation (4 spaces recommended) to define code blocks. Inconsistent indentation causes errors.</li>
+                    </ul>
+                </div>
+
+                <button class="nav-btn complete-btn" data-topic="basics">Mark Complete ✓</button>
+                <div class="nav-buttons">
+                    <button class="nav-btn prev" onclick="navigateToSection('setup')">◀ Prev: Setup</button>
+                    <button class="nav-btn next" onclick="navigateToSection('control-flow')">Next: Control Flow ▶</button>
+                </div>
+            </section>
+
+            <!-- CONTROL FLOW -->
+            <section id="control-flow" class="section">
+                <h2>🔀 Control Flow</h2>
+                <p>Control flow statements let your program make decisions and repeat actions.</p>
+
+                <h3>Conditional Statements (if/elif/else)</h3>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span class="code-label">Python</span>
+                    </div>
+<pre><code>age = <span class="number">18</span>
+
+<span class="keyword">if</span> age >= <span class="number">18</span>:
+    <span class="keyword">print</span>(<span class="string">"You can vote!"</span>)
+<span class="keyword">elif</span> age >= <span class="number">16</span>:
+    <span class="keyword">print</span>(<span class="string">"You can drive!"</span>)
+<span class="keyword">else</span>:
+    <span class="keyword">print</span>(<span class="string">"You're still young!"</span>)
+</code></pre>
+                </div>
+
+                <h3>Loops</h3>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span class="code-label">Python</span>
+                    </div>
+<pre><code><span class="comment"># for loop - iterate over a sequence</span>
+fruits = [<span class="string">"apple"</span>, <span class="string">"banana"</span>, <span class="string">"cherry"</span>]
+<span class="keyword">for</span> fruit <span class="keyword">in</span> fruits:
+    <span class="keyword">print</span>(fruit)
+
+<span class="comment"># range() - generate numbers</span>
+<span class="keyword">for</span> i <span class="keyword">in</span> <span class="keyword">range</span>(<span class="number">5</span>):  <span class="comment"># 0, 1, 2, 3, 4</span>
+    <span class="keyword">print</span>(i)
+
+<span class="comment"># while loop - repeat until condition is False</span>
+count = <span class="number">0</span>
+<span class="keyword">while</span> count < <span class="number">5</span>:
+    <span class="keyword">print</span>(count)
+    count += <span class="number">1</span>
+
+<span class="comment"># break - exit loop early</span>
+<span class="keyword">for</span> i <span class="keyword">in</span> <span class="keyword">range</span>(<span class="number">10</span>):
+    <span class="keyword">if</span> i == <span class="number">5</span>:
+        <span class="keyword">break</span>  <span class="comment"># Stop at 5</span>
+    <span class="keyword">print</span>(i)
+
+<span class="comment"># continue - skip to next iteration</span>
+<span class="keyword">for</span> i <span class="keyword">in</span> <span class="keyword">range</span>(<span class="number">5</span>):
+    <span class="keyword">if</span> i == <span class="number">2</span>:
+        <span class="keyword">continue</span>  <span class="comment"># Skip 2</span>
+    <span class="keyword">print</span>(i)  <span class="comment"># Prints 0, 1, 3, 4</span>
+</code></pre>
+                </div>
+
+                <div class="warning-box">
+                    <div class="warning-title">⚠️ Common Pitfalls: Control Flow</div>
+                    <ul>
+                        <li><strong>Infinite Loops:</strong> <code>while True:</code> loops forever unless you <code>break</code>. Always ensure condition becomes False eventually.</li>
+                        <li><strong>Forgetting Colons:</strong> Every <code>if</code>, <code>for</code>, <code>while</code> needs a colon <code>:</code> at the end. Python won't work without it.</li>
+                        <li><strong>Indentation Errors:</strong> Code inside if/for/while must be indented (4 spaces). Mixed tabs/spaces cause errors.</li>
+                        <li><strong>range() Exclusivity:</strong> <code>range(5)</code> gives 0-4, not 0-5. Upper bound is exclusive.</li>
+                    </ul>
+                </div>
+
+                <button class="nav-btn complete-btn" data-topic="control-flow">Mark Complete ✓</button>
+                <div class="nav-buttons">
+                    <button class="nav-btn prev" onclick="navigateToSection('basics')">◀ Prev: Basics</button>
+                    <button class="nav-btn next" onclick="navigateToSection('functions')">Next: Functions ▶</button>
+                </div>
+            </section>
+
+            <!-- FUNCTIONS -->
+            <section id="functions" class="section">
+                <h2>⚡ Functions</h2>
+                <p>Functions are reusable blocks of code that perform specific tasks.</p>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span class="code-label">Python</span>
+                    </div>
+<pre><code><span class="comment"># Define a function</span>
+<span class="keyword">def</span> greet(name):
+    <span class="keyword">return</span> <span class="string">f"Hello, {name}!"</span>
+
+<span class="comment"># Call the function</span>
+message = greet(<span class="string">"Alice"</span>)
+<span class="keyword">print</span>(message)  <span class="comment"># Hello, Alice!</span>
+
+<span class="comment"># Function with multiple parameters</span>
+<span class="keyword">def</span> add(a, b):
+    <span class="keyword">return</span> a + b
+
+result = add(<span class="number">5</span>, <span class="number">3</span>)
+<span class="keyword">print</span>(result)  <span class="comment"># 8</span>
+
+<span class="comment"># Default parameters</span>
+<span class="keyword">def</span> greet_with_time(name, time=<span class="string">"day"</span>):
+    <span class="keyword">return</span> <span class="string">f"Good {time}, {name}!"</span>
+
+<span class="keyword">print</span>(greet_with_time(<span class="string">"Bob"</span>))            <span class="comment"># Good day, Bob!</span>
+<span class="keyword">print</span>(greet_with_time(<span class="string">"Bob"</span>, <span class="string">"morning"</span>))  <span class="comment"># Good morning, Bob!</span>
+</code></pre>
+                </div>
+
+                <div class="warning-box">
+                    <div class="warning-title">⚠️ Common Pitfalls: Functions</div>
+                    <ul>
+                        <li><strong>Forgetting return:</strong> Without <code>return</code>, function returns <code>None</code>. Use <code>return</code> to send values back to caller.</li>
+                        <li><strong>Calling Before Definition:</strong> Define functions before you call them. Python reads top-to-bottom.</li>
+                        <li><strong>Mutable Default Arguments:</strong> Don't use <code>def func(items=[]):</code>. The list is shared across calls, causing bugs. Use <code>None</code> instead.</li>
+                        <li><strong>Parameter Order:</strong> Required parameters must come before optional (default) parameters in definition.</li>
+                    </ul>
+                </div>
+
+                <button class="nav-btn complete-btn" data-topic="functions">Mark Complete ✓</button>
+                <div class="nav-buttons">
+                    <button class="nav-btn prev" onclick="navigateToSection('control-flow')">◀ Prev: Control Flow</button>
+                    <button class="nav-btn next" onclick="navigateToSection('debugging')">Next: Debugging ▶</button>
+                </div>
+            </section>
+
+            <!-- DEBUGGING -->
+            <section id="debugging" class="section">
+                <h2>🐛 Debugging & Error Handling</h2>
+                <p>Even the best programmers write code with bugs. Learning to debug is a critical skill!</p>
+
+                <h3>Error Handling with try/except</h3>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span class="code-label">Python</span>
+                    </div>
+<pre><code><span class="comment"># Handle errors gracefully</span>
+<span class="keyword">try</span>:
+    number = <span class="keyword">int</span>(<span class="keyword">input</span>(<span class="string">"Enter a number: "</span>))
+    result = <span class="number">100</span> / number
+    <span class="keyword">print</span>(<span class="string">f"Result: {result}"</span>)
+<span class="keyword">except</span> ValueError:
+    <span class="keyword">print</span>(<span class="string">"That's not a valid number!"</span>)
+<span class="keyword">except</span> ZeroDivisionError:
+    <span class="keyword">print</span>(<span class="string">"Can't divide by zero!"</span>)
+<span class="keyword">except</span> Exception <span class="keyword">as</span> e:
+    <span class="keyword">print</span>(<span class="string">f"An error occurred: {e}"</span>)
+</code></pre>
+                </div>
+
+                <h3>Debugging with Print Statements</h3>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span class="code-label">Python</span>
+                    </div>
+<pre><code><span class="keyword">def</span> calculate_average(numbers):
+    <span class="keyword">print</span>(<span class="string">f"DEBUG: numbers = {numbers}"</span>)  <span class="comment"># See what we're working with</span>
+    
+    total = <span class="keyword">sum</span>(numbers)
+    <span class="keyword">print</span>(<span class="string">f"DEBUG: total = {total}"</span>)       <span class="comment"># Check intermediate result</span>
+    
+    count = <span class="keyword">len</span>(numbers)
+    <span class="keyword">print</span>(<span class="string">f"DEBUG: count = {count}"</span>)       <span class="comment"># Verify count</span>
+    
+    average = total / count
+    <span class="keyword">return</span> average
+
+result = calculate_average([<span class="number">5</span>, <span class="number">10</span>, <span class="number">15</span>])
+<span class="keyword">print</span>(<span class="string">f"Average: {result}"</span>)
+</code></pre>
+                </div>
+
+                <div class="explanation-box">
+                    <div class="explanation-title">💡 Debugging Tips</div>
+                    <p><strong>Read the Error Message:</strong> Python tells you what went wrong and on which line. Start there!</p>
+                    <p><strong>Use Print Statements:</strong> Add <code>print()</code> to see variable values at different points in your code.</p>
+                    <p><strong>Check Your Assumptions:</strong> Is the variable what you think it is? Print it and verify.</p>
+                    <p><strong>Divide and Conquer:</strong> Comment out half your code. If error disappears, the bug is in the commented part.</p>
+                    <p><strong>Google the Error:</strong> Copy-paste error messages into Google. Chances are someone else solved it!</p>
+                </div>
+
+                <button class="nav-btn complete-btn" data-topic="debugging">Mark Complete ✓</button>
+                <div class="nav-buttons">
+                    <button class="nav-btn prev" onclick="navigateToSection('functions')">◀ Prev: Functions</button>
+                    <button class="nav-btn next" onclick="navigateToSection('cheatsheet')">Next: Cheat Sheet ▶</button>
+                </div>
+            </section>
+
+            <!-- CHEAT SHEET -->
+            <section id="cheatsheet" class="section">
+                <h2>📜 Week 1 Cheat Sheet</h2>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span class="code-label">Python Quick Reference</span>
+                    </div>
+<pre><code><span class="comment"># ═══ VARIABLES ═══</span>
+name = <span class="string">"Alice"</span>
+age = <span class="number">25</span>
+height = <span class="number">5.6</span>
+is_student = <span class="keyword">True</span>
+
+<span class="comment"># ═══ OPERATORS ═══</span>
+x + y    <span class="comment"># Addition</span>
+x - y    <span class="comment"># Subtraction</span>
+x * y    <span class="comment"># Multiplication</span>
+x / y    <span class="comment"># Division</span>
+x // y   <span class="comment"># Floor division</span>
+x % y    <span class="comment"># Modulo (remainder)</span>
+x ** y   <span class="comment"># Exponent</span>
+
+<span class="comment"># ═══ CONTROL FLOW ═══</span>
+<span class="keyword">if</span> condition:
+    <span class="comment"># do something</span>
+<span class="keyword">elif</span> other_condition:
+    <span class="comment"># do something else</span>
+<span class="keyword">else</span>:
+    <span class="comment"># do default</span>
+
+<span class="keyword">for</span> item <span class="keyword">in</span> sequence:
+    <span class="comment"># repeat for each item</span>
+
+<span class="keyword">while</span> condition:
+    <span class="comment"># repeat while True</span>
+
+<span class="comment"># ═══ FUNCTIONS ═══</span>
+<span class="keyword">def</span> function_name(param1, param2=<span class="string">"default"</span>):
+    <span class="comment"># do something</span>
+    <span class="keyword">return</span> result
+
+<span class="comment"># ═══ ERROR HANDLING ═══</span>
+<span class="keyword">try</span>:
+    <span class="comment"># risky code</span>
+<span class="keyword">except</span> ErrorType:
+    <span class="comment"># handle error</span>
+</code></pre>
+                </div>
+
+                <div class="objectives-box" style="margin-top: 2rem;">
+                    <div class="objectives-title">🎯 Key Takeaways: Week 1</div>
+                    <ul>
+                        <li><strong>Python is Readable:</strong> Code should be clear and easy to understand. Use descriptive variable names.</li>
+                        <li><strong>Indentation Matters:</strong> Python uses indentation (4 spaces) to define code blocks. Consistency is critical.</li>
+                        <li><strong>Variables Store Data:</strong> Use variables to store values you'll use later. Choose meaningful names.</li>
+                        <li><strong>Functions Make Code Reusable:</strong> Write once, use many times. Functions should do one thing well.</li>
+                        <li><strong>Errors Are Normal:</strong> Read error messages carefully. They tell you what's wrong and where.</li>
+                        <li><strong>Print for Debugging:</strong> <code>print()</code> is your best debugging tool. Use it to inspect variable values.</li>
+                        <li><strong>Practice Daily:</strong> Programming is a skill. The more you practice, the better you get.</li>
+                        <li><strong>Ask Questions:</strong> No question is too basic. Use Slack, forums, and your mentor for help.</li>
+                    </ul>
+                </div>
+
+                <button class="nav-btn complete-btn" data-topic="cheatsheet">Mark Lesson Complete 🎉</button>
+                <div class="nav-buttons">
+                    <button class="nav-btn prev" onclick="navigateToSection('debugging')">◀ Prev: Debugging</button>
+                    <button class="nav-btn next" disabled>🏆 Week 1 Complete!</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        const sectionsOrder = ['intro', 'setup', 'basics', 'control-flow', 'functions', 'debugging', 'cheatsheet'];
+        const completedTopics = new Set();
+
+        function navigateToSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            document.getElementById(sectionId).classList.add('active');
+            event.target.classList.add('active');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        document.querySelectorAll('.complete-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const topic = this.getAttribute('data-topic');
+                completedTopics.add(topic);
+                
+                const navItem = Array.from(document.querySelectorAll('.nav-item')).find(item => 
+                    item.textContent.toLowerCase().includes(topic)
+                );
+                if (navItem) {
+                    navItem.classList.add('completed');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

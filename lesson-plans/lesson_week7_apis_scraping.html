@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 7: APIs & Web Scraping | Python Course</title>
+    <meta name="description" content="Interactive lesson on fetching data from the web using APIs and Web Scraping with Python.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&family=Orbitron:wght@700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* ═══════════════════════════════════════════════════════════════════
+           CSS CUSTOM PROPERTIES (Variables) - CONSISTENT WITH PREVIOUS WEEKS
+           ═══════════════════════════════════════════════════════════════════ */
+        :root {
+            --bg-dark: #0a0e27;
+            --bg-medium: #1a1f3a;
+            --bg-light: #2a2f4a;
+            --accent-cyan: #00f0ff;
+            --accent-magenta: #ff00ff;
+            --accent-yellow: #ffff00;
+            --accent-green: #00ff41;
+            --accent-orange: #ff6b35;
+            --accent-red: #ff3366;
+            --accent-blue: #4da6ff;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --level-bad: #ff3366;
+            --level-novice: #ff9f43;
+            --level-intermediate: #4da6ff;
+            --level-best: #00ff41;
+            --shadow-glow: 0 0 20px rgba(0, 240, 255, 0.3);
+            --shadow-glow-green: 0 0 20px rgba(0, 255, 65, 0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Space Mono', monospace;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 240, 255, 0.03) 2px, rgba(0, 240, 255, 0.03) 4px);
+            pointer-events: none;
+            z-index: 1;
+            animation: scanlines 8s linear infinite;
+        }
+
+        @keyframes scanlines {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(4px); }
+        }
+
+        header {
+            position: relative;
+            z-index: 10;
+            padding: 2rem;
+            text-align: center;
+            background: linear-gradient(135deg, var(--bg-medium) 0%, var(--bg-dark) 100%);
+            border-bottom: 3px solid var(--accent-cyan);
+            box-shadow: 0 4px 20px rgba(0, 240, 255, 0.2);
+        }
+
+        h1 {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, var(--accent-cyan), var(--accent-magenta));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 5px var(--accent-cyan)); }
+            to { filter: drop-shadow(0 0 20px var(--accent-magenta)); }
+        }
+
+        .subtitle { font-size: 1.1rem; color: var(--accent-green); font-weight: 600; }
+        
+        .week-badge {
+            display: inline-block;
+            background: var(--accent-magenta);
+            color: var(--bg-dark);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-top: 0.5rem;
+        }
+
+        .progress-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 4px; background: var(--bg-medium); z-index: 1000;
+        }
+        .progress-bar {
+            height: 100%; background: linear-gradient(90deg, var(--accent-cyan), var(--accent-magenta)); width: 0%; transition: width 0.3s ease; box-shadow: var(--shadow-glow);
+        }
+        .xp-bar {
+            position: fixed; top: 20px; right: 20px; background: var(--bg-medium); padding: 1rem; border-radius: 8px; border: 2px solid var(--accent-cyan); z-index: 100; min-width: 220px; box-shadow: var(--shadow-glow);
+        }
+        .xp-label { font-size: 0.85rem; color: var(--accent-yellow); margin-bottom: 0.5rem; font-weight: 700; }
+        .xp-progress { width: 100%; height: 20px; background: var(--bg-dark); border-radius: 10px; overflow: hidden; position: relative; }
+        .xp-fill { height: 100%; background: linear-gradient(90deg, var(--accent-green), var(--accent-cyan)); width: 0%; transition: width 0.5s ease; }
+        .xp-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 0.75rem; font-weight: 700; color: var(--text-primary); text-shadow: 1px 1px 2px rgba(0,0,0,0.8); }
+
+        .container { display: flex; max-width: 1400px; margin: 0 auto; position: relative; z-index: 2; }
+        .sidebar { width: 300px; position: sticky; top: 20px; height: calc(100vh - 40px); padding: 2rem 1rem; background: var(--bg-medium); border-right: 2px solid var(--accent-cyan); overflow-y: auto; }
+        .nav-title { font-size: 0.9rem; color: var(--accent-yellow); margin-bottom: 1rem; font-weight: 700; text-transform: uppercase; }
+        .nav-item { padding: 0.75rem 1rem; margin-bottom: 0.5rem; cursor: pointer; border-left: 3px solid transparent; transition: all 0.3s ease; font-size: 0.95rem; background: var(--bg-dark); border-radius: 4px; }
+        .nav-item:hover { border-left-color: var(--accent-cyan); background: var(--bg-light); transform: translateX(5px); }
+        .nav-item.active { border-left-color: var(--accent-magenta); background: var(--bg-light); color: var(--accent-cyan); box-shadow: var(--shadow-glow); }
+        .nav-item.completed::after { content: ' ✓'; color: var(--accent-green); float: right; }
+        
+        .main-content { flex: 1; padding: 2rem; min-height: 100vh; }
+        .section { display: none; animation: fadeIn 0.5s ease; }
+        .section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        h2 { font-family: 'Orbitron', monospace; font-size: 2rem; color: var(--accent-cyan); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 1px; }
+        h3 { font-family: 'Orbitron', monospace; font-size: 1.5rem; color: var(--accent-magenta); margin: 2rem 0 1rem 0; }
+        p { margin-bottom: 1rem; color: var(--text-secondary); line-height: 1.8; }
+
+        .skill-progression { margin: 2rem 0; background: var(--bg-medium); border-radius: 12px; overflow: hidden; border: 2px solid var(--bg-light); }
+        .skill-tabs { display: flex; background: var(--bg-dark); border-bottom: 2px solid var(--bg-light); flex-wrap: wrap; }
+        .skill-tab { flex: 1; min-width: 120px; padding: 1rem; cursor: pointer; text-align: center; font-weight: 700; font-size: 0.85rem; transition: all 0.3s ease; border: none; background: transparent; color: var(--text-secondary); font-family: 'Space Mono', monospace; position: relative; }
+        .skill-tab::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 3px; background: transparent; transition: background 0.3s ease; }
+        .skill-tab:hover { background: var(--bg-light); }
+        .skill-tab.active { color: var(--text-primary); }
+        .skill-tab[data-level="bad"] { border-top: 3px solid var(--level-bad); }
+        .skill-tab[data-level="novice"] { border-top: 3px solid var(--level-novice); }
+        .skill-tab[data-level="intermediate"] { border-top: 3px solid var(--level-intermediate); }
+        .skill-tab[data-level="best"] { border-top: 3px solid var(--level-best); }
+        .skill-tab[data-level="bad"].active::after { background: var(--level-bad); }
+        .skill-tab[data-level="novice"].active::after { background: var(--level-novice); }
+        .skill-tab[data-level="intermediate"].active::after { background: var(--level-intermediate); }
+        .skill-tab[data-level="best"].active::after { background: var(--level-best); }
+        .skill-tab-icon { display: block; font-size: 1.2rem; margin-bottom: 0.25rem; }
+        .skill-content { display: none; padding: 0; animation: fadeIn 0.3s ease; }
+        .skill-content.active { display: block; }
+
+        .code-container { background: var(--bg-dark); border: 2px solid var(--accent-cyan); border-radius: 8px; margin: 1.5rem 0; overflow: hidden; box-shadow: var(--shadow-glow); }
+        .code-container.level-bad { border-color: var(--level-bad); box-shadow: 0 0 15px rgba(255, 51, 102, 0.2); }
+        .code-container.level-novice { border-color: var(--level-novice); box-shadow: 0 0 15px rgba(255, 159, 67, 0.2); }
+        .code-container.level-intermediate { border-color: var(--level-intermediate); box-shadow: 0 0 15px rgba(77, 166, 255, 0.2); }
+        .code-container.level-best { border-color: var(--level-best); box-shadow: var(--shadow-glow-green); }
+
+        .code-header { background: var(--bg-medium); padding: 0.75rem 1rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--accent-cyan); flex-wrap: wrap; gap: 0.5rem; }
+        .code-header-left { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+        .code-label { color: var(--accent-yellow); font-weight: 700; font-size: 0.9rem; }
+        .level-badge { padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+        .level-badge.bad { background: var(--level-bad); color: white; }
+        .level-badge.novice { background: var(--level-novice); color: var(--bg-dark); }
+        .level-badge.intermediate { background: var(--level-intermediate); color: var(--bg-dark); }
+        .level-badge.best { background: var(--level-best); color: var(--bg-dark); }
+        .semantic-label { font-size: 0.8rem; color: var(--text-secondary); padding: 0.25rem 0.5rem; background: var(--bg-dark); border-radius: 4px; }
+
+        pre { padding: 1.5rem; overflow-x: auto; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; line-height: 1.7; background: var(--bg-dark); color: var(--text-primary); margin: 0; }
+        .keyword { color: var(--accent-magenta); font-weight: 600; }
+        .string { color: var(--accent-green); }
+        .function { color: var(--accent-cyan); }
+        .comment { color: #6a9955; font-style: italic; }
+        .number { color: var(--accent-yellow); }
+        .class-name { color: var(--accent-orange); font-weight: bold; }
+        .builtin { color: var(--accent-blue); }
+        .decorator { color: var(--accent-yellow); }
+
+        .output { background: #000; color: var(--text-primary); padding: 0; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; border-top: 1px solid var(--bg-light); max-height: 0; overflow: hidden; transition: all 0.3s ease; }
+        .output.show { padding: 1rem; max-height: 300px; overflow-y: auto; }
+        .output-label { color: var(--text-secondary); font-size: 0.75rem; text-transform: uppercase; margin-bottom: 0.5rem; display: block; }
+
+        .run-button { background: var(--accent-green); color: var(--bg-dark); border: none; padding: 0.4rem 1rem; border-radius: 4px; font-family: 'Space Mono', monospace; font-weight: 700; cursor: pointer; transition: all 0.2s; font-size: 0.8rem; }
+        .run-button:hover { transform: translateY(-2px); box-shadow: 0 0 10px var(--accent-green); }
+        .run-button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+        .explanation-box { background: var(--bg-medium); border-radius: 8px; padding: 1.25rem; margin: 1rem 0; border-left: 4px solid var(--accent-blue); }
+        .explanation-box.tip { border-left-color: var(--level-best); }
+        .explanation-box.warning { border-left-color: var(--level-bad); }
+        .explanation-box.info { border-left-color: var(--accent-cyan); }
+        .explanation-title { font-weight: 700; margin-bottom: 0.5rem; color: var(--text-primary); display: flex; align-items: center; gap: 0.5rem; }
+
+        .objectives-box { background: linear-gradient(135deg, rgba(0, 240, 255, 0.1), var(--bg-medium)); border: 2px solid var(--accent-cyan); border-radius: 8px; padding: 1.5rem; margin: 1.5rem 0; }
+        .objectives-list li { padding: 0.5rem 0; padding-left: 1.5rem; position: relative; }
+        .objectives-list li::before { content: '▸'; position: absolute; left: 0; color: var(--accent-green); font-weight: bold; }
+
+        .playground { background: var(--bg-medium); border: 2px solid var(--accent-yellow); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; }
+        .playground-header { display: flex; justify-content: space-between; margin-bottom: 1rem; }
+        .playground-title { font-weight: 700; color: var(--accent-yellow); }
+        textarea { width: 100%; height: 150px; background: var(--bg-dark); color: var(--text-primary); border: 1px solid var(--bg-light); padding: 1rem; font-family: 'JetBrains Mono', monospace; border-radius: 4px; resize: vertical; }
+
+        .nav-buttons { display: flex; justify-content: space-between; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--bg-light); }
+        .nav-btn { background: var(--bg-medium); color: var(--text-primary); border: 2px solid var(--accent-cyan); padding: 1rem 2rem; border-radius: 8px; cursor: pointer; font-family: 'Space Mono', monospace; font-weight: 700; transition: all 0.3s ease; }
+        .nav-btn:hover { background: var(--accent-cyan); color: var(--bg-dark); }
+        .nav-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .complete-btn { background: linear-gradient(135deg, var(--accent-green), var(--accent-cyan)); color: var(--bg-dark); border: none; width: 100%; margin-top: 2rem; }
+
+        .achievement { position: fixed; bottom: 20px; right: 20px; background: linear-gradient(135deg, var(--bg-medium), #000); border: 2px solid var(--accent-yellow); border-radius: 12px; padding: 1.5rem; width: 300px; transform: translateY(150%); transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 2000; box-shadow: 0 0 30px rgba(255, 255, 0, 0.3); text-align: center; }
+        .achievement.show { transform: translateY(0); }
+        .achievement-icon { font-size: 3rem; margin-bottom: 0.5rem; animation: bounce 1s infinite alternate; }
+        @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-10px); } }
+
+        @media (max-width: 968px) {
+            .container { flex-direction: column; }
+            .sidebar { width: 100%; height: auto; position: relative; }
+            .xp-bar { position: relative; top: 0; right: 0; margin: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="xp-bar">
+        <div class="xp-label">📊 Progress</div>
+        <div class="xp-progress">
+            <div class="xp-fill" id="xpFill"></div>
+            <div class="xp-text" id="xpText">0 / 5 Topics</div>
+        </div>
+    </div>
+
+    <header>
+        <h1>🌐 APIs & Web Scraping</h1>
+        <p class="subtitle">Fetching the World's Data with Python</p>
+        <span class="week-badge">WEEK 7</span>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar">
+            <nav class="nav-section">
+                <div class="nav-title">📖 Topics</div>
+                <div class="nav-item active" data-section="intro">Introduction</div>
+                <div class="nav-item" data-section="apis">Using APIs</div>
+                <div class="nav-item" data-section="scraping">Web Scraping</div>
+                <div class="nav-item" data-section="ethics">Ethics & Limits</div>
+                <div class="nav-item" data-section="cheatsheet">Cheat Sheet</div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <!-- INTRO -->
+            <section id="intro" class="section active">
+                <h2>🌐 The Internet as Your Dataset</h2>
+                
+                <div class="objectives-box">
+                    <div class="objectives-title">🎯 Learning Objectives</div>
+                    <ul class="objectives-list">
+                        <li>Understand HTTP requests (GET, POST)</li>
+                        <li>Fetch JSON data using the `requests` library</li>
+                        <li>Parse HTML using `BeautifulSoup`</li>
+                        <li>Handle rate limits and authentication</li>
+                        <li>Scrape data responsibly and ethically</li>
+                    </ul>
+                </div>
+
+                <div class="vocab-list">
+                    <div class="vocab-title">📚 Key Vocabulary</div>
+                    <div class="vocab-grid">
+                        <div class="vocab-item">
+                            <span class="vocab-term">API</span>
+                            <span class="vocab-definition">Application Programming Interface—a structured way to request data from servers, usually returning JSON or XML. The official, documented way to access data.</span>
+                        </div>
+                        <div class="vocab-item">
+                            <span class="vocab-term">HTTP</span>
+                            <span class="vocab-definition">Hypertext Transfer Protocol—the foundation of web communication. GET retrieves data, POST sends data, PUT updates, DELETE removes.</span>
+                        </div>
+                        <div class="vocab-item">
+                            <span class="vocab-term">JSON</span>
+                            <span class="vocab-definition">JavaScript Object Notation—a lightweight data format using key-value pairs, easily converted to Python dictionaries with <code>json.loads()</code>.</span>
+                        </div>
+                        <div class="vocab-item">
+                            <span class="vocab-term">Web Scraping</span>
+                            <span class="vocab-definition">Extracting data from HTML web pages not designed for data access. Uses tools like BeautifulSoup to parse HTML structure.</span>
+                        </div>
+                        <div class="vocab-item">
+                            <span class="vocab-term">Rate Limiting</span>
+                            <span class="vocab-definition">Restrictions on how many API requests you can make per time period (e.g., 100 requests/hour). Exceeding limits can get you blocked.</span>
+                        </div>
+                        <div class="vocab-item">
+                            <span class="vocab-term">robots.txt</span>
+                            <span class="vocab-definition">A file at a website's root (e.g., <code>example.com/robots.txt</code>) specifying which pages can be scraped by bots. Respect it.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="concept-grid">
+                    <div class="concept-card">
+                        <h3>🔌 Using APIs</h3>
+                        <p>Make HTTP requests with <code>requests</code> library to fetch structured JSON data from APIs. Clean, documented, and respectful.</p>
+                    </div>
+                    <div class="concept-card">
+                        <h3>🕷️ Web Scraping</h3>
+                        <p>Parse HTML with BeautifulSoup to extract data from websites without APIs. Powerful but fragile—page changes break your code.</p>
+                    </div>
+                    <div class="concept-card">
+                        <h3>⚖️ Ethics & Legality</h3>
+                        <p>Respect robots.txt, rate limits, and terms of service. Scraping without permission can violate laws and get you banned.</p>
+                    </div>
+                </div>
+
+                <div class="analogy-box">
+                    <div class="analogy-title">🎯 Analogy: API vs Scraping</div>
+                    <p><strong>Using an API:</strong> Walking into a library and asking the librarian for a specific book. They hand you a neat catalog card (JSON) with all the information organized.</p>
+                    <p><strong>Web Scraping:</strong> Sneaking into the library's back room and photographing pages from books yourself. You get the data, but it's messy, you might miss context, and you could get kicked out if caught.</p>
+                    <p><strong>Rate Limiting:</strong> The librarian says, "You can only ask for 100 books per hour. Come back tomorrow if you need more."</p>
+                    <p><strong>Authentication (API Keys):</strong> The library gives you a member card (API key) proving you're authorized to request data.</p>
+                    <p><strong>robots.txt:</strong> A sign outside the library saying, "Please don't photograph books from the rare manuscripts section."</p>
+                </div>
+
+                <div class="explanation-box info">
+                    <div class="explanation-title">💡 API vs Scraping</div>
+                    <p><strong>API (Application Programming Interface):</strong> The "front door" for data. Structured, documented, and authorized.</p>
+                    <p><strong>Web Scraping:</strong> The "back door". Extracting data from HTML meant for humans. Fragile but powerful.</p>
+                    <p><strong>Real-World Applications:</strong></p>
+                    <ul>
+                        <li><strong>Weather Apps:</strong> Fetch current weather from OpenWeatherMap API</li>
+                        <li><strong>Financial Analysis:</strong> Pull stock prices from Yahoo Finance API or scrape market data</li>
+                        <li><strong>Social Media Monitoring:</strong> Collect tweets via Twitter API (now X API) for sentiment analysis</li>
+                        <li><strong>E-commerce:</strong> Scrape competitor prices to dynamically adjust your pricing strategy</li>
+                    </ul>
+                </div>
+
+                <div class="explanation-box">
+                    <div class="explanation-title">💡 Learning Strategy: APIs & Scraping</div>
+                    <p><strong>Always Try the API First:</strong> Before scraping, check if the site has an API. It's faster, more reliable, and legal.</p>
+                    <p><strong>Use Browser DevTools:</strong> Open Chrome/Firefox DevTools → Network tab to see API requests websites make internally. Reverse-engineer hidden APIs.</p>
+                    <p><strong>Respect Rate Limits:</strong> Add <code>time.sleep()</code> between requests. Getting IP-banned wastes more time than waiting a few seconds.</p>
+                    <p><strong>Save Raw Data First:</strong> Save JSON responses or HTML to files before parsing. If parsing fails, you don't have to re-fetch.</p>
+                    <p><strong>Read robots.txt:</strong> Visit <code>example.com/robots.txt</code> to see what's allowed. Ignoring it can get you sued or blocked.</p>
+                </div>
+
+                <button class="nav-btn complete-btn" data-topic="intro">Mark Complete ✓</button>
+                <div class="nav-buttons">
+                    <button class="nav-btn" disabled>◀ Previous</button>
+                    <button class="nav-btn next" onclick="navigateToSection('apis')">Next: Using APIs ▶</button>
+                </div>
+            </section>
+
+            <!-- APIS -->
+            <section id="apis" class="section">
+                <h2>🔌 Connecting to APIs</h2>
+                <p>The <code>requests</code> library is the gold standard for HTTP in Python.</p>
+
+                <div class="skill-progression">
+                    <div class="skill-tabs">
+                        <button class="skill-tab active" data-level="bad" data-target="api-bad">
+                            <span class="skill-tab-icon">🔴</span> Bad
+                        </button>
+                        <button class="skill-tab" data-level="novice" data-target="api-novice">
+                            <span class="skill-tab-icon">🟠</span> Novice
+                        </button>
+                        <button class="skill-tab" data-level="best" data-target="api-best">
+                            <span class="skill-tab-icon">🟢</span> Best Practice
+                        </button>
+                    </div>
+
+                    <!-- BAD -->
+                    <div class="skill-content active" id="api-bad">
+                        <div class="code-container level-bad">
+                            <div class="code-header">
+                                <div class="code-header-left">
+                                    <span class="code-label">Python</span>
+                                    <span class="level-badge bad">❌ Bad Practice</span>
+                                    <span class="semantic-label">No Error Handling</span>
+                                </div>
+                                <button class="run-button" data-output="Error: 'NoneType' object is not subscriptable">Run ▶</button>
+                            </div>
+<pre><code><span class="comment"># ❌ BAD: Assuming everything works</span>
+<span class="keyword">import</span> requests
+<span class="keyword">import</span> json
+
+<span class="comment"># If the internet is down or URL is wrong, this crashes</span>
+response = requests.get(<span class="string">'https://api.fake-site.com/data'</span>)
+
+<span class="comment"># If response is 404 (Not Found), this crashes</span>
+data = json.loads(response.text)
+
+<span class="keyword">print</span>(data[<span class="string">'results'</span>])
+</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- NOVICE -->
+                    <div class="skill-content" id="api-novice">
+                        <div class="code-container level-novice">
+                            <div class="code-header">
+                                <div class="code-header-left">
+                                    <span class="code-label">Python</span>
+                                    <span class="level-badge novice">🔰 Novice</span>
+                                    <span class="semantic-label">Basic Check</span>
+                                </div>
+                                <button class="run-button" data-output="Status Code: 200\n{'id': 1, 'title': 'Hello World'}">Run ▶</button>
+                            </div>
+<pre><code><span class="comment"># 🔰 NOVICE: Checking status code</span>
+<span class="keyword">import</span> requests
+
+url = <span class="string">'https://jsonplaceholder.typicode.com/posts/1'</span>
+response = requests.get(url)
+
+<span class="keyword">if</span> response.status_code == <span class="number">200</span>:
+    <span class="comment"># Built-in JSON decoder</span>
+    data = response.json()
+    <span class="keyword">print</span>(f<span class="string">"Status Code: {response.status_code}"</span>)
+    <span class="keyword">print</span>(data)
+<span class="keyword">else</span>:
+    <span class="keyword">print</span>(<span class="string">"Something went wrong"</span>)
+</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- BEST -->
+                    <div class="skill-content" id="api-best">
+                        <div class="code-container level-best">
+                            <div class="code-header">
+                                <div class="code-header-left">
+                                    <span class="code-label">Python</span>
+                                    <span class="level-badge best">⭐ Best Practice</span>
+                                    <span class="semantic-label">Robust Handling</span>
+                                </div>
+                                <button class="run-button" data-output="Success: Fetched 1 posts">Run ▶</button>
+                            </div>
+<pre><code><span class="comment"># ⭐ BEST PRACTICE: Try/Except & raise_for_status</span>
+<span class="keyword">import</span> requests
+<span class="keyword">from</span> requests.exceptions <span class="keyword">import</span> RequestException
+
+url = <span class="string">'https://jsonplaceholder.typicode.com/posts/1'</span>
+
+<span class="keyword">try</span>:
+    <span class="comment"># Set timeout to prevent hanging forever</span>
+    response = requests.get(url, timeout=<span class="number">5</span>)
+    
+    <span class="comment"># Raises error for 4xx or 5xx status codes</span>
+    response.raise_for_status()
+    
+    data = response.json()
+    <span class="keyword">print</span>(<span class="string">f"Success: Fetched {len(data) if isinstance(data, list) else 1} posts"</span>)
+
+<span class="keyword">except</span> requests.exceptions.HTTPError <span class="keyword">as</span> errh:
+    <span class="keyword">print</span>(<span class="string">f"Http Error: {errh}"</span>)
+<span class="keyword">except</span> requests.exceptions.ConnectionError <span class="keyword">as</span> errc:
+    <span class="keyword">print</span>(<span class="string">f"Error Connecting: {errc}"</span>)
+<span class="keyword">except</span> requests.exceptions.Timeout <span class="keyword">as</span> errt:
+    <span class="keyword">print</span>(<span class="string">f"Timeout Error: {errt}"</span>)
+<span class="keyword">except</span> RequestException <span class="keyword">as</span> e:
+    <span class="keyword">print</span>(<span class="string">f"OOPS: {e}"</span>)
+</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <div class="warning-title">⚠️ Common Pitfalls: APIs</div>
+                    <ul>
+                        <li><strong>Ignoring Status Codes:</strong> Always check <code>response.status_code</code>. A 200 means success, but 401 (unauthorized), 429 (rate limit), or 500 (server error) require different handling.</li>
+                        <li><strong>Not Handling Timeouts:</strong> Network requests can hang forever. Always set <code>timeout=10</code> in <code>requests.get()</code> to prevent infinite waits.</li>
+                        <li><strong>Hardcoding API Keys:</strong> Never commit API keys to GitHub. Use environment variables (<code>os.getenv('API_KEY')</code>) or config files in <code>.gitignore</code>.</li>
+                        <li><strong>Exceeding Rate Limits:</strong> APIs limit requests per time period. Add <code>time.sleep()</code> between requests or use libraries like <code>ratelimit</code> to stay compliant.</li>
+                    </ul>
+                </div>
+
+                <div class="discussion-box">
+                    <div class="discussion-title">💬 Discussion Questions</div>
+                    <ol>
+                        <li>Why do companies provide free APIs? What are the business reasons behind rate limits and API keys?</li>
+                        <li>What's the difference between authentication (proving who you are) and authorization (what you're allowed to do)? How do API keys relate?</li>
+                        <li>When would you use GET vs. POST requests? Give examples of data operations that require each.</li>
+                        <li>How can you handle API responses when the service is temporarily down (e.g., 503 errors)? What retry strategies make sense?</li>
+                    </ol>
+                </div>
+
+                <div class="playground">
+                    <div class="playground-title">🎮 Practice Playground: Weather Dashboard</div>
+                    <p><strong>Challenge:</strong> Build a weather data fetcher using OpenWeatherMap API (free tier):</p>
+                    <ul>
+                        <li>Sign up for an API key at <code>openweathermap.org</code></li>
+                        <li>Write a function that takes a city name and returns current temperature, humidity, and weather description</li>
+                        <li>Handle errors (invalid city, network timeout, API key issues)</li>
+                        <li>Fetch weather for 5 different cities and save results to a CSV file</li>
+                    </ul>
+                    <p><strong>Bonus:</strong> Use <code>requests.Session()</code> for connection pooling when making multiple requests.</p>
+                </div>
+
+                <button class="nav-btn complete-btn" data-topic="apis">Mark Topic Complete ✓</button>
+                <div class="nav-buttons">
+                    <button class="nav-btn prev" onclick="navigateToSection('intro')">◀ Prev: Intro</button>
+                    <button class="nav-btn next" onclick="navigateToSection('scraping')">Next: Web Scraping ▶</button>
+                </div>
+            </section>
+
+            <!-- SCRAPING -->
+            <section id="scraping" class="section">
+                <h2>🕸️ Web Scraping</h2>
+                <p>When there is no API, use BeautifulSoup to parse HTML.</p>
+
+                <div class="code-container level-best">
+                    <div class="code-header">
+                        <span class="code-label">Python</span>
+                        <span class="level-badge best">⭐ Beautiful Soup</span>
+                    </div>
+                    <button class="run-button" data-output="Title: My Blog\nHeadline: Welcome to Python">Run ▶</button>
+<pre><code><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup
+
+<span class="comment"># Simulate HTML content</span>
+html_doc = <span class="string">"""
+&lt;html&gt;
+    &lt;head&gt;&lt;title&gt;My Blog&lt;/title&gt;&lt;/head&gt;
+    &lt;body&gt;
+        &lt;h1 class="headline"&gt;Welcome to Python&lt;/h1&gt;
+        &lt;p class="content"&gt;Scraping is fun!&lt;/p&gt;
+        &lt;a href="http://example.com" id="link1"&gt;Link&lt;/a&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+"""</span>
+
+<span class="comment"># Parse HTML</span>
+soup = BeautifulSoup(html_doc, <span class="string">'html.parser'</span>)
+
+<span class="comment"># Extract data</span>
+title = soup.title.string
+headline = soup.find(<span class="string">'h1'</span>, class_=<span class="string">'headline'</span>).text
+link = soup.find(<span class="string">'a'</span>)[<span class="string">'href'</span>]
+
+<span class="keyword">print</span>(<span class="string">f"Title: {title}"</span>)
+<span class="keyword">print</span>(<span class="string">f"Headline: {headline}"</span>)
+</code></pre>
+                </div>
+
+                <div class="warning-box">
+                    <div class="warning-title">⚠️ Common Pitfalls: Web Scraping</div>
+                    <ul>
+                        <li><strong>Brittle Selectors:</strong> CSS selectors like <code>.class-name</code> break when websites redesign. Your scraper needs constant maintenance—expect it.</li>
+                        <li><strong>Ignoring robots.txt:</strong> Check <code>website.com/robots.txt</code> before scraping. Violating it can lead to legal issues or permanent IP bans.</li>
+                        <li><strong>No Rate Limiting:</strong> Hammering a server with requests crashes it and gets you blocked. Add <code>time.sleep(1)</code> between requests as a courtesy.</li>
+                        <li><strong>Not Handling Missing Elements:</strong> Use <code>.find()</code> and check for <code>None</code> before accessing <code>.text</code>. Missing elements crash your script without defensive coding.</li>
+                    </ul>
+                </div>
+
+                <div class="discussion-box">
+                    <div class="discussion-title">💬 Discussion Questions</div>
+                    <ol>
+                        <li>Why is web scraping considered "fragile"? What happens when a website redesigns its HTML structure?</li>
+                        <li>How does BeautifulSoup's <code>find()</code> differ from <code>find_all()</code>? When would you use each?</li>
+                        <li>What strategies can you use to make scrapers more resilient to HTML changes (e.g., multiple fallback selectors)?</li>
+                        <li>Why is it important to add delays between scraping requests? What's a reasonable delay for most websites?</li>
+                    </ol>
+                </div>
+
+                <div class="playground">
+                    <div class="playground-title">🎮 Practice Playground: News Aggregator</div>
+                    <p><strong>Challenge:</strong> Scrape headlines from a news website (choose a simple one like quotes.toscrape.com for practice):</p>
+                    <ul>
+                        <li>Fetch the homepage HTML using <code>requests.get()</code></li>
+                        <li>Parse the HTML with BeautifulSoup</li>
+                        <li>Extract all article titles, authors, and timestamps</li>
+                        <li>Save results to a Pandas DataFrame and export to CSV</li>
+                        <li>Handle missing data gracefully (some articles may lack authors)</li>
+                    </ul>
+                    <p><strong>Bonus:</strong> Scrape multiple pages by following "Next Page" links in a loop.</p>
+                </div>
+
+                <button class="nav-btn complete-btn" data-topic="scraping">Mark Topic Complete ✓</button>
+                <div class="nav-buttons">
+                    <button class="nav-btn prev" onclick="navigateToSection('apis')">◀ Prev: APIs</button>
+                    <button class="nav-btn next" onclick="navigateToSection('ethics')">Next: Ethics ▶</button>
+                </div>
+            </section>
+
+            <!-- ETHICS -->
+            <section id="ethics" class="section">
+                <h2>⚖️ Ethics & Best Practices</h2>
+                <p>Just because you <em>can</em> scrape it, doesn't mean you <em>should</em>.</p>
+
+                <div class="explanation-box warning">
+                    <div class="explanation-title">⚠️ The Rules of the Road</div>
+                    <ul>
+                        <li><strong>Check <code>robots.txt</code>:</strong> (e.g., google.com/robots.txt) to see what is allowed.</li>
+                        <li><strong>Rate Limiting:</strong> Don't hammer the server. Sleep between requests (`time.sleep(1)`).</li>
+                        <li><strong>User-Agent:</strong> Identify your bot script in the headers.</li>
+                        <li><strong>Public Data Only:</strong> Do not scrape data behind a login unless authorized.</li>
+                    </ul>
+                </div>
+
+                <div class="code-container level-best">
+                    <div class="code-header">
+                        <span class="code-label">Python</span>
+                        <span class="level-badge best">⭐ Polite Scraper</span>
+                    </div>
+<pre><code><span class="keyword">import</span> time
+<span class="keyword">import</span> requests
+
+headers = {
+    <span class="string">'User-Agent'</span>: <span class="string">'MyStudentBot/1.0 (education purposes)'</span>
+}
+
+urls = [<span class="string">'http://site.com/page1'</span>, <span class="string">'http://site.com/page2'</span>]
+
+<span class="keyword">for</span> url <span class="keyword">in</span> urls:
+    <span class="keyword">try</span>:
+        <span class="comment"># Be polite! Identify yourself</span>
+        response = requests.get(url, headers=headers)
+        <span class="comment"># ... process data ...</span>
+        
+        <span class="comment"># Be polite! Wait between requests</span>
+        time.sleep(<span class="number">1</span>)
+        
+    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:
+        <span class="keyword">print</span>(e)
+</code></pre>
+                </div>
+
+                <div class="warning-box">
+                    <div class="warning-title">⚠️ Common Pitfalls: Ethics & Legality</div>
+                    <ul>
+                        <li><strong>Ignoring Terms of Service:</strong> Most websites' ToS explicitly forbid scraping. Violating ToS can lead to legal action—read them before scraping.</li>
+                        <li><strong>Scraping Personal Data:</strong> GDPR and CCPA regulate personal data collection. Scraping user profiles, emails, or private info can violate privacy laws.</li>
+                        <li><strong>Not Respecting robots.txt:</strong> This file specifies what bots can access. Ignoring it is unethical and may be illegal under CFAA (Computer Fraud and Abuse Act).</li>
+                        <li><strong>Overwhelming Small Servers:</strong> Small websites can't handle thousands of requests per second. Your scraper could cause a denial-of-service (DoS)—rate limit yourself.</li>
+                    </ul>
+                </div>
+
+                <div class="discussion-box">
+                    <div class="discussion-title">💬 Discussion Questions</div>
+                    <ol>
+                        <li>Where is the ethical line between "public data" and "data you shouldn't scrape"? Is scraping social media profiles ethical?</li>
+                        <li>What legal precedents exist around web scraping? Research the hiQ vs. LinkedIn case and its implications.</li>
+                        <li>How do you balance "data is publicly visible" with "the website owner doesn't want you scraping it"?</li>
+                        <li>What's the difference between scraping for personal research vs. commercial use? Why does intent matter legally?</li>
+                    </ol>
+                </div>
+
+                <button class="nav-btn complete-btn" data-topic="ethics">Mark Topic Complete ✓</button>
+                <div class="nav-buttons">
+                    <button class="nav-btn prev" onclick="navigateToSection('scraping')">◀ Prev: Scraping</button>
+                    <button class="nav-btn next" onclick="navigateToSection('cheatsheet')">Next: Cheat Sheet ▶</button>
+                </div>
+            </section>
+
+            <!-- CHEAT SHEET -->
+            <section id="cheatsheet" class="section">
+                <h2>📜 Scraping Cheat Sheet</h2>
+                
+                <div class="code-container level-best">
+                    <div class="code-header">
+                        <span class="code-label">Patterns</span>
+                        <span class="level-badge best">Reference</span>
+                    </div>
+<pre><code><span class="comment"># ═══ REQUESTS ═══</span>
+<span class="keyword">import</span> requests
+resp = requests.get(url, headers=headers, params={<span class="string">'q'</span>: <span class="string">'search'</span>})
+data = resp.json()          <span class="comment"># Parse JSON response</span>
+html = resp.text            <span class="comment"># Get raw text/HTML</span>
+resp.raise_for_status()     <span class="comment"># Check for errors</span>
+
+<span class="comment"># ═══ BEAUTIFUL SOUP ═══</span>
+<span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup
+soup = BeautifulSoup(html, <span class="string">'html.parser'</span>)
+
+el = soup.find(<span class="string">'div'</span>, id=<span class="string">'main'</span>)      <span class="comment"># Find one</span>
+els = soup.find_all(<span class="string">'a'</span>, class_=<span class="string">'link'</span>) <span class="comment"># Find all</span>
+
+text = el.text.strip()      <span class="comment"># Get text content</span>
+href = el[<span class="string">'href'</span>]           <span class="comment"># Get attribute</span>
+</code></pre>
+                </div>
+
+                <div class="objectives-box" style="margin-top: 2rem;">
+                    <div class="objectives-title">🎯 Key Takeaways: APIs & Web Scraping</div>
+                    <ul>
+                        <li><strong>Try APIs First:</strong> Always check if a website offers an API before scraping. APIs are faster, more reliable, and legally safer.</li>
+                        <li><strong>HTTP Status Codes Matter:</strong> Check <code>response.status_code</code>—200 is success, 401 is unauthorized, 429 is rate limit, 500 is server error.</li>
+                        <li><strong>Secure Your API Keys:</strong> Never hardcode keys in code or commit them to GitHub. Use environment variables with <code>os.getenv()</code>.</li>
+                        <li><strong>Rate Limit Yourself:</strong> Add <code>time.sleep()</code> between requests. Exceeding limits gets you IP-banned and is disrespectful to servers.</li>
+                        <li><strong>Web Scraping is Fragile:</strong> HTML changes break scrapers. Expect constant maintenance and use defensive coding (check for <code>None</code>).</li>
+                        <li><strong>Respect robots.txt:</strong> Check <code>website.com/robots.txt</code> to see what's allowed. Ignoring it can lead to legal consequences.</li>
+                        <li><strong>Ethics are Critical:</strong> Scraping personal data or violating ToS can violate laws (GDPR, CCPA, CFAA). Always research legality first.</li>
+                        <li><strong>Save Raw Data First:</strong> Store JSON/HTML before parsing. If parsing fails, you won't need to re-fetch, saving time and server load.</li>
+                    </ul>
+                </div>
+
+                <button class="nav-btn complete-btn" data-topic="cheatsheet">Mark Lesson Complete 🎉</button>
+                <div class="nav-buttons">
+                    <button class="nav-btn prev" onclick="navigateToSection('ethics')">◀ Prev: Ethics</button>
+                    <button class="nav-btn next" disabled>🏆 Lesson Complete!</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div class="achievement" id="achievement">
+        <div class="achievement-icon">🕷️</div>
+        <div class="achievement-title">Achievement Unlocked!</div>
+        <p>You've learned to weave the web! You can now fetch data from anywhere.</p>
+    </div>
+
+    <script>
+        const sectionsOrder = ['intro', 'apis', 'scraping', 'ethics', 'cheatsheet'];
+        const totalTopics = 4; 
+        
+        const progressBar = document.getElementById('progressBar');
+        const xpFill = document.getElementById('xpFill');
+        const xpText = document.getElementById('xpText');
+        const achievement = document.getElementById('achievement');
+        const completed = new Set();
+
+        function navigateToSection(id) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            const target = document.getElementById(id);
+            if (target) target.classList.add('active');
+            
+            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+            const nav = document.querySelector(`.nav-item[data-section="${id}"]`);
+            if (nav) nav.classList.add('active');
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', () => navigateToSection(item.dataset.section));
+        });
+
+        function updateXP() {
+            const percent = (completed.size / totalTopics) * 100;
+            xpFill.style.width = percent + '%';
+            xpText.textContent = `${completed.size} / ${totalTopics} Topics`;
+            
+            if (completed.size === totalTopics) {
+                achievement.classList.add('show');
+                setTimeout(() => achievement.classList.remove('show'), 6000);
+            }
+        }
+
+        document.querySelectorAll('.complete-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const topic = btn.dataset.topic;
+                if (!completed.has(topic)) {
+                    completed.add(topic);
+                    const item = document.querySelector(`.nav-item[data-section="${topic}"]`);
+                    if (item) item.classList.add('completed');
+                    btn.textContent = 'Completed ✓';
+                    btn.disabled = true;
+                    updateXP();
+                }
+            });
+        });
+
+        document.querySelectorAll('.run-button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const container = btn.closest('.code-container');
+                let out = container.querySelector('.output');
+                if (!out) {
+                    out = document.createElement('div');
+                    out.className = 'output';
+                    container.appendChild(out);
+                }
+                out.innerHTML = '<div class="output-label">Output:</div>' + 
+                               (btn.dataset.output || 'No output').replace(/\n/g, '<br>');
+                out.classList.add('show');
+                btn.disabled = true;
+                btn.innerHTML = '✔ Ran';
+            });
+        });
+
+        document.querySelectorAll('.skill-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                const progression = tab.closest('.skill-progression');
+                const targetId = tab.dataset.target;
+                progression.querySelectorAll('.skill-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                progression.querySelectorAll('.skill-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                const targetContent = document.getElementById(targetId);
+                if (targetContent) targetContent.classList.add('active');
+            });
+        });
+
+        window.addEventListener('scroll', () => {
+            const doc = document.documentElement;
+            const scrolled = doc.scrollTop || document.body.scrollTop;
+            const height = (doc.scrollHeight - doc.clientHeight) || 1;
+            const percent = (scrolled / height) * 100;
+            progressBar.style.width = percent + '%';
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+                const activeSection = document.querySelector('.section.active');
+                if (!activeSection) return;
+                const currentIndex = sectionsOrder.indexOf(activeSection.id);
+                let newIndex;
+                if (e.key === 'ArrowRight' && currentIndex < sectionsOrder.length - 1) newIndex = currentIndex + 1;
+                else if (e.key === 'ArrowLeft' && currentIndex > 0) newIndex = currentIndex - 1;
+                if (newIndex !== undefined) navigateToSection(sectionsOrder[newIndex]);
+            }
+        });
+
+        console.log('🌐 Week 7: APIs & Scraping Loaded!');
+    </script>
+</body>
+</html>
