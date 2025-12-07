@@ -1,4 +1,4 @@
-# 🐍 Python Essentials - Interactive Curriculum
+# Python Essentials - Interactive Curriculum
 
 > **Enhanced curriculum for the Returned Citizen community by StrayDog Syndications LLC**
 
@@ -9,7 +9,7 @@
 
 ---
 
-## 📚 Table of Contents
+## Table of Contents
 
 - [Overview](#overview)
 - [Course Structure](#course-structure)
@@ -26,14 +26,14 @@
 
 ---
 
-## 🎯 Overview
+## Overview
 
 The **Python Essentials** curriculum is an enhanced, production-ready educational platform that takes students from Python fundamentals through advanced data engineering, web development, and machine learning concepts. This comprehensive program was enhanced and deployed by **[StrayDog Syndications LLC](https://www.straydog-syndications-llc.com/)** specifically for the **Returned Citizen community**.
 
 ### Mission
 Our mission is to bridge the "Digital Cliff" for justice-impacted learners through accessible, career-aligned education that empowers the next generation of Python programmers.
 
-### 🤝 Like-Minded Affiliates
+### Like-Minded Affiliates
 
 We're proud to collaborate with organizations that share our commitment to creating second-chance opportunities through technology:
 
@@ -56,7 +56,7 @@ We're proud to collaborate with organizations that share our commitment to creat
 
 ---
 
-## 📖 Course Structure
+## Course Structure
 
 ### **11-Week Intensive Program**
 
@@ -76,19 +76,19 @@ We're proud to collaborate with organizations that share our commitment to creat
 
 ---
 
-## 🎨 Interactive Lesson Plans
+## Interactive Lesson Plans
 
 ### **NEW: Premium HTML Lesson Experience**
 
 Each week features a **beautifully designed, interactive HTML lesson** with:
 
-✨ **Retro Gaming Aesthetic** - Dark theme with cyberpunk-inspired design  
-📊 **Live Progress Tracking** - Visual XP bar and topic completion markers  
-💻 **Syntax-Highlighted Code** - Color-coded examples with skill level badges  
-🎯 **Progressive Examples** - From bad practice → novice → intermediate → best practice  
-📱 **Responsive Design** - Works seamlessly on desktop, tablet, and mobile  
-🧭 **Smart Navigation** - Sidebar with instant topic jumping  
-💡 **Educational Boxes** - Tips, warnings, explanations, and best practices  
+- **Retro Gaming Aesthetic** - Dark theme with cyberpunk-inspired design  
+- **Live Progress Tracking** - Visual XP bar and topic completion markers  
+- **Syntax-Highlighted Code** - Color-coded examples with skill level badges  
+- **Progressive Examples** - From bad practice → novice → intermediate → best practice  
+- **Responsive Design** - Works seamlessly on desktop, tablet, and mobile  
+- **Smart Navigation** - Sidebar with instant topic jumping  
+- **Educational Boxes** - Tips, warnings, explanations, and best practices  
 
 **Access Lessons**: Open any `.html` file in the `lesson-plans/` directory in your web browser.
 
@@ -101,7 +101,7 @@ xdg-open lesson-plans/lesson_week2_data_structures.html  # Linux
 
 ---
 
-## ⭐ Key Features
+## Key Features
 
 ### **For Students**
 
@@ -129,7 +129,7 @@ xdg-open lesson-plans/lesson_week2_data_structures.html  # Linux
 
 ---
 
-## 📋 Prerequisites
+## Prerequisites
 
 ### **Required Skills**
 - Basic computer literacy (file management, web browsing)
@@ -145,7 +145,7 @@ xdg-open lesson-plans/lesson_week2_data_structures.html  # Linux
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### **1. Clone the Repository**
 
@@ -256,7 +256,7 @@ CTD/
 
 ---
 
-## 👨‍🏫 For Educators
+## For Educators
 
 ### **Teaching Workflow**
 
@@ -289,21 +289,21 @@ CTD/
 
 ---
 
-## 👩‍💻 For Students
+## For Students
 
 ### **Weekly Learning Cycle**
 
-**📖 Monday-Tuesday: Learn**
+**Monday-Tuesday: Learn**
 - Read lesson materials (`lessons/` directory)
 - Complete interactive HTML lesson (`lesson-plans/`)
 - Practice with Jupyter notebooks (`sessions/`)
 
-**💻 Wednesday-Thursday: Practice**
+**Wednesday-Thursday: Practice**
 - Work through weekly assignment (`assignments/`)
 - Run automated tests: `pytest -v`
 - Debug and refine your code
 
-**👥 Friday: Collaborate**
+**Friday: Collaborate**
 - Attend group session
 - Pair program with peers
 - Ask questions and share insights
@@ -332,7 +332,7 @@ CTD/
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 We welcome contributions from educators, students, and the developer community!
 
@@ -397,17 +397,17 @@ See our comprehensive [Contributing Guide](CONTRIBUTING.md) for:
 - 📝 Additional practice problems
 - 🌐 Translations to other languages
 - 🎨 UI/UX improvements for HTML lessons
-- 📊 Data visualization examples
+- Data visualization examples
 - 🧪 Additional test cases
 - 📚 Supplementary learning resources
 
 ---
 
-## 🌐 Live Deployment
+## Live Deployment
 
 **Access the interactive curriculum online:**
 
-🔗 **[https://straydogsyn.github.io/Python-Essentials-Code-The-Dream/](https://straydogsyn.github.io/Python-Essentials-Code-The-Dream/)**
+**Live Site:** [https://straydogsyn.github.io/Python-Essentials-Code-The-Dream/](https://straydogsyn.github.io/Python-Essentials-Code-The-Dream/)
 
 The complete Python Essentials curriculum is live on GitHub Pages! Access all 11 weeks of interactive lessons, progress tracking, and hands-on exercises from any device, anywhere. No installation required—just click and start learning!
 
@@ -417,7 +417,7 @@ The complete Python Essentials curriculum is live on GitHub Pages! Access all 11
 
 This repository uses **GitHub Actions** for automated quality assurance:
 
-- ✅ **Python Tests**: Automated testing across Python 3.8-3.11
+- **Python Tests**: Automated testing across Python 3.8-3.11
 - 📝 **Code Linting**: Style validation with flake8 and black
 - 📓 **Notebook Validation**: Jupyter notebook integrity checks
 - 🚀 **Auto-Deployment**: GitHub Pages updates on every push
@@ -431,11 +431,11 @@ View build status and test results in the [Actions tab](https://github.com/Stray
 This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
 **What this means:**
-- ✅ Free to use for educational purposes
-- ✅ Modify and adapt for your classroom
-- ✅ Share with students and colleagues
-- ⚠️ Attribution appreciated but not required
-- ⚠️ No warranty provided
+- Free to use for educational purposes
+- Modify and adapt for your classroom
+- Share with students and colleagues
+- Attribution appreciated but not required
+- No warranty provided
 
 ---
 
@@ -443,7 +443,7 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 ---
 
-## 🏷️ Branding Module
+## Branding Module
 
 **Files**: `assets/css/branding.css`, `assets/js/branding.js`
 
@@ -492,7 +492,7 @@ Specially enhanced for the **Returned Citizen community** and **[Code the Dream]
 - **Original Curriculum**: Code the Dream educators and lesson authors
 - **Enhancement Team**: StrayDog Syndications LLC
 - **Technical Reviewers**: Industry professionals providing feedback
-## 📞 Contact & Support
+## Contact & Support
 
 - **Repository**: [Python-Essentials-Code-The-Dream](https://github.com/StrayDogSyn/Python-Essentials-Code-The-Dream)
 - **Issues**: [GitHub Issues](https://github.com/StrayDogSyn/Python-Essentials-Code-The-Dream/issues)
