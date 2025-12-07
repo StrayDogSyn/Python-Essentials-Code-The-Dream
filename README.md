@@ -1,10 +1,10 @@
-# 🐍 Python Essentials - Interactive Curriculum for Code the Dream
+# 🐍 Python Essentials - Interactive Curriculum
 
-> **Enhanced curriculum for the Returned Citizen community, especially Code the Dream students, by StrayDog Syndications LLC**
+> **Enhanced curriculum for the Returned Citizen community by StrayDog Syndications LLC**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
-[![Live Deployment](https://img.shields.io/badge/status-deployed-success.svg)](https://github.com/StrayDogSyn/Python-Essentials-Code-The-Dream)
+[![Live Deployment](https://img.shields.io/badge/status-deployed-success.svg)](https://straydogsyn.github.io/Python-Essentials-Code-The-Dream/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 
 ---
@@ -28,10 +28,22 @@
 
 ## 🎯 Overview
 
-The **Python Essentials** curriculum is an enhanced, production-ready educational platform that takes students from Python fundamentals through advanced data engineering, web development, and machine learning concepts. This comprehensive program was enhanced and deployed by **[StrayDog Syndications LLC](https://www.straydog-syndications-llc.com/)** specifically for the **Returned Citizen community**, with special focus on **Code the Dream students**.
+The **Python Essentials** curriculum is an enhanced, production-ready educational platform that takes students from Python fundamentals through advanced data engineering, web development, and machine learning concepts. This comprehensive program was enhanced and deployed by **[StrayDog Syndications LLC](https://www.straydog-syndications-llc.com/)** specifically for the **Returned Citizen community**.
 
 ### Mission
 Our mission is to bridge the "Digital Cliff" for justice-impacted learners through accessible, career-aligned education that empowers the next generation of Python programmers.
+
+### 🤝 Like-Minded Affiliates
+
+We're proud to collaborate with organizations that share our commitment to creating second-chance opportunities through technology:
+
+- **[The Last Mile](https://thelastmile.org/)** - Technology training and education for incarcerated individuals
+- **[Justice Through Code](https://centerforjustice.columbia.edu/justicethroughcode)** - Columbia University's coding bootcamp for formerly incarcerated individuals
+- **[Code the Dream](https://codethedream.org/)** - Free software development training for people from diverse low-income backgrounds
+- **[Reentry Campus Program](https://www.reentrycampusprogram.org/)** - Affordable pathways to post-secondary education for incarcerated individuals
+- **[The Second Story Initiative](https://www.straydog-secondstory.org/)** - Transforming lives through education and opportunity
+
+*Together, we're building a future where everyone has access to opportunity.*
 
 ### Key Principles
 
@@ -391,13 +403,13 @@ See our comprehensive [Contributing Guide](CONTRIBUTING.md) for:
 
 ---
 
-## 🌐 Live Lessons
+## 🌐 Live Deployment
 
-**Access the interactive lesson portal online:**
+**Access the interactive curriculum online:**
 
-🔗 **[https://straydogsyn.github.io/CTD/](https://straydogsyn.github.io/CTD/)**
+🔗 **[https://straydogsyn.github.io/Python-Essentials-Code-The-Dream/](https://straydogsyn.github.io/Python-Essentials-Code-The-Dream/)**
 
-All 11 HTML lessons are hosted via GitHub Pages for easy access from any device, anywhere. No installation required—just click and learn!
+The complete Python Essentials curriculum is live on GitHub Pages! Access all 11 weeks of interactive lessons, progress tracking, and hands-on exercises from any device, anywhere. No installation required—just click and start learning!
 
 ---
 
@@ -480,27 +492,27 @@ Specially enhanced for the **Returned Citizen community** and **[Code the Dream]
 - **Original Curriculum**: Code the Dream educators and lesson authors
 - **Enhancement Team**: StrayDog Syndications LLC
 - **Technical Reviewers**: Industry professionals providing feedback
-- **Students**: Past cohorts whose feedback shaped improvements
-- **Open Source Community**: Python, Jupyter, and web development tools
-
-### **Special Thanks**
-- The Python Software Foundation for maintaining excellent documentation
-- Jupyter Project for interactive computing tools
-- VS Code team for an outstanding developer experience
-- All mentors and instructors who bring this curriculum to life
-- The Returned Citizen community for their resilience and determination
-
----
-
 ## 📞 Contact & Support
 
 - **Repository**: [Python-Essentials-Code-The-Dream](https://github.com/StrayDogSyn/Python-Essentials-Code-The-Dream)
 - **Issues**: [GitHub Issues](https://github.com/StrayDogSyn/Python-Essentials-Code-The-Dream/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/StrayDogSyn/Python-Essentials-Code-The-Dream/discussions)
-- **StrayDog**: [www.straydog-syndications-llc.com](https://www.straydog-syndications-llc.com/)
-- **Code the Dream**: [codethedream.org](https://codethedream.org)
+- **StrayDog Syndications LLC**: [www.straydog-syndications-llc.com](https://www.straydog-syndications-llc.com/)
+- **The Second Story Initiative**: [www.straydog-secondstory.org](https://www.straydog-secondstory.org/)
 
 ---
+
+<div align="center">
+
+**Enhanced curriculum for the Returned Citizen community by StrayDog Syndications LLC**
+
+**Bridging the Digital Cliff through accessible, career-aligned education**
+
+*In collaboration with like-minded affiliates*
+
+[⬆ Back to Top](#-python-essentials---interactive-curriculum)
+
+</div>
 
 <div align="center">
 
