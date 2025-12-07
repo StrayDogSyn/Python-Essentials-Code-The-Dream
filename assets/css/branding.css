@@ -120,10 +120,78 @@
     z-index: 1;
 }
 
-/* Affiliate Logo Hover Effects */
-.sd-affiliates a img:hover {
-    opacity: 1 !important;
+/* Affiliate Icons with Glassmorphic Tooltips */
+.affiliate-icon {
+    position: relative;
+    display: inline-block;
+}
+
+.affiliate-icon a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.affiliate-icon a:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--accent-cyan);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 255, 255, 0.2);
+}
+
+.affiliate-icon svg {
+    transition: all 0.3s ease;
+    opacity: 0.7;
+}
+
+.affiliate-icon a:hover svg {
+    opacity: 1;
     transform: scale(1.1);
+    filter: drop-shadow(0 0 8px currentColor);
+}
+
+/* Glassmorphic Tooltip */
+.affiliate-tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-8px);
+    background: rgba(20, 20, 40, 0.95);
+    backdrop-filter: blur(12px);
+    color: var(--accent-cyan);
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(0, 255, 255, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+}
+
+.affiliate-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: rgba(20, 20, 40, 0.95);
+}
+
+.affiliate-icon:hover .affiliate-tooltip {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-12px);
 }
 
 /* Responsive Design */
