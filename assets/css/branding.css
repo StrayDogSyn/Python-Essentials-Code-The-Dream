@@ -120,6 +120,12 @@
     z-index: 1;
 }
 
+/* Affiliate Logo Hover Effects */
+.sd-affiliates a img:hover {
+    opacity: 1 !important;
+    transform: scale(1.1);
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .sd-watermark::before {
